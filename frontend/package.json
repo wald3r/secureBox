@@ -20,5 +20,6 @@
     "eject": "react-scripts eject",
     "lint": "eslint .",
     "server": "json-server -p3001 db.json"
-  }
+  },
+  "proxy": "http://localhost:3003"
 }

@@ -1,22 +1,22 @@
 import React, { useState } from 'react'
 import loginService from './services/login'
 
-const App = (props) => {
+const App = ( ) => {
 
-  const [user, setUser] = useState(null)
-  const [ name, setName ] = useState(null)
-  const [ password, setPassword ] = useState(null)
+  const [ user, setUser ] = useState(null)
+  const [ username, setUsername ] = useState('')
+  const [ password, setPassword ] = useState('')
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    console.log('login', name, password)
-    const newUser = await loginService.login(name, password)
-    console.log(newUser)
+    console.log('login with: ', username, password)
+    const newUser = await loginService.login({ username, password })
     if(newUser !== undefined){
       setUser(newUser)
     }
-    setPassword(null)
-    setName(null)
+
+    setPassword('')
+    setUsername('')
   }
 
 
@@ -24,7 +24,7 @@ const App = (props) => {
     return (
       <div>
         <form onSubmit={handleLogin}>
-          <div>Username: <input onChange={({ target }) => setName(target.value)}/></div>
+          <div>Username: <input onChange={({ target }) => setUsername(target.value)}/></div>
           <div>Password: <input onChange={({ target }) => setPassword(target.value)} /></div>
           <div><button type="submit">Login</button></div>
         </form>
