@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
 import loginService from './services/login'
+import registrationService from './services/registration'
 
 const App = ( ) => {
 
   const [ user, setUser ] = useState(null)
   const [ username, setUsername ] = useState('')
   const [ password, setPassword ] = useState('')
+  const [ newname, setNewname ] = useState('')
+  const [ newpwd, setNewpwd ] = useState('')
+  const [ name, setName ] = useState('')
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -20,6 +24,21 @@ const App = ( ) => {
   }
 
 
+  const handleRegistration =  async (event) => {
+    event.preventDefault()
+    console.log('register:', newname, newpwd, name)
+
+    const newUser = await registrationService.register({ username: newname, password: newpwd, name: name })
+    console.log(newUser)
+    setNewname('')
+    setNewpwd('')
+    setName('')
+  }
+
+  const handleLogout = () => {
+    setUser(null)
+  }
+
   if (user === null){
     return (
       <div>
@@ -28,12 +47,18 @@ const App = ( ) => {
           <div>Password: <input onChange={({ target }) => setPassword(target.value)} /></div>
           <div><button type="submit">Login</button></div>
         </form>
+        <form onSubmit={handleRegistration}>
+          <div>Name: <input onChange={({ target }) => setName(target.value)}/></div>
+          <div>Username: <input onChange={({ target }) => setNewname(target.value)} /></div>
+          <div>Password: <input onChange={({ target }) => setNewpwd(target.value)} /></div>
+          <div><button type="submit">Login</button></div>
+        </form>
       </div>
     )
   }else{
     return(
       <div>
-        Hello
+         <div><button type="submit" onClick={handleLogout}>Logout</button></div>
       </div>
     )
   }
