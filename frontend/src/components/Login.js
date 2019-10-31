@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import loginService from '../services/login'
 import { setUser } from '../reducers/userReducer'
+import { handleNotification } from '../reducers/notificationReducer'
+import { handleError } from '../reducers/errorReducer'
 import { connect } from 'react-redux'
 
 const Login = ( props ) => {
@@ -14,6 +16,9 @@ const Login = ( props ) => {
     const newUser = await loginService.login({ username, password })
     if(newUser !== undefined){
       props.setUser(newUser)
+      handleNotification('Login successfull!', 5000)
+    }else{
+      handleError('Login failed!', 5000)
     }
     setPassword('')
     setUsername('')
@@ -36,7 +41,9 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  setUser
+  setUser,
+  handleNotification,
+  handleError
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

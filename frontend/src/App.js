@@ -2,9 +2,11 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { setUser, removeUser } from './reducers/userReducer'
+import { handleNotification } from './reducers/notificationReducer'
 import Login from './components/Login'
 import Registration from './components/Registration'
-
+import Notification from './components/Notificiation'
+import Error from './components/Error'
 
 const App = ( props ) => {
 
@@ -20,31 +22,40 @@ const App = ( props ) => {
 
   const handleLogout = () => {
     props.removeUser()
+    props.handleNotification('Logout successfull!', 5000)
+
   }
 
   if (props.user === null){
     return (
-
-      <Router>
-        <div>
-          <h1>SecureBox</h1>
-          <Link style={padding} to='/'>Login</Link>
-          <Link style={padding} to='/registration'>Registration</Link>
-        </div>
-        <br></br>
-        <Route exact path='/' render={() => <Login/> } />
-        <Route exact path='/registration' render={() => <Registration /> } />
-      </Router>
+      <div>
+        <Error />
+        <Notification />
+        <Router>
+          <div>
+            <h1>SecureBox</h1>
+            <Link style={padding} to='/'>Login</Link>
+            <Link style={padding} to='/registration'>Registration</Link>
+          </div>
+          <br></br>
+          <Route exact path='/' render={() => <Login/> } />
+          <Route exact path='/registration' render={() => <Registration /> } />
+        </Router>
+      </div>
     )
   }else{
     return(
-      <Router>
-        <div>
-          <h1>SecureBox</h1>
-          {props.user.username} is logged in <button onClick={handleLogout}>Logout</button>
-        </div>
-        <br></br>
-      </Router>
+      <div>
+        <Error />
+        <Notification />
+        <Router>
+          <div>
+            <h1>SecureBox</h1>
+            {props.user.username} is logged in <button onClick={handleLogout}>Logout</button>
+          </div>
+          <br></br>
+        </Router>
+      </div>
     )
   }
 
@@ -58,7 +69,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   setUser,
-  removeUser
+  removeUser,
+  handleNotification
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
