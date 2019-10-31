@@ -4,6 +4,7 @@ import { setUser } from '../reducers/userReducer'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
 import { connect } from 'react-redux'
+import { Button } from 'react-bootstrap'
 
 const Login = ( props ) => {
 
@@ -16,9 +17,9 @@ const Login = ( props ) => {
     const newUser = await loginService.login({ username, password })
     if(newUser !== undefined){
       props.setUser(newUser)
-      handleNotification('Login successfull!', 5000)
+      props.handleNotification('Login successfull!', 5000)
     }else{
-      handleError('Login failed!', 5000)
+      props.handleError('Login failed!', 5000)
     }
     setPassword('')
     setUsername('')
@@ -29,7 +30,7 @@ const Login = ( props ) => {
     <form onSubmit={handleLogin}>
     <div>Username: <input onChange={({ target }) => setUsername(target.value)}/></div>
     <div>Password: <input onChange={({ target }) => setPassword(target.value)} /></div>
-    <div><button type="submit">Login</button></div>
+    <div><Button type="submit">Login</Button></div>
     </form>
   )
 }

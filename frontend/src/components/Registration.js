@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import registrationService from '../services/registration'
+import { Button } from 'react-bootstrap'
 
 
 
@@ -25,7 +26,7 @@ const Registration = () => {
         <div>Name: <input onChange={({ target }) => setName(target.value)}/></div>
         <div>Username: <input onChange={({ target }) => setNewname(target.value)} /></div>
         <div>Password: <input onChange={({ target }) => setNewpwd(target.value)} /></div>
-        <div><button type="submit">Register</button></div>
+        <div><Button type="submit">Register</Button></div>
       </form>
     </div>
   )

@@ -7,6 +7,7 @@ import Login from './components/Login'
 import Registration from './components/Registration'
 import Notification from './components/Notificiation'
 import Error from './components/Error'
+import { Button } from 'react-bootstrap'
 
 const App = ( props ) => {
 
@@ -51,7 +52,7 @@ const App = ( props ) => {
         <Router>
           <div>
             <h1>SecureBox</h1>
-            {props.user.username} is logged in <button onClick={handleLogout}>Logout</button>
+            {props.user.username} is logged in <Button onClick={handleLogout}>Logout</Button>
           </div>
           <br></br>
         </Router>
