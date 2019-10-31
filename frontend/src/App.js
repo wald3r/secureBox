@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { setUser, removeUser } from './reducers/userReducer'
 import Login from './components/Login'
 import Registration from './components/Registration'
@@ -16,6 +16,8 @@ const App = ( props ) => {
     }
   }, [])
 
+  const padding = { padding: 5 }
+
   const handleLogout = () => {
     props.removeUser()
   }
@@ -24,15 +26,25 @@ const App = ( props ) => {
     return (
 
       <Router>
-      <Route exact path='/' render={() => <Login/> } />
-      <Route exact path='/Registration' render={() => <Registration /> } />
+        <div>
+          <h1>SecureBox</h1>
+          <Link style={padding} to='/'>Login</Link>
+          <Link style={padding} to='/registration'>Registration</Link>
+        </div>
+        <br></br>
+        <Route exact path='/' render={() => <Login/> } />
+        <Route exact path='/registration' render={() => <Registration /> } />
       </Router>
     )
   }else{
     return(
-      <div>
-         <div><button type="submit" onClick={handleLogout}>Logout</button></div>
-      </div>
+      <Router>
+        <div>
+          <h1>SecureBox</h1>
+          {props.user.username} is logged in <button onClick={handleLogout}>Logout</button>
+        </div>
+        <br></br>
+      </Router>
     )
   }
 
