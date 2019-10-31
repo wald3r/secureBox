@@ -6,6 +6,8 @@ import { handleNotification } from './reducers/notificationReducer'
 import Login from './components/Login'
 import Registration from './components/Registration'
 import Notification from './components/Notificiation'
+import Home from './components/Home'
+import Upload from './components/Upload'
 import Error from './components/Error'
 import { Button } from 'react-bootstrap'
 
@@ -52,9 +54,13 @@ const App = ( props ) => {
         <Router>
           <div>
             <h1>SecureBox</h1>
+            <Link style={padding} to='/'>Home</Link>
+            <Link style={padding} to='/upload'>Upload</Link>
             {props.user.username} is logged in <Button onClick={handleLogout}>Logout</Button>
           </div>
           <br></br>
+          <Route exact path='/' render={() => <Home /> } />
+          <Route exact path='/upload' render={() => <Upload /> } />
         </Router>
       </div>
     )

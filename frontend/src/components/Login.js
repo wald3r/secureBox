@@ -29,7 +29,7 @@ const Login = ( props ) => {
   return (
     <form onSubmit={handleLogin}>
     <div>Username: <input onChange={({ target }) => setUsername(target.value)}/></div>
-    <div>Password: <input onChange={({ target }) => setPassword(target.value)} /></div>
+    <div>Password: <input type='password' onChange={({ target }) => setPassword(target.value)} /></div>
     <div><Button type="submit">Login</Button></div>
     </form>
   )
