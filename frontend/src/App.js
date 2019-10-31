@@ -1,39 +1,30 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { setUser, removeUser } from './reducers/userReducer'
 import Login from './components/Login'
 import Registration from './components/Registration'
 
 
-const App = ( ) => {
-
-  const [ user, setUser ] = useState(null)
-
-
+const App = ( props ) => {
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedappUser')
     if (loggedUserJSON) {
       const newUser = JSON.parse(loggedUserJSON)
-      setUser(newUser)
+      props.setUser(newUser)
     }
   }, [])
 
   const handleLogout = () => {
-    setUser(null)
+    props.removeUser()
   }
 
-  const handleUser = ( newUser ) => {
-    setUser(newUser)
-  }
-
-  if (user === null){
+  if (props.user === null){
     return (
 
       <Router>
-      <Route exact path='/' render={() =>
-          <Login
-              handleUser={handleUser}
-          /> } />
+      <Route exact path='/' render={() => <Login/> } />
       <Route exact path='/Registration' render={() => <Registration /> } />
       </Router>
     )
@@ -47,4 +38,15 @@ const App = ( ) => {
 
 }
 
-export default App
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  }
+}
+
+const mapDispatchToProps = {
+  setUser,
+  removeUser
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

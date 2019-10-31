@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import loginService from '../services/login'
+import { setUser } from '../reducers/userReducer'
+import { connect } from 'react-redux'
 
-const Login = ({ handleUser }) => {
+const Login = ( props ) => {
 
   const [ username, setUsername ] = useState('')
   const [ password, setPassword ] = useState('')
@@ -11,8 +13,7 @@ const Login = ({ handleUser }) => {
     console.log('login with: ', username, password)
     const newUser = await loginService.login({ username, password })
     if(newUser !== undefined){
-      handleUser(newUser)
-      window.localStorage.setItem('loggedappUser', JSON.stringify(newUser))
+      props.setUser(newUser)
     }
     setPassword('')
     setUsername('')
@@ -28,4 +29,14 @@ const Login = ({ handleUser }) => {
   )
 }
 
-export default Login
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  }
+}
+
+const mapDispatchToProps = {
+  setUser
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

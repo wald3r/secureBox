@@ -19,7 +19,6 @@ const Registration = () => {
     setName('')
   }
 
-
   return(
     <div>
       <form onSubmit={handleRegistration}>
