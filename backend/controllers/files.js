@@ -1,6 +1,7 @@
-var filesRouter = require('express').Router()
+const filesRouter = require('express').Router()
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
+const fs = require('fs');
 
 
 filesRouter.post('/upload', async (request, response) => {
@@ -25,13 +26,19 @@ filesRouter.post('/upload', async (request, response) => {
 
   console.log(request.files)
   let test = request.files.file
+  let path = `files/${user.username}`
 
-  test.mv(`files/${test.name}`, err => {
+  if (!fs.existsSync(path)){
+    fs.mkdirSync(path);
+  } 
+
+  test.mv(`${path}/${test.name}`, err => {
     if (err){
-      return response.status(500).send(err)
-    }else{
-      return response.status(200).send('All files uploaded.')
-    }
+      console.log(err)
+      return response.status(500).send(err)}
+
+    response.status(200).send('All files uploaded.')
+
   })  
 })
 
