@@ -9,6 +9,17 @@ const setToken = newToken => {
 }
 
 
+const getFiles = async () => {
+
+  const config = {
+    headers: { Authorization: token },
+  }
+  const response = await axios.get(baseUrl, config)
+  return response.data
+}
+
+
+
 const sendFiles = async data => {
 
   const config = {
@@ -23,4 +34,4 @@ const sendFiles = async data => {
 
 
 
-export default { sendFiles, setToken }
+export default { sendFiles, setToken, getFiles }

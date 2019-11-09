@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import uploadService from '../services/upload'
+import fileService from '../services/files'
 import { Form, Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { handleNotification } from '../reducers/notificationReducer'
@@ -16,7 +16,7 @@ const Upload = ( { ...props } ) => {
     for(var x = 0; x<files.length; x++) {
       data.append('file', files[x])
     }
-    const response = await uploadService.sendFiles(data)
+    const response = await fileService.sendFiles(data)
     if(response.status === 200){
       props.handleNotification(response.data, 5000)
     }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import loginService from '../services/login'
-import uploadService from '../services/upload'
+import fileService from '../services/files'
 import { setUser } from '../reducers/userReducer'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
@@ -18,7 +18,7 @@ const Login = ( props ) => {
     const newUser = await loginService.login({ username, password })
     if(newUser !== undefined){
       props.setUser(newUser)
-      uploadService.setToken(newUser.token)
+      fileService.setToken(newUser.token)
       props.handleNotification('Login successfull!', 5000)
     }else{
       props.handleError('Login failed!', 5000)
