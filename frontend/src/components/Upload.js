@@ -1,34 +1,11 @@
 import React, { useState } from 'react'
-import filesService from '../services/files'
+import uploadService from '../services/upload'
 import { Form, Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
 
-//import { useDropzone } from 'react-dropzone'
-
 const Upload = ( { ...props } ) => {
-/*
-  const onDrop = useCallback(async acceptedFiles => {
-    console.log(acceptedFiles)
-    let data = new FormData()
-    data.append('file', acceptedFiles)
-    await filesService.sendPhotos(data)
-  }, [])
-
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
-
-  return (
-    <div {...getRootProps()}>
-      <input {...getInputProps()} />
-      {
-        isDragActive ?
-          <p>Drop the files here ...</p> :
-          <p>Drag 'n' drop some files here, or click to select files</p>
-      }
-    </div>
-  )*/
 
   const [files, setFiles] = useState([])
 
@@ -39,8 +16,13 @@ const Upload = ( { ...props } ) => {
     for(var x = 0; x<files.length; x++) {
       data.append('file', files[x])
     }
-    await filesService.sendPhotos(data)
-    props.handleNotification('Files uploaded', 5000)
+    const response = await uploadService.sendFiles(data)
+    if(response === 200){
+      props.handleNotification('Files uploaded', 5000)
+    }
+    else{
+      props.handleError('Files upload failed', 5000)
+    }
     setFiles([])
   }
 
