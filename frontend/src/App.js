@@ -60,7 +60,7 @@ const App = ( props ) => {
           </div>
           <br></br>
           <Route exact path='/' render={() => <Home /> } />
-          <Route exact path='/upload' render={() => <Upload /> } />
+          <Route exact path='/upload' render={(props) => <Upload {...props}/> } />
         </Router>
       </div>
     )
