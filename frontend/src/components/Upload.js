@@ -17,11 +17,11 @@ const Upload = ( { ...props } ) => {
       data.append('file', files[x])
     }
     const response = await uploadService.sendFiles(data)
-    if(response === 200){
-      props.handleNotification('Files uploaded', 5000)
+    if(response.status === 200){
+      props.handleNotification(response.data, 5000)
     }
     else{
-      props.handleError('Files upload failed', 5000)
+      props.handleError(response.data, 5000)
     }
     setFiles([])
   }

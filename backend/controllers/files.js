@@ -1,38 +1,50 @@
 const filesRouter = require('express').Router()
-const User = require('../models/user')
-const jwt = require('jsonwebtoken')
+const authenticationHelper = require('../utils/authenticationHelper')
+const File = require ('../models/file')
 const fs = require('fs');
 
 
+filesRouter.get('/', async (request, response, next) => {
+
+  try {
+    const files = await File.find({}).populate('user')
+    return response.json(files)
+  }catch(exception){
+    next(exception)
+  }
+
+
+})
+
 filesRouter.post('/upload', async (request, response) => {
 
-
-  const token = request.token
-
-  const decodedToken = jwt.verify(token, process.env.SECRET)
-  if (!token || !decodedToken.id) {
-    return response.status(400).json({ error: 'token missing or invalid' })
+  const user = await authenticationHelper.isLoggedIn(request.token)
+  if(user == undefined){
+    return response.status(400).send('Not Authenticated')
   }
-
-  const user = await User.findById(decodedToken.id)
-  
-  if(!user){
-    return response.status(400).send('User not found')
-  }
-
   if (!request.files || Object.keys(request.files).length === 0) {
     return response.status(400).send('No files were uploaded.')
   }
 
   console.log(request.files)
-  let test = request.files.file
+  let file = request.files.file
   let path = `files/${user.username}`
 
   if (!fs.existsSync(path)){
     fs.mkdirSync(path);
   } 
+  const newFile = new File ({
+    name: file.name,
+    path: path,
+    mimetype: file.mimetype,
+    size: file.size,
+    user: user.id
+  })
 
-  test.mv(`${path}/${test.name}`, err => {
+  const savedFile = newFile.save()
+  
+
+  file.mv(`${path}/${file.name}`, err => {
     if (err){
       console.log(err)
       return response.status(500).send(err)}

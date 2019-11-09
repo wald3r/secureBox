@@ -16,7 +16,7 @@ const sendFiles = async data => {
   }
 
   const response = await axios.post(`${baseUrl}/upload`, data, config)
-  return response.status
+  return response
 
 
 }
