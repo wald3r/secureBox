@@ -1,7 +1,9 @@
+import fileService from '../services/files'
 
 export const setUser = ( user ) => {
   return async dispatch => {
     window.localStorage.setItem('loggedappUser', JSON.stringify(user))
+    fileService.setToken(user.token)
     dispatch({
       type: 'SETUSER',
       user

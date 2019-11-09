@@ -20,8 +20,8 @@ const App = ( props ) => {
     const loggedUserJSON = window.localStorage.getItem('loggedappUser')
     if (loggedUserJSON) {
       const newUser = JSON.parse(loggedUserJSON)
-      props.getFiles()
       props.setUser(newUser)
+      props.getFiles()
     }
   }, [])
 

@@ -7,8 +7,15 @@ const fs = require('fs');
 filesRouter.get('/', async (request, response, next) => {
 
   try {
-    const files = await File.find({}).populate('user')
-    return response.json(files)
+
+    const user = await authenticationHelper.isLoggedIn(request.token)
+    if(user == undefined){
+      return response.status(400).send('Not Authenticated')
+    }
+
+    const files = await File.find({ user: user.id }).populate('user')
+    console.log(files)
+    return response.status(200).json(files)
   }catch(exception){
     next(exception)
   }

@@ -3,7 +3,11 @@ import fileService from '../services/files'
 
 export const getFiles = () => {
   return async dispatch => {
-    const data = await fileService.getFiles()
+    const response = await fileService.getFiles()
+    if(response.status === 400){
+      return
+    }
+    let data = response.data
     dispatch({
       type: 'GETFILES',
       data
