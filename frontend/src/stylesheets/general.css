@@ -1,0 +1,16 @@
+@import './upload.css';
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.title{
+  text-align: center;
+}
+
+.button {
+  display: table-cell;
+
+  width: 100%;
+}

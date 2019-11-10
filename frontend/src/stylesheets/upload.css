@@ -43,9 +43,3 @@
   text-transform: capitalize;
   text-align: center;
 }
-
-.button {
-  display: table-cell;
-
-  width: 100%;
-}

@@ -12,10 +12,11 @@ import Upload from './components/Upload'
 import Error from './components/Error'
 import { Button } from 'react-bootstrap'
 import AllMyFiles from './components/AllMyFiles'
+import './stylesheets/general.css'
 
 
 const App = ( props ) => {
-
+  //window.localStorage.removeItem('loggedappUser')
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedappUser')
     if (loggedUserJSON) {
@@ -39,10 +40,14 @@ const App = ( props ) => {
         <Error />
         <Notification />
         <Router>
-          <div>
-            <h1>SecureBox</h1>
-            <Link style={padding} to='/'>Login</Link>
-            <Link style={padding} to='/registration'>Registration</Link>
+          <div className='container'>
+            <div className='row'>
+              <div className='col-md-15'>
+                <h1>SecureBox</h1>
+                <Link style={padding} to='/'>Login</Link>
+                <Link style={padding} to='/registration'>Registration</Link>
+              </div>
+            </div>
           </div>
           <br></br>
           <Route exact path='/' render={() => <Login/> } />
@@ -56,12 +61,16 @@ const App = ( props ) => {
         <Error />
         <Notification />
         <Router>
-          <div>
-            <h1>SecureBox</h1>
-            <Link style={padding} to='/'>Home</Link>
-            <Link style={padding} to='/upload'>Upload</Link>
-            <Link style={padding} to='/myfiles'>Files</Link>
-            {props.user.username} is logged in <Button onClick={handleLogout}>Logout</Button>
+          <div className='container'>
+            <div className='row'>
+              <div className='col-md-15'>
+                <h1 className='title'>SecureBox</h1>
+                <Link style={padding} to='/'>Home</Link>
+                <Link style={padding} to='/upload'>Upload</Link>
+                <Link style={padding} to='/myfiles'>Files</Link>
+                {props.user.username} is logged in <Button onClick={handleLogout}>Logout</Button>
+              </div>
+            </div>
           </div>
           <br></br>
           <Route exact path='/' render={() => <Home /> } />

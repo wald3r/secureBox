@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import registrationService from '../services/registration'
 import { Button, Form } from 'react-bootstrap'
+import '../stylesheets/general.css'
 
 
 
@@ -22,44 +23,48 @@ const Registration = () => {
 
   return(
 
-    <div>
-      <Form onSubmit={handleRegistration}>
-        <table className='table .table-striped' width="10">
-            <thead className='thead-dark'>
+    <div className='container'>
+      <div className='row'>
+        <div className='col-md-15'>
+          <Form onSubmit={handleRegistration}>
+            <table className='table .table-striped' width="10">
+                <thead className='thead-dark'>
 
-            </thead>
-            <tbody width="10">
-                <tr>
-                    <td width="10">
-                        Name:
-                    </td>
+                </thead>
+                <tbody width="10">
+                    <tr>
+                        <td width="10">
+                            Name:
+                        </td>
 
-                    <td>
-                      <input onChange={({ target }) => setName(target.value)}/>
-                    </td>
-                </tr>
-                <tr>
-                    <td width="10">
-                        Username:
-                    </td>
+                        <td>
+                          <input onChange={({ target }) => setName(target.value)}/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="10">
+                            Username:
+                        </td>
 
-                    <td>
-                      <input onChange={({ target }) => setName(target.value)}/>
-                    </td>
-                </tr>
-                <tr>
-                    <td width="10">
-                        Password:
-                    </td>
+                        <td>
+                          <input onChange={({ target }) => setName(target.value)}/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="10">
+                            Password:
+                        </td>
 
-                    <td>
-                      <input onChange={({ target }) => setNewpwd(target.value)} />
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <div><Button type="submit">Register</Button></div>
-      </Form>
+                        <td>
+                          <input onChange={({ target }) => setNewpwd(target.value)} />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div><Button className='button' type="submit">Register</Button></div>
+          </Form>
+        </div>
+      </div>
     </div>
   )
 }

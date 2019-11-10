@@ -7,6 +7,7 @@ import { getFiles } from '../reducers/filesReducer'
 import { handleError } from '../reducers/errorReducer'
 import { connect } from 'react-redux'
 import { Button, Form } from 'react-bootstrap'
+import '../stylesheets/general.css'
 
 const Login = ( props ) => {
 
@@ -16,13 +17,13 @@ const Login = ( props ) => {
   const handleLogin = async (event) => {
     event.preventDefault()
     console.log('login with: ', username, password)
-    const newUser = await loginService.login({ username, password })
-    if(newUser !== undefined){
+    try{
+      const newUser = await loginService.login({ username, password })
       props.setUser(newUser)
       fileService.setToken(newUser.token)
       props.getFiles()
       props.handleNotification('Login successfull!', 5000)
-    }else{
+    }catch(exception){
       props.handleError('Login failed!', 5000)
     }
     setPassword('')
@@ -32,35 +33,39 @@ const Login = ( props ) => {
 
   return (
 
-    <div>
-      <Form onSubmit={handleLogin}>
-        <table className='table .table-striped' width="10">
-            <thead className='thead-dark'>
+    <div className='container'>
+      <div className='row'>
+        <div className='col-md-15'>
+          <Form onSubmit={handleLogin}>
+            <table className='table .table-striped' width="10">
+                <thead className='thead-dark'>
 
-            </thead>
-            <tbody width="10">
-                <tr>
-                    <td width="10">
-                        Username:
-                    </td>
+                </thead>
+                <tbody width="10">
+                    <tr>
+                        <td width="10">
+                            Username:
+                        </td>
 
-                    <td>
-                      <input onChange={({ target }) => setUsername(target.value)}/>
-                    </td>
-                </tr>
-                <tr>
-                    <td width="10">
-                        Password:
-                    </td>
+                        <td>
+                          <input onChange={({ target }) => setUsername(target.value)}/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="10">
+                            Password:
+                        </td>
 
-                    <td>
-                      <input type='password' onChange={({ target }) => setPassword(target.value)}/>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <Button type="submit">login</Button>
-      </Form>
+                        <td>
+                          <input type='password' onChange={({ target }) => setPassword(target.value)}/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <Button className='button' type="submit">login</Button>
+          </Form>
+        </div>
+      </div>
     </div>
   )
 }

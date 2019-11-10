@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
 import { getFiles } from '../reducers/filesReducer'
-import '../upload.css'
+import '../stylesheets/general.css'
 
 const Upload = ( { ...props } ) => {
 
@@ -43,7 +43,7 @@ const Upload = ( { ...props } ) => {
   return (
     <div className='container'>
       <div className='row'>
-        <div className='col-md-9'>
+        <div className='col-md-15'>
           <div className='form-group files' >
             <Form method='POST' encType='multipart/form-data' onSubmit={uploadHandler} >
               <input type='file' name='files' multiple onChange={onChangeHandler}/>
