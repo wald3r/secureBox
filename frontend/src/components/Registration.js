@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import registrationService from '../services/registration'
-import { Button } from 'react-bootstrap'
+import { Button, Form } from 'react-bootstrap'
 
 
 
@@ -21,13 +21,45 @@ const Registration = () => {
   }
 
   return(
+
     <div>
-      <form onSubmit={handleRegistration}>
-        <div>Name: <input onChange={({ target }) => setName(target.value)}/></div>
-        <div>Username: <input onChange={({ target }) => setNewname(target.value)} /></div>
-        <div>Password: <input onChange={({ target }) => setNewpwd(target.value)} /></div>
+      <Form onSubmit={handleRegistration}>
+        <table className='table .table-striped' width="10">
+            <thead className='thead-dark'>
+
+            </thead>
+            <tbody width="10">
+                <tr>
+                    <td width="10">
+                        Name:
+                    </td>
+
+                    <td>
+                      <input onChange={({ target }) => setName(target.value)}/>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="10">
+                        Username:
+                    </td>
+
+                    <td>
+                      <input onChange={({ target }) => setName(target.value)}/>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="10">
+                        Password:
+                    </td>
+
+                    <td>
+                      <input onChange={({ target }) => setNewpwd(target.value)} />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         <div><Button type="submit">Register</Button></div>
-      </form>
+      </Form>
     </div>
   )
 }

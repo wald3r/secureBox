@@ -5,7 +5,7 @@ import { setUser } from '../reducers/userReducer'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
 import { connect } from 'react-redux'
-import { Button } from 'react-bootstrap'
+import { Button, Form } from 'react-bootstrap'
 
 const Login = ( props ) => {
 
@@ -29,11 +29,37 @@ const Login = ( props ) => {
 
 
   return (
-    <form onSubmit={handleLogin}>
-    <div>Username: <input onChange={({ target }) => setUsername(target.value)}/></div>
-    <div>Password: <input type='password' onChange={({ target }) => setPassword(target.value)} /></div>
-    <div><Button type="submit">Login</Button></div>
-    </form>
+
+    <div>
+      <Form onSubmit={handleLogin}>
+        <table className='table .table-striped' width="10">
+            <thead className='thead-dark'>
+
+            </thead>
+            <tbody width="10">
+                <tr>
+                    <td width="10">
+                        Username:
+                    </td>
+
+                    <td>
+                      <input onChange={({ target }) => setUsername(target.value)}/>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="10">
+                        Password:
+                    </td>
+
+                    <td>
+                      <input type='password' onChange={({ target }) => setPassword(target.value)}/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <Button type="submit">login</Button>
+      </Form>
+    </div>
   )
 }
 
