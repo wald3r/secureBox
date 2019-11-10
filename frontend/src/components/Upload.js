@@ -46,7 +46,7 @@ const Upload = ( { ...props } ) => {
         <div className='col-md-15'>
           <div className='form-group files' >
             <Form method='POST' encType='multipart/form-data' onSubmit={uploadHandler} >
-              <input type='file' name='files' multiple onChange={onChangeHandler}/>
+              <input type='file' autoComplete='off' name='files' multiple onChange={onChangeHandler}/>
               <Button className='button' type="submit">Upload</Button>
             </Form>
           </div>

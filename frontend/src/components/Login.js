@@ -48,7 +48,7 @@ const Login = ( props ) => {
                         </td>
 
                         <td>
-                          <input onChange={({ target }) => setUsername(target.value)}/>
+                          <input autoComplete='off' onChange={({ target }) => setUsername(target.value)}/>
                         </td>
                     </tr>
                     <tr>
@@ -57,7 +57,7 @@ const Login = ( props ) => {
                         </td>
 
                         <td>
-                          <input type='password' onChange={({ target }) => setPassword(target.value)}/>
+                          <input autoComplete='off' type='password' onChange={({ target }) => setPassword(target.value)}/>
                         </td>
                     </tr>
                 </tbody>

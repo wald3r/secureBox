@@ -38,7 +38,7 @@ const Registration = () => {
                         </td>
 
                         <td>
-                          <input onChange={({ target }) => setName(target.value)}/>
+                          <input autoComplete='off' onChange={({ target }) => setName(target.value)}/>
                         </td>
                     </tr>
                     <tr>
@@ -47,7 +47,7 @@ const Registration = () => {
                         </td>
 
                         <td>
-                          <input onChange={({ target }) => setName(target.value)}/>
+                          <input autoComplete='off' onChange={({ target }) => setName(target.value)}/>
                         </td>
                     </tr>
                     <tr>
@@ -56,7 +56,7 @@ const Registration = () => {
                         </td>
 
                         <td>
-                          <input onChange={({ target }) => setNewpwd(target.value)} />
+                          <input autoComplete='off' type='password' onChange={({ target }) => setNewpwd(target.value)} />
                         </td>
                     </tr>
                 </tbody>
