@@ -11,17 +11,18 @@ registrationRouter.post('/', async (request, response, next) => {
         const salt = 10
 
         const passwordHash = await bcrypt.hash(body.password, salt)
-     
+        console.log(body)
         const user = new User({
             username: body.username,
             name: body.name,
             password: passwordHash
         })
         const savedUser = await user.save()
-        response.json(savedUser)
+        response.status(200).json(savedUser)
 
     } catch(exception){
-      next(exception)
+      console.log(exception.message)
+      response.status(500).send({error: exception.message})
     }
   })
 

@@ -1,24 +1,40 @@
 import React, { useState } from 'react'
 import registrationService from '../services/registration'
 import { Button, Form } from 'react-bootstrap'
+import { connect } from 'react-redux'
+import { handleNotification } from '../reducers/notificationReducer'
+import { handleError } from '../reducers/errorReducer'
 import '../stylesheets/general.css'
 
 
 
-const Registration = () => {
+const Registration = (props) => {
+
 
 
   const [ newname, setNewname ] = useState('')
-  const [ newpwd, setNewpwd ] = useState('')
+  const [ newpwd1, setNewpwd1 ] = useState('')
+  const [ newpwd2, setNewpwd2 ] = useState('')
   const [ name, setName ] = useState('')
 
   const handleRegistration =  async (event) => {
     event.preventDefault()
-    console.log('register:', newname, newpwd, name)
-    await registrationService.register({ username: newname, password: newpwd, name: name })
-    setNewname('')
-    setNewpwd('')
-    setName('')
+    console.log('register:', newname, name)
+    try{
+      if(newpwd1 === newpwd2){
+        const responst = await registrationService.register({ username: newname, password: newpwd1, name: name })
+        console.log(responst)
+        props.handleNotification('Registration successfull', 5000)
+      }else{
+        props.handleError('Passwords do not match', 5000)
+      }
+    }catch(exception){
+      props.handleError(exception.message, 5000)
+    }
+    /*setNewname('')
+    setNewpwd1('')
+    setNewpwd2('')
+    setName('')*/
   }
 
   return(
@@ -47,7 +63,7 @@ const Registration = () => {
                         </td>
 
                         <td>
-                          <input autoComplete='off' onChange={({ target }) => setName(target.value)}/>
+                          <input autoComplete='off' onChange={({ target }) => setNewname(target.value)}/>
                         </td>
                     </tr>
                     <tr>
@@ -56,7 +72,16 @@ const Registration = () => {
                         </td>
 
                         <td>
-                          <input autoComplete='off' type='password' onChange={({ target }) => setNewpwd(target.value)} />
+                          <input autoComplete='off' type='password' onChange={({ target }) => setNewpwd1(target.value)} />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="10">
+                            Repeat Password:
+                        </td>
+
+                        <td>
+                          <input autoComplete='off' type='password' onChange={({ target }) => setNewpwd2(target.value)} />
                         </td>
                     </tr>
                 </tbody>
@@ -69,4 +94,9 @@ const Registration = () => {
   )
 }
 
-export default Registration
+const mapDispatchToProps = {
+  handleNotification,
+  handleError
+}
+
+export default connect(null, mapDispatchToProps)(Registration)
