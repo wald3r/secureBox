@@ -4,6 +4,8 @@ import { Form, Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
+import { getFiles } from '../reducers/filesReducer'
+
 
 const Upload = ( { ...props } ) => {
 
@@ -19,11 +21,13 @@ const Upload = ( { ...props } ) => {
     const response = await fileService.sendFiles(data)
     if(response.status === 200){
       props.handleNotification(response.data, 5000)
+      props.getFiles()
     }
     else{
       props.handleError(response.data, 5000)
     }
     setFiles([])
+    window.location.reload()
   }
 
   const onChangeHandler = (event) => {
@@ -44,7 +48,8 @@ const Upload = ( { ...props } ) => {
 
 const mapDispatchToProps = {
   handleNotification,
-  handleError
+  handleError,
+  getFiles
 }
 
 export default connect(null, mapDispatchToProps)(Upload)
