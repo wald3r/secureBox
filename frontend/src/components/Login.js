@@ -3,6 +3,7 @@ import loginService from '../services/login'
 import fileService from '../services/files'
 import { setUser } from '../reducers/userReducer'
 import { handleNotification } from '../reducers/notificationReducer'
+import { getFiles } from '../reducers/filesReducer'
 import { handleError } from '../reducers/errorReducer'
 import { connect } from 'react-redux'
 import { Button, Form } from 'react-bootstrap'
@@ -19,6 +20,7 @@ const Login = ( props ) => {
     if(newUser !== undefined){
       props.setUser(newUser)
       fileService.setToken(newUser.token)
+      props.getFiles()
       props.handleNotification('Login successfull!', 5000)
     }else{
       props.handleError('Login failed!', 5000)
@@ -72,7 +74,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   setUser,
   handleNotification,
-  handleError
+  handleError,
+  getFiles
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)
