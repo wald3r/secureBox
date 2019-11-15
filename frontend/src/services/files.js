@@ -9,6 +9,7 @@ const setToken = newToken => {
 }
 
 
+
 const getFiles = async () => {
 
   const config = {
@@ -19,13 +20,23 @@ const getFiles = async () => {
 }
 
 
+const getFile = async (id) => {
+
+  const config = {
+    responseType: 'blob',
+    headers: { Authorization: token },
+  }
+  console.log('send')
+  const response = await axios.get(`${baseUrl}/${id}`, config)
+  return response
+}
+
 
 const sendFiles = async data => {
 
   const config = {
     headers: { Authorization: token },
   }
-
   const response = await axios.post(`${baseUrl}/upload`, data, config)
   return response
 
@@ -34,4 +45,4 @@ const sendFiles = async data => {
 
 
 
-export default { sendFiles, setToken, getFiles }
+export default { sendFiles, setToken, getFiles, getFile }

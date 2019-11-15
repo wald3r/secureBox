@@ -1,10 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Table } from 'react-bootstrap'
+import { Table, Button } from 'react-bootstrap'
+import fileService from '../services/files'
 import '../stylesheets/general.css'
+
 
 const AllMyFiles = ({ ...props }) => {
 
+  const fileDownload = require('js-file-download')
+
+  const handleSingleDownload = async (id) => {
+    const response = await fileService.getFile(id)
+    console.log(response)
+    fileDownload(response.data, 'test.png')
+  }
 
   return (
     <div className='container'>
@@ -24,6 +33,7 @@ const AllMyFiles = ({ ...props }) => {
                   <td>{file.name}</td>
                   <td>{file.mimetype}</td>
                   <td>{file.size}</td>
+                  <td><Button onClick={() => handleSingleDownload(file.id)}>Download</Button></td>
                 </tr>
               )}
             </tbody>
