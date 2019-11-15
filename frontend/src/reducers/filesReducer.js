@@ -15,11 +15,22 @@ export const getFiles = () => {
   }
 }
 
+export const setFiles = (data) => {
+  return async dispatch => {
+    dispatch({
+      type: 'SETFILES',
+      data
+    })
+  }
+}
+
 const filesReducer = (state = [], action) => {
 
   console.log(action.type)
   switch (action.type){
   case 'GETFILES':
+    return action.data
+  case 'SETFILES':
     return action.data
   default:
     return state

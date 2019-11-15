@@ -22,6 +22,7 @@ const AllMyFiles = ({ ...props }) => {
       const response = await fileService.removeFile(file.id)
       if(response.status === 200){
         props.handleNotification(response.data, 5000)
+        props.setFiles(props.files.filter(oFile => oFile.id !== file.id))
       }
     }catch(exception){
       props.handleError('File removal failed', 5000)
