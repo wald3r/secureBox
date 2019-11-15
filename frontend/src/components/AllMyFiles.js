@@ -9,10 +9,11 @@ const AllMyFiles = ({ ...props }) => {
 
   const fileDownload = require('js-file-download')
 
-  const handleSingleDownload = async (id) => {
-    const response = await fileService.getFile(id)
+  const handleSingleDownload = async (file) => {
+    const response = await fileService.getFile(file.id)
     console.log(response)
-    fileDownload(response.data, 'test.png')
+    console.log(response.headers)
+    fileDownload(response.data, file.name)
   }
 
   return (
@@ -33,7 +34,7 @@ const AllMyFiles = ({ ...props }) => {
                   <td>{file.name}</td>
                   <td>{file.mimetype}</td>
                   <td>{file.size}</td>
-                  <td><Button onClick={() => handleSingleDownload(file.id)}>Download</Button></td>
+                  <td><Button onClick={() => handleSingleDownload(file)}>Download</Button></td>
                 </tr>
               )}
             </tbody>

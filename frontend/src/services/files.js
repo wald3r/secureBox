@@ -27,7 +27,7 @@ const getFile = async (id) => {
     headers: { Authorization: token },
   }
   console.log('send')
-  const response = await axios.get(`${baseUrl}/${id}`, config)
+  const response = await axios.get(`${baseUrl}/download/${id}`, config)
   return response
 }
 
