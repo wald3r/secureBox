@@ -8,7 +8,14 @@ const setToken = newToken => {
   token = `bearer ${newToken}`
 }
 
+const removeFile = async (id) => {
+  const config = {
+    headers: { Authorization: token },
+  }
 
+  const response = await axios.delete(`${baseUrl}/remove/${id}`, config)
+  return response
+}
 
 const getFiles = async () => {
 
@@ -45,4 +52,4 @@ const sendFiles = async data => {
 
 
 
-export default { sendFiles, setToken, getFiles, getFile }
+export default { sendFiles, setToken, getFiles, getFile, removeFile }

@@ -43,7 +43,30 @@ filesRouter.get('/download/:id', async(request, response) => {
 
 })
 
+filesRouter.delete('/remove/:id', async(request, response) => {
 
+  const user = await authenticationHelper.isLoggedIn(request.token)
+  if(user == undefined){
+    return response.status(400).send('Not Authenticated')
+  }
+
+  const fileDb = await File.findById(request.params.id)
+  const filePath = `${fileDb.path}/${fileDb.name}`
+
+  fs.exists(filePath, async (exists) => {
+    if (exists) {
+      try{
+        fs.unlinkSync(filePath)
+        await File.findByIdAndDelete(request.params.id)
+        response.status(200).send('File removed')
+      } catch(exception) {
+        console.error(`File Removal Helper: ${exception.message}`)
+      }
+    } else {
+      response.status(404).send('File does not exist')
+    }
+  });
+})
 
 filesRouter.post('/upload', async (request, response) => {
 

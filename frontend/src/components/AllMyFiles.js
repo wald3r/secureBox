@@ -3,7 +3,9 @@ import { connect } from 'react-redux'
 import { Table, Button } from 'react-bootstrap'
 import fileService from '../services/files'
 import '../stylesheets/general.css'
-
+import { handleNotification } from '../reducers/notificationReducer'
+import { handleError } from '../reducers/errorReducer'
+import { setFiles } from '../reducers/filesReducer'
 
 const AllMyFiles = ({ ...props }) => {
 
@@ -11,9 +13,19 @@ const AllMyFiles = ({ ...props }) => {
 
   const handleSingleDownload = async (file) => {
     const response = await fileService.getFile(file.id)
-    console.log(response)
-    console.log(response.headers)
     fileDownload(response.data, file.name)
+
+  }
+
+  const handleSingleRemoval = async (file) => {
+    try{
+      const response = await fileService.removeFile(file.id)
+      if(response.status === 200){
+        props.handleNotification(response.data, 5000)
+      }
+    }catch(exception){
+      props.handleError('File removal failed', 5000)
+    }
   }
 
   return (
@@ -35,6 +47,7 @@ const AllMyFiles = ({ ...props }) => {
                   <td>{file.mimetype}</td>
                   <td>{file.size}</td>
                   <td><Button onClick={() => handleSingleDownload(file)}>Download</Button></td>
+                  <td><Button onClick={() => handleSingleRemoval(file)}>Delete</Button></td>
                 </tr>
               )}
             </tbody>
@@ -51,4 +64,9 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(AllMyFiles)
+const mapDispatchToProps = {
+  setFiles,
+  handleNotification,
+  handleError
+}
+export default connect(mapStateToProps, mapDispatchToProps)(AllMyFiles)

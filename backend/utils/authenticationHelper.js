@@ -3,14 +3,18 @@ const jwt = require('jsonwebtoken')
 
 const isLoggedIn = async (token) => {
   
-  const decodedToken = jwt.verify(token, process.env.SECRET)
-  if (!token || !decodedToken.id) {
-    return null
-  }
+  var user = undefined
+  try{
+    const decodedToken = jwt.verify(token, process.env.SECRET)
+    if (!token || !decodedToken.id) {
+      return null
+    }
 
-  const user = await User.findById(decodedToken.id)
-  
-  if(!user){
+    user = await User.findById(decodedToken.id)
+  }catch(exception){
+    console.error(`Authentication Helper: ${exception.message}`)
+  }
+  if(user == undefined){
     return null
   }
 
