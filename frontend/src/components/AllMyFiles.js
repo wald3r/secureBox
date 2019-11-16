@@ -10,12 +10,12 @@ import { setFiles } from '../reducers/filesReducer'
 const AllMyFiles = ({ ...props }) => {
 
   const [selectedFiles, setSelectedFiles] = useState([])
-  const [checkedFile, setCheckedFile] = useState(false)
+  const [allSelected, setAllSelected] = useState(false)
 
   const fileDownload = require('js-file-download')
 
   const showSelectedButtons = { display: props.files.length === 0 ? 'none' : '' }
-  const showCheckedAllName = checkedFile === true ? 'Remove selection' : 'Select all'
+  const showCheckedAllName = allSelected === true ? 'Remove selection' : 'Select all'
 
   const handleSingleDownload = async (file) => {
     const response = await fileService.getFile(file.id)
@@ -36,7 +36,7 @@ const AllMyFiles = ({ ...props }) => {
     }
   }
 
-  const handleOnSelection = (file, event) => {
+  const handleOneSelection = (file, event) => {
     if(event.target.checked){
       setSelectedFiles(selectedFiles.concat(file))
     }else{
@@ -46,31 +46,41 @@ const AllMyFiles = ({ ...props }) => {
 
 
   const handleSelectedRemoval = async () => {
-    try{
-      await selectedFiles.map(async sfile => {
-        await fileService.removeFile(sfile.id)
-        props.handleNotification(`File ${sfile.name} removed`, 5000)
-      })
-    }catch(exception){
-      props.handleError('File removal failed', 5000)
+    console.log(allSelected)
+    if(allSelected){
+      try{
+        await props.files.map(async sfile => {
+          await fileService.removeFile(sfile.id)
+          props.handleNotification(`File ${sfile.name} removed`, 5000)
+        })
+        props.setFiles([])
+      }catch(exception){
+        props.handleError('File removal failed', 5000)
+      }
     }
   }
 
   const handleSelectedDownload = async () => {
-    await selectedFiles.map(async sfile => {
-      const response = await fileService.getFile(sfile.id)
-      fileDownload(response.data, sfile.name)
-      props.handleNotification('Download started...', 2500)
-    })
+    if(allSelected){
+      await props.files.map(async sfile => {
+        const response = await fileService.getFile(sfile.id)
+        fileDownload(response.data, sfile.name)
+        props.handleNotification('Download started...', 2500)
+      })
+    }
   }
 
   const handleSelectAll = () => {
-    setCheckedFile(!checkedFile)
-    if(!checkedFile){
-      console.log('test')
-      setSelectedFiles(props.files)
+    var items = document.getElementsByClassName('checkbox')
+    for(let a = 0; a < items.length; a++){
+      if(items[a].type === 'checkbox'){
+        items[a].checked = !items[a].checked
+      }
+    }
+    if(items[0].checked === true){
+      setAllSelected(true)
     }else{
-      setSelectedFiles([])
+      setAllSelected(false)
     }
   }
 
@@ -90,7 +100,7 @@ const AllMyFiles = ({ ...props }) => {
             <tbody>
               {props.files.map(file =>
                 <tr key={file.id}>
-                  <td><input onClick={() => handleOnSelection(file, event)} type="checkbox" className='checkbox'/></td>
+                  <td><input onClick={() => handleOneSelection(file, event)} type="checkbox" className='checkbox'/></td>
                   <td>{file.name}</td>
                   <td>{file.mimetype}</td>
                   <td>{file.size}</td>
