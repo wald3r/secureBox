@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Table, Button } from 'react-bootstrap'
 import fileService from '../services/files'
@@ -9,7 +9,11 @@ import { setFiles } from '../reducers/filesReducer'
 
 const AllMyFiles = ({ ...props }) => {
 
+  const [selectedFiles, setSelectedFiles] = useState([])
+
   const fileDownload = require('js-file-download')
+
+
 
   const handleSingleDownload = async (file) => {
     const response = await fileService.getFile(file.id)
@@ -29,6 +33,29 @@ const AllMyFiles = ({ ...props }) => {
     }
   }
 
+  console.log(selectedFiles)
+  const handleOnSelection = (file, event) => {
+    if(event.target.checked){
+      setSelectedFiles(selectedFiles.concat(file))
+    }else{
+      setSelectedFiles(selectedFiles.filter(sfile => sfile.id !== file.id))
+    }
+  }
+
+
+  const handleSelectedRemoval = async () => {
+    await selectedFiles.map(async sfile => {
+      await fileService.removeFile(sfile.id)
+    })
+  }
+
+  const handleSelectedDownload = async () => {
+    await selectedFiles.map(async sfile => {
+      const response = await fileService.getFile(sfile.id)
+      fileDownload(response.data, sfile.name)
+    })
+  }
+
   return (
     <div className='container'>
       <div className='row'>
@@ -36,6 +63,7 @@ const AllMyFiles = ({ ...props }) => {
           <Table className='table'>
             <thead className='thead-dark'>
               <tr>
+                <th>Select</th>
                 <th>Name</th>
                 <th>Mimetype</th>
                 <th>Size</th>
@@ -44,6 +72,7 @@ const AllMyFiles = ({ ...props }) => {
             <tbody>
               {props.files.map(file =>
                 <tr key={file.id}>
+                  <td><input onClick={() => handleOnSelection(file, event)} type="checkbox" className='checkbox'/></td>
                   <td>{file.name}</td>
                   <td>{file.mimetype}</td>
                   <td>{file.size}</td>
@@ -53,6 +82,8 @@ const AllMyFiles = ({ ...props }) => {
               )}
             </tbody>
           </Table>
+          <Button onClick={handleSelectedRemoval}>Delete all</Button>
+          <Button onClick={handleSelectedDownload}>Download all</Button>
         </div>
       </div>
     </div>

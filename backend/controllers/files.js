@@ -87,7 +87,7 @@ filesRouter.post('/upload', async (request, response) => {
   }else{
     files = request.files.file
   }
-  files.map(async file => {
+  await files.map(async file => {
 
     const newFile = new File ({
        name: file.name,
