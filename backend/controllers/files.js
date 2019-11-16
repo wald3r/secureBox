@@ -3,7 +3,7 @@ const authenticationHelper = require('../utils/authenticationHelper')
 const File = require ('../models/file')
 const fs = require('fs');
 const config = require('../utils/config')
-
+const nameCreation = require('../utils/nameCreation')
 
 filesRouter.get('/', async (request, response, next) => {
 
@@ -88,9 +88,10 @@ filesRouter.post('/upload', async (request, response) => {
     files = request.files.file
   }
   await files.map(async file => {
-
+    console.log(file)
+    const fileName = nameCreation.createDocumentName(file.name, file.mimetype)
     const newFile = new File ({
-       name: file.name,
+      name: fileName,
       path: path,
       mimetype: file.mimetype,
       size: file.size,
@@ -100,7 +101,7 @@ filesRouter.post('/upload', async (request, response) => {
 
     const savedFile = await newFile.save()
       
-    file.mv(`${path}/${file.name}`, err => {
+    file.mv(`${path}/${fileName}`, err => {
       if (err){
          console.log(`File Post Helper: ${err.message}`)
          return response.status(500).send(err)}

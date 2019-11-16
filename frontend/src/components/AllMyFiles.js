@@ -10,14 +10,17 @@ import { setFiles } from '../reducers/filesReducer'
 const AllMyFiles = ({ ...props }) => {
 
   const [selectedFiles, setSelectedFiles] = useState([])
+  const [checkedFile, setCheckedFile] = useState(false)
 
   const fileDownload = require('js-file-download')
 
-
+  const showSelectedButtons = { display: props.files.length === 0 ? 'none' : '' }
+  const showCheckedAllName = checkedFile === true ? 'Remove selection' : 'Select all'
 
   const handleSingleDownload = async (file) => {
     const response = await fileService.getFile(file.id)
     fileDownload(response.data, file.name)
+    props.handleNotification('Download started...', 2500)
 
   }
 
@@ -25,7 +28,7 @@ const AllMyFiles = ({ ...props }) => {
     try{
       const response = await fileService.removeFile(file.id)
       if(response.status === 200){
-        props.handleNotification(response.data, 5000)
+        props.handleNotification(`File ${file.name} removed`, 5000)
         props.setFiles(props.files.filter(oFile => oFile.id !== file.id))
       }
     }catch(exception){
@@ -33,7 +36,6 @@ const AllMyFiles = ({ ...props }) => {
     }
   }
 
-  console.log(selectedFiles)
   const handleOnSelection = (file, event) => {
     if(event.target.checked){
       setSelectedFiles(selectedFiles.concat(file))
@@ -44,16 +46,32 @@ const AllMyFiles = ({ ...props }) => {
 
 
   const handleSelectedRemoval = async () => {
-    await selectedFiles.map(async sfile => {
-      await fileService.removeFile(sfile.id)
-    })
+    try{
+      await selectedFiles.map(async sfile => {
+        await fileService.removeFile(sfile.id)
+        props.handleNotification(`File ${sfile.name} removed`, 5000)
+      })
+    }catch(exception){
+      props.handleError('File removal failed', 5000)
+    }
   }
 
   const handleSelectedDownload = async () => {
     await selectedFiles.map(async sfile => {
       const response = await fileService.getFile(sfile.id)
       fileDownload(response.data, sfile.name)
+      props.handleNotification('Download started...', 2500)
     })
+  }
+
+  const handleSelectAll = () => {
+    setCheckedFile(!checkedFile)
+    if(!checkedFile){
+      console.log('test')
+      setSelectedFiles(props.files)
+    }else{
+      setSelectedFiles([])
+    }
   }
 
   return (
@@ -76,14 +94,17 @@ const AllMyFiles = ({ ...props }) => {
                   <td>{file.name}</td>
                   <td>{file.mimetype}</td>
                   <td>{file.size}</td>
-                  <td><Button onClick={() => handleSingleDownload(file)}>Download</Button></td>
-                  <td><Button onClick={() => handleSingleRemoval(file)}>Delete</Button></td>
+                  <td><Button onClick={() => handleSingleDownload(file)}><i className="fa fa-folder"></i></Button></td>
+                  <td><Button onClick={() => handleSingleRemoval(file)}><i className="fa fa-trash"></i></Button></td>
                 </tr>
               )}
             </tbody>
           </Table>
-          <Button onClick={handleSelectedRemoval}>Delete all</Button>
-          <Button onClick={handleSelectedDownload}>Download all</Button>
+          <div style={showSelectedButtons}>
+            <Button  onClick={handleSelectAll}>{showCheckedAllName}</Button>
+            <Button  onClick={handleSelectedRemoval}><i className="fa fa-trash"></i></Button>
+            <Button  onClick={handleSelectedDownload}><i className="fa fa-folder"></i></Button>
+          </div>
         </div>
       </div>
     </div>

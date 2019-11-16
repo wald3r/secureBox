@@ -11,12 +11,28 @@ const Upload = ( { ...props } ) => {
 
   const [files, setFiles] = useState([])
 
+  const checkMimeType= () => {
+    const types = ['image/png', 'image/jpeg', 'image/gif', 'application/pdf', 'application/txt']
+    let err = []
+    for(var x = 0; x<files.length; x++) {
+      if(types.every(type => files[x].type !== type)){
+        err = err.concat(files[x].type)
+      }
+    }
+
+    if(err.length !== 0){
+      props.handleError(`${err} not supported format`, 5000)
+      return false
+    }
+    return true
+  }
+
+
   const uploadHandler = async (event) => {
     event.preventDefault()
-    console.log(files.length)
     if(files.length === 0){
       props.handleError('No files!', 5000)
-    }else{
+    }else if(checkMimeType()){
       console.log('start uploading')
       const data = new FormData()
       for(var x = 0; x<files.length; x++) {
