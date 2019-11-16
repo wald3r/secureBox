@@ -13,9 +13,7 @@ filesRouter.get('/', async (request, response, next) => {
     if(user == undefined){
       return response.status(400).send('Not Authenticated')
     }
-    console.log('list files')
     const files = await File.find({ user: user.id }).populate('user')
-    console.log(files)
     return response.status(200).json(files)
   }catch(exception){
     next(exception)
@@ -25,7 +23,6 @@ filesRouter.get('/', async (request, response, next) => {
 
 filesRouter.get('/download/:id', async(request, response) => {
 
-  console.log('download file')
   const user = await authenticationHelper.isLoggedIn(request.token)
   if(user == undefined){
     return response.status(400).send('Not Authenticated')
@@ -78,32 +75,41 @@ filesRouter.post('/upload', async (request, response) => {
     return response.status(400).send('No files were uploaded.')
   }
 
-  console.log(request.files)
-  let file = request.files.file
-  let path = `files/${user.username}`
+  const path = `files/${user.username}`
 
   if (!fs.existsSync(path)){
     fs.mkdirSync(path);
   } 
-  const newFile = new File ({
-    name: file.name,
-    path: path,
-    mimetype: file.mimetype,
-    size: file.size,
-    user: user._id
-  })
-
-  const savedFile = newFile.save()
   
+  let files = []
+  if(request.files.file.length === undefined){
+    files = files.concat(request.files.file)
+  }else{
+    files = request.files.file
+  }
+  files.map(async file => {
 
-  file.mv(`${path}/${file.name}`, err => {
-    if (err){
-      console.log(err)
-      return response.status(500).send(err)}
+    const newFile = new File ({
+       name: file.name,
+      path: path,
+      mimetype: file.mimetype,
+      size: file.size,
+      user: user._id
+      
+    })
 
-    response.status(200).send('All files uploaded.')
-
-  })  
+    const savedFile = await newFile.save()
+      
+    file.mv(`${path}/${file.name}`, err => {
+      if (err){
+         console.log(`File Post Helper: ${err.message}`)
+         return response.status(500).send(err)}
+  
+  
+    })
+  })
+  response.status(200).send('Files uploaded.')
+   
 })
 
 module.exports = filesRouter
