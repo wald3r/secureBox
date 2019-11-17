@@ -14,7 +14,8 @@
     "react-scripts": "0.9.5",
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "simple-crypto-js": "^2.2.0"
   },
   "devDependencies": {
     "eslint-plugin-jest": "^23.0.2",

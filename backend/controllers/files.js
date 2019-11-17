@@ -81,6 +81,8 @@ filesRouter.post('/upload', async (request, response) => {
     fs.mkdirSync(path);
   } 
   
+  console.log(request.files.file)
+
   let files = []
   if(request.files.file.length === undefined){
     files = files.concat(request.files.file)
@@ -109,7 +111,7 @@ filesRouter.post('/upload', async (request, response) => {
   
     })
   })
-  response.status(200).send('Files uploaded.')
+  response.status(200).send('Files uploaded')
    
 })
 

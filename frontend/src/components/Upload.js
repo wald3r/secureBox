@@ -6,10 +6,16 @@ import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
 import { getFiles } from '../reducers/filesReducer'
 import '../stylesheets/general.css'
+import SimpleCrypto from "simple-crypto-js"
+
+
 
 const Upload = ( { ...props } ) => {
 
   const [files, setFiles] = useState([])
+
+  var key = 'testkey'
+  var simpleCrypto = new SimpleCrypto(key)
 
   const checkMimeType= () => {
     const types = ['image/png', 'image/jpeg', 'image/gif', 'application/pdf', 'application/txt']
@@ -36,8 +42,14 @@ const Upload = ( { ...props } ) => {
       console.log('start uploading')
       const data = new FormData()
       for(var x = 0; x<files.length; x++) {
+        console.log((files[x]))
+        var encrypted = simpleCrypto.encrypt(files[x])
+        console.log(encrypted)
+        var decrypted = simpleCrypto.decrypt(encrypted)
+        console.log(decrypted)
         data.append('file', files[x])
       }
+      console.log(data)
       const response = await fileService.sendFiles(data)
       if(response.status === 200){
         props.handleNotification(response.data, 5000)
