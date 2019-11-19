@@ -22,7 +22,8 @@ registrationRouter.post('/', async (request, response, next) => {
 
     } catch(exception){
       console.log(exception.message)
-      response.status(500).send({error: exception.message})
+      //response.status(500).send({error: exception.message})
+      next(exception)
     }
   })
 
