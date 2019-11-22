@@ -4,6 +4,8 @@ const File = require ('../models/file')
 const fs = require('fs');
 const config = require('../utils/config')
 const nameCreation = require('../utils/nameCreation')
+const CryptoJS = require('crypto-js')
+
 
 filesRouter.get('/', async (request, response, next) => {
 
@@ -81,16 +83,22 @@ filesRouter.post('/upload', async (request, response) => {
     fs.mkdirSync(path);
   } 
   
-  console.log(request.files.file)
-
   let files = []
   if(request.files.file.length === undefined){
     files = files.concat(request.files.file)
   }else{
     files = request.files.file
   }
+
   await files.map(async file => {
     console.log(file)
+    console.log(file.data[0])
+    var cipherobject = CryptoJS.AES.encrypt(JSON.stringify(file.data), 'secret key')
+    console.log(cipherobject)
+    file.data = cipherobject
+    console.log(file)
+    //file.data = ciphertext
+    //console.log(file)
     const fileName = nameCreation.createDocumentName(file.name, file.mimetype)
     const newFile = new File ({
       name: fileName,

@@ -12,7 +12,6 @@ import '../stylesheets/general.css'
 const Upload = ( { ...props } ) => {
 
   const [files, setFiles] = useState([])
-  const CryptoJS = require('crypto-js')
 
   const checkMimeType= () => {
     const types = ['image/png', 'image/jpeg', 'image/gif', 'application/pdf', 'application/txt']
@@ -30,7 +29,6 @@ const Upload = ( { ...props } ) => {
     return true
   }
 
-
   const uploadHandler = async (event) => {
     event.preventDefault()
     if(files.length === 0){
@@ -39,11 +37,6 @@ const Upload = ( { ...props } ) => {
       console.log('start uploading')
       const data = new FormData()
       for(var x = 0; x<files.length; x++) {
-        //var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(files[x]), 'secret key')
-        //console.log(ciphertext)
-        //var bytes = CryptoJS.AES.decrypt(ciphertext.toString(), 'secret key')
-        //console.log(JSON.parse(bytes.toString(CryptoJS.enc.Utf8)))
-        console.log(files[x].FormData)
         data.append('file', files[x])
       }
       const response = await fileService.sendFiles(data)

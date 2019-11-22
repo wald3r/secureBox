@@ -19,6 +19,7 @@ const AllMyFiles = ({ ...props }) => {
 
   const handleSingleDownload = async (file) => {
     const response = await fileService.getFile(file.id)
+    console.log(response.data)
     fileDownload(response.data, file.name)
     props.handleNotification('Download started...', 2500)
 
