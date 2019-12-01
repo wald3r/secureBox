@@ -4,7 +4,12 @@ const File = require ('../models/file')
 const fs = require('fs');
 const config = require('../utils/config')
 const nameCreation = require('../utils/nameCreation')
-const CryptoJS = require('crypto-js')
+const crypto = require('crypto')
+const hash = crypto.createHash('sha256');
+const test = require('path');
+const AppendInitVect = require('../utils/AppendInitVect')
+const password = 'Password used to generate key'
+const algorithm = 'aes-256-cbc'
 
 
 filesRouter.get('/', async (request, response, next) => {
@@ -32,13 +37,28 @@ filesRouter.get('/download/:id', async(request, response) => {
   const fileDb = await File.findById(request.params.id)
   const filePath = `${fileDb.path}/${fileDb.name}`
   
-  fs.exists(filePath, (exists) => {
-    if (exists) {
-      response.sendFile(filePath , { root : config.FILE_DIR});
-    } else {
-      response.status(404).send('File does not exist')
-    }
-  });
+  const readStream = fs.createReadStream(`${config.FILE_DIR}${filePath}.enc`, { start: 16 })
+  const readInitVect = fs.createReadStream(`${config.FILE_DIR}${filePath}.enc`, { end: 15 })
+  let initVect
+  readInitVect.on('data', (chunk) => {
+    initVect = chunk
+  })
+  readInitVect.on('close', () => {
+    const cipherKey = getCipherKey(password)
+    const decipher = crypto.createDecipheriv('aes256', cipherKey, initVect)
+    const writeStream = fs.createWriteStream(`${config.FILE_DIR}${filePath}.enc`.replace('.enc', ''))
+    readStream
+      .pipe(decipher)
+      .pipe(writeStream)
+    
+  })
+
+  await readStream.on('close', async () => {
+    await response.sendFile(filePath , { root : config.FILE_DIR});
+
+  })
+  console.log(`${config.FILE_DIR}${filePath}`)
+  fs.unlinkSync(`${config.FILE_DIR}${filePath}`)
 
 })
 
@@ -90,15 +110,7 @@ filesRouter.post('/upload', async (request, response) => {
     files = request.files.file
   }
 
-  await files.map(async file => {
-    console.log(file)
-    console.log(file.data[0])
-    var cipherobject = CryptoJS.AES.encrypt(JSON.stringify(file.data), 'secret key')
-    console.log(cipherobject)
-    file.data = cipherobject
-    console.log(file)
-    //file.data = ciphertext
-    //console.log(file)
+  await files.map(async file => {  
     const fileName = nameCreation.createDocumentName(file.name, file.mimetype)
     const newFile = new File ({
       name: fileName,
@@ -118,9 +130,33 @@ filesRouter.post('/upload', async (request, response) => {
   
   
     })
+    console.log(`${config.FILE_DIR}${path}/${fileName}`)
+    
+    const readStream = fs.createReadStream(`${config.FILE_DIR}${path}/${fileName}`)
+    const key = getCipherKey(password)
+    const iv = crypto.randomBytes(16)
+    
+
+
+    const cipher = crypto.createCipheriv('aes256', key, iv)
+    const appendInitVector = new AppendInitVect(iv)
+    const writeStream = fs.createWriteStream(`${config.FILE_DIR}${path}/${fileName}` + '.enc')
+
+    readStream.pipe(cipher)
+              .pipe(appendInitVector)
+              .pipe(writeStream)
+
+    fs.unlinkSync(`${config.FILE_DIR}${path}/${fileName}`)
   })
+
+
+
   response.status(200).send('Files uploaded')
    
 })
+
+function getCipherKey(password) {
+  return crypto.createHash('sha256').update(password).digest();
+}
 
 module.exports = filesRouter

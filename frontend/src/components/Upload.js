@@ -7,8 +7,6 @@ import { handleError } from '../reducers/errorReducer'
 import { getFiles } from '../reducers/filesReducer'
 import '../stylesheets/general.css'
 
-
-
 const Upload = ( { ...props } ) => {
 
   const [files, setFiles] = useState([])
