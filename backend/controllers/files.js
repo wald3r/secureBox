@@ -109,7 +109,7 @@ filesRouter.post('/upload', async (request, response) => {
   }
 
   await files.map(async file => {  
-    const fileName = nameCreation.createDocumentName(file.name, file.mimetype)
+    const fileName = nameCreation.createDocumentName(file.name, file.mimetype, path)
     const newFile = new File ({
       name: fileName,
       path: path,
@@ -127,7 +127,6 @@ filesRouter.post('/upload', async (request, response) => {
   
   
     })
-    console.log(`${config.FILE_DIR}${path}/${fileName}`)
     cryptoHelper.encrypt('test', `${config.FILE_DIR}${path}/${fileName}`)
   })
 
