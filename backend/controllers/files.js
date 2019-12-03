@@ -50,7 +50,6 @@ filesRouter.delete('/dremove/:id', async(request, response) => {
   try{
       fs.unlink(`${config.FILE_DIR}${filePath}`, (err) => {
         if(err) throw console.log(err)
-        console.log('worked')
      })
   } catch(exception) {
       console.error(`File Removal Helper: ${exception.message}`)
