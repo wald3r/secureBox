@@ -13,7 +13,7 @@ const removeFile = async (id) => {
     headers: { Authorization: token },
   }
 
-  const response = await axios.delete(`${baseUrl}/remove/${id}`, config)
+  const response = await axios.delete(`${baseUrl}/eremove/${id}`, config)
   return response
 }
 
@@ -33,11 +33,19 @@ const getFile = async (id) => {
     responseType: 'blob',
     headers: { Authorization: token },
   }
-  console.log('send')
   const response = await axios.get(`${baseUrl}/download/${id}`, config)
   return response
 }
 
+
+const removeUnencryptedFile = async (id) => {
+  const config = {
+    headers: { Authorization: token },
+  }
+
+  await axios.delete(`${baseUrl}/dremove/${id}`, config)
+
+}
 
 const sendFiles = async data => {
 
@@ -52,4 +60,4 @@ const sendFiles = async data => {
 
 
 
-export default { sendFiles, setToken, getFiles, getFile, removeFile }
+export default { sendFiles, setToken, getFiles, getFile, removeFile, removeUnencryptedFile }

@@ -4,13 +4,7 @@ const File = require ('../models/file')
 const fs = require('fs');
 const config = require('../utils/config')
 const nameCreation = require('../utils/nameCreation')
-const crypto = require('crypto')
-const hash = crypto.createHash('sha256');
-const test = require('path');
-const AppendInitVect = require('../utils/AppendInitVect')
-const password = 'Password used to generate key'
-const algorithm = 'aes-256-cbc'
-
+const cryptoHelper = require('../utils/cryptoHelper')
 
 filesRouter.get('/', async (request, response, next) => {
 
@@ -37,33 +31,15 @@ filesRouter.get('/download/:id', async(request, response) => {
   const fileDb = await File.findById(request.params.id)
   const filePath = `${fileDb.path}/${fileDb.name}`
   
-  const readStream = fs.createReadStream(`${config.FILE_DIR}${filePath}.enc`, { start: 16 })
-  const readInitVect = fs.createReadStream(`${config.FILE_DIR}${filePath}.enc`, { end: 15 })
-  let initVect
-  readInitVect.on('data', (chunk) => {
-    initVect = chunk
-  })
-  readInitVect.on('close', () => {
-    const cipherKey = getCipherKey(password)
-    const decipher = crypto.createDecipheriv('aes256', cipherKey, initVect)
-    const writeStream = fs.createWriteStream(`${config.FILE_DIR}${filePath}.enc`.replace('.enc', ''))
-    readStream
-      .pipe(decipher)
-      .pipe(writeStream)
-    
-  })
-
-  await readStream.on('close', async () => {
-    await response.sendFile(filePath , { root : config.FILE_DIR});
-
-  })
-  console.log(`${config.FILE_DIR}${filePath}`)
-  fs.unlinkSync(`${config.FILE_DIR}${filePath}`)
-
+  const readStream = cryptoHelper.decrypt('test', `${config.FILE_DIR}${filePath}.enc`)
+  readStream.on('close', async () => {
+    await response.sendFile(filePath , { root : config.FILE_DIR})
+  }) 
+  
 })
 
-filesRouter.delete('/remove/:id', async(request, response) => {
 
+filesRouter.delete('/dremove/:id', async(request, response) => {
   const user = await authenticationHelper.isLoggedIn(request.token)
   if(user == undefined){
     return response.status(400).send('Not Authenticated')
@@ -71,6 +47,28 @@ filesRouter.delete('/remove/:id', async(request, response) => {
 
   const fileDb = await File.findById(request.params.id)
   const filePath = `${fileDb.path}/${fileDb.name}`
+  try{
+      fs.unlink(`${config.FILE_DIR}${filePath}`, (err) => {
+        if(err) throw console.log(err)
+        console.log('worked')
+     })
+  } catch(exception) {
+      console.error(`File Removal Helper: ${exception.message}`)
+  }
+
+
+})
+
+
+filesRouter.delete('/eremove/:id', async(request, response) => {
+
+  const user = await authenticationHelper.isLoggedIn(request.token)
+  if(user == undefined){
+    return response.status(400).send('Not Authenticated')
+  }
+
+  const fileDb = await File.findById(request.params.id)
+  const filePath = `${fileDb.path}/${fileDb.name}.enc`
 
   fs.exists(filePath, async (exists) => {
     if (exists) {
@@ -84,7 +82,7 @@ filesRouter.delete('/remove/:id', async(request, response) => {
     } else {
       response.status(404).send('File does not exist')
     }
-  });
+  })
 })
 
 filesRouter.post('/upload', async (request, response) => {
@@ -122,7 +120,6 @@ filesRouter.post('/upload', async (request, response) => {
     })
 
     const savedFile = await newFile.save()
-      
     file.mv(`${path}/${fileName}`, err => {
       if (err){
          console.log(`File Post Helper: ${err.message}`)
@@ -131,22 +128,7 @@ filesRouter.post('/upload', async (request, response) => {
   
     })
     console.log(`${config.FILE_DIR}${path}/${fileName}`)
-    
-    const readStream = fs.createReadStream(`${config.FILE_DIR}${path}/${fileName}`)
-    const key = getCipherKey(password)
-    const iv = crypto.randomBytes(16)
-    
-
-
-    const cipher = crypto.createCipheriv('aes256', key, iv)
-    const appendInitVector = new AppendInitVect(iv)
-    const writeStream = fs.createWriteStream(`${config.FILE_DIR}${path}/${fileName}` + '.enc')
-
-    readStream.pipe(cipher)
-              .pipe(appendInitVector)
-              .pipe(writeStream)
-
-    fs.unlinkSync(`${config.FILE_DIR}${path}/${fileName}`)
+    cryptoHelper.encrypt('test', `${config.FILE_DIR}${path}/${fileName}`)
   })
 
 
@@ -155,8 +137,5 @@ filesRouter.post('/upload', async (request, response) => {
    
 })
 
-function getCipherKey(password) {
-  return crypto.createHash('sha256').update(password).digest();
-}
 
 module.exports = filesRouter

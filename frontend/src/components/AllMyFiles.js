@@ -22,6 +22,7 @@ const AllMyFiles = ({ ...props }) => {
     console.log(response.data)
     fileDownload(response.data, file.name)
     props.handleNotification('Download started...', 2500)
+    await fileService.removeUnencryptedFile(file.id)
 
   }
 
