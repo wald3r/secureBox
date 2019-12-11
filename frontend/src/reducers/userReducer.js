@@ -1,12 +1,24 @@
 import fileService from '../services/files'
+import usersService from '../services/users'
 
 export const setUser = ( user ) => {
   return async dispatch => {
     window.localStorage.setItem('loggedappUser', JSON.stringify(user))
     fileService.setToken(user.token)
+    usersService.setToken(user.token)
     dispatch({
       type: 'SETUSER',
       user
+    })
+  }
+}
+
+
+export const updateUser = ( details ) => {
+  return async dispatch => {
+    dispatch({
+      type: 'UDPATEDETAILS',
+      details
     })
   }
 }
@@ -28,6 +40,12 @@ const userReducer = (state = null, action) => {
     return action.user
   case 'REMOVEUSER':
     return null
+  case 'UPDATEDETAILS':
+    const updatedUser = {  name: action.details.name,
+      username: action.details.username,
+      email: action.details.email,
+      ...state  }
+    return updatedUser
   default:
     return state
   }

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { setUser, removeUser } from './reducers/userReducer'
+import { getUsers } from './reducers/usersReducer'
 import { handleNotification } from './reducers/notificationReducer'
 import { getFiles } from './reducers/filesReducer'
 import Login from './components/Login'
@@ -12,6 +13,8 @@ import Upload from './components/Upload'
 import Error from './components/Error'
 import { Button } from 'react-bootstrap'
 import AllMyFiles from './components/AllMyFiles'
+import Profile from './components/Profile'
+import Admin from './components/Admin'
 import './stylesheets/general.css'
 
 
@@ -23,6 +26,7 @@ const App = ( props ) => {
       const newUser = JSON.parse(loggedUserJSON)
       props.setUser(newUser)
       props.getFiles()
+      props.getUsers()
     }
   }, [])
 
@@ -68,6 +72,8 @@ const App = ( props ) => {
                 <Link style={padding} to='/'>Home</Link>
                 <Link style={padding} to='/upload'>Upload</Link>
                 <Link style={padding} to='/myfiles'>Files</Link>
+                <Link style={padding} to='/profile'>Profile</Link>
+                <Link style={padding} to='/admin'>Admin</Link>
                 {props.user.username} is logged in <Button onClick={handleLogout}>Logout</Button>
               </div>
             </div>
@@ -76,6 +82,8 @@ const App = ( props ) => {
           <Route exact path='/' render={() => <Home /> } />
           <Route exact path='/upload' render={(props) => <Upload {...props}/> } />
           <Route exact path='/myfiles' render={(props) => <AllMyFiles {...props}/> } />
+          <Route exact path='/profile' render={(props) => <Profile {...props}/> } />
+          <Route exact path='/admin' render={(props) => <Admin {...props}/> } />
         </Router>
       </div>
     )
@@ -86,11 +94,13 @@ const App = ( props ) => {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
+    users: state.users,
   }
 }
 
 const mapDispatchToProps = {
   setUser,
+  getUsers,
   removeUser,
   handleNotification,
   getFiles

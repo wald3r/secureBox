@@ -15,7 +15,8 @@ registrationRouter.post('/', async (request, response, next) => {
         const user = new User({
             username: body.username,
             name: body.name,
-            password: passwordHash
+            password: passwordHash,
+            email: body.email
         })
         const savedUser = await user.save()
         response.status(200).json(savedUser)

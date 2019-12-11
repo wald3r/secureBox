@@ -13,6 +13,7 @@ const Registration = (props) => {
 
 
   const [ newname, setNewname ] = useState('')
+  const [ email, setEmail ] = useState('')
   const [ newpwd1, setNewpwd1 ] = useState('')
   const [ newpwd2, setNewpwd2 ] = useState('')
   const [ name, setName ] = useState('')
@@ -22,7 +23,7 @@ const Registration = (props) => {
     console.log('register:', newname, name)
     try{
       if(newpwd1 === newpwd2){
-        const responst = await registrationService.register({ username: newname, password: newpwd1, name: name })
+        const responst = await registrationService.register({ username: newname, password: newpwd1, name: name, email: email })
         console.log(responst)
         props.handleNotification('Registration successfull', 5000)
       }else{
@@ -31,10 +32,11 @@ const Registration = (props) => {
     }catch(exception){
       props.handleError(exception.message, 5000)
     }
-    /*setNewname('')
+    setNewname('')
+    setEmail('')
     setNewpwd1('')
     setNewpwd2('')
-    setName('')*/
+    setName('')
   }
 
   return(
@@ -64,6 +66,15 @@ const Registration = (props) => {
 
                         <td>
                           <input autoComplete='off' onChange={({ target }) => setNewname(target.value)}/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="10">
+                            E-Mail:
+                        </td>
+
+                        <td>
+                          <input autoComplete='off' onChange={({ target }) => setEmail(target.value)}/>
                         </td>
                     </tr>
                     <tr>

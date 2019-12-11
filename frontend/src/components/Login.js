@@ -3,6 +3,7 @@ import loginService from '../services/login'
 import fileService from '../services/files'
 import { setUser } from '../reducers/userReducer'
 import { handleNotification } from '../reducers/notificationReducer'
+import { getUsers } from '../reducers/usersReducer'
 import { getFiles } from '../reducers/filesReducer'
 import { handleError } from '../reducers/errorReducer'
 import { connect } from 'react-redux'
@@ -22,6 +23,7 @@ const Login = ( props ) => {
       props.setUser(newUser)
       fileService.setToken(newUser.token)
       props.getFiles()
+      props.getUsers()
       props.handleNotification('Login successfull!', 5000)
     }catch(exception){
       props.handleError('Login failed!', 5000)
@@ -73,6 +75,7 @@ const Login = ( props ) => {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
+    users: state.users,
   }
 }
 
@@ -80,7 +83,8 @@ const mapDispatchToProps = {
   setUser,
   handleNotification,
   handleError,
-  getFiles
+  getFiles,
+  getUsers
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)
