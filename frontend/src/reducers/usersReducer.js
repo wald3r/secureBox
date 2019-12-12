@@ -11,6 +11,14 @@ export const getUsers = ( ) => {
 }
 
 
+export const changeUser = ( user ) => {
+  return async dispatch => {
+    dispatch({
+      type: 'CHANGEUSER',
+      user
+    })
+  }
+}
 
 
 const userReducer = (state = [], action) => {
@@ -18,6 +26,10 @@ const userReducer = (state = [], action) => {
   switch (action.type){
   case 'GETUSERS':
     return action.data
+  case 'CHANGEUSER':
+    const users = state.filter(u => u._id !== action.user._id)
+    users.concat(action.user)
+    return users.concat(action.user)
   default:
     return state
   }

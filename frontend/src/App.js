@@ -21,12 +21,12 @@ import './stylesheets/general.css'
 const App = ( props ) => {
   //window.localStorage.removeItem('loggedappUser')
   useEffect(() => {
+    props.getUsers()
     const loggedUserJSON = window.localStorage.getItem('loggedappUser')
     if (loggedUserJSON) {
       const newUser = JSON.parse(loggedUserJSON)
       props.setUser(newUser)
       props.getFiles()
-      props.getUsers()
     }
   }, [])
 

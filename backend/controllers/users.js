@@ -56,14 +56,14 @@ usersRouter.get('/', async (request, response, next) => {
   usersRouter.put('/details/:id', async (request, response, next) => {
     try{
       const user = await User.findById(request.params.id)
-      
+    
       user.name = request.body.name
       user.username = request.body.username
       user.email = request.body.email
 
 
       const savedUser = await user.save()
-
+      console.log(savedUser)
       return response.status(200).json(savedUser)
 
     } catch(exception){

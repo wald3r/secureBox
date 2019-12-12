@@ -17,7 +17,7 @@ export const setUser = ( user ) => {
 export const updateUser = ( details ) => {
   return async dispatch => {
     dispatch({
-      type: 'UDPATEDETAILS',
+      type: 'UPDATEDETAILS',
       details
     })
   }
@@ -41,10 +41,13 @@ const userReducer = (state = null, action) => {
   case 'REMOVEUSER':
     return null
   case 'UPDATEDETAILS':
-    const updatedUser = {  name: action.details.name,
+    const updatedUser = {  ...state,
+      name: action.details.name,
       username: action.details.username,
       email: action.details.email,
-      ...state  }
+    }
+    window.localStorage.removeItem('loggedappUser')
+    window.localStorage.setItem('loggedappUser', JSON.stringify(updatedUser))
     return updatedUser
   default:
     return state

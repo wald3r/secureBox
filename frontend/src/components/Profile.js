@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
 import { updateUser } from '../reducers/userReducer'
+import { changeUser } from '../reducers/usersReducer'
+
 import usersService from '../services/users'
 
 const Profile = ( props ) => {
@@ -22,7 +24,6 @@ const Profile = ( props ) => {
   if(props.user === null){
     return
   }
-
   const handleUserDetails = async (event) => {
     event.preventDefault()
 
@@ -43,6 +44,8 @@ const Profile = ( props ) => {
       props.user.id)
 
     props.updateUser(response.data)
+    props.changeUser(response.data)
+    props.handleNotification('User updated', 5000)
     setUsername('')
     setName('')
     setEmail('')
@@ -61,7 +64,6 @@ const Profile = ( props ) => {
     }else{
       try{
         const response = await usersService.checkUserPassword({ password: oldPassword } , props.user.id)
-        console.log('test', response)
         if(response.status === 200){
           await usersService.updateUserPassword({ password: password1 }, props.user.id)
           props.handleNotification('Password updated', 5000)
@@ -91,15 +93,15 @@ const Profile = ( props ) => {
           <tbody>
           <tr>
               <td>Username</td>
-              <td><input value={props.user.username} onChange={({ target }) => setUsername(target.value)}></input></td>
+              <td><input defaultValue={props.user.username} type='text' onChange={({ target }) => setUsername(target.value)}></input></td>
            </tr>
            <tr>
               <td>Name</td>
-              <td><input value={props.user.name} onChange={({ target }) => setName(target.value)}></input></td>
+              <td><input defaultValue={props.user.name} type='text' onChange={({ target }) => setName(target.value)}></input></td>
            </tr>
            <tr>
               <td>E-Mail</td>
-              <td><input value={props.user.email} onChange={({ target }) => setEmail(target.value)}></input></td>
+              <td><input defaultValue={props.user.email} type='text' onChange={({ target }) => setEmail(target.value)}></input></td>
            </tr>
            </tbody>
           </Table>
@@ -145,7 +147,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   handleNotification,
   handleError,
-  updateUser
+  updateUser,
+  changeUser
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)
