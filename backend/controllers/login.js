@@ -2,12 +2,6 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const loginRouter = require('express').Router()
 const User = require('../models/user')
-const rateLimit = require("express-rate-limit");
-
-const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 3 // limit each IP to 100 requests per windowMs
-  });
 
 
 loginRouter.post('/', async(request, response) => {
@@ -19,6 +13,11 @@ loginRouter.post('/', async(request, response) => {
     if(!(user && passwordCorrect)){
         return response.status(401).json({
             error: 'invalid username or password'
+        })
+    }
+    if(user.activate !== true){
+        return response.status(401).json({
+            error: 'not active'
         })
     }
 

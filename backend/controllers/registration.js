@@ -1,7 +1,29 @@
 const registrationRouter = require('express').Router()
 const User = require('../models/user')
+const Registration = require('../models/registration')
 const bcrypt = require('bcrypt')
+const cryptoHelper = require('../utils/cryptoHelper.js')
+const nodemailer = require('../utils/nodemailer')
 
+registrationRouter.get('/verify/:id', async (request, response) => {
+  try{
+    const waitingActivation = await Registration.find({hash: request.params.id})
+
+    if(waitingActivation.length > 0){
+      const user = await User.findById(waitingActivation[0].userid)
+      if(user !== undefinded){
+        user.active = true
+        await user.save()
+      }
+      response.status(200).send('User got activated!')
+    }
+    response.status(500).send('Activation did not work!')
+  }
+  catch(exception){
+    console.log(exception.message)
+  }
+
+})
 
 
 
@@ -9,7 +31,6 @@ registrationRouter.post('/', async (request, response, next) => {
     try{
         const body = request.body
         const salt = 10
-
         const passwordHash = await bcrypt.hash(body.password, salt)
         console.log(body)
         const user = new User({
@@ -19,6 +40,17 @@ registrationRouter.post('/', async (request, response, next) => {
             email: body.email
         })
         const savedUser = await user.save()
+        if(savedUser !== undefined){
+          const registration = new Registration({
+            userid: savedUser._id,
+            hash: cryptoHelper.createRandomHash()
+          })
+
+          await registration.save()
+          await nodemailer.sendRegistrationMail(savedUser, registration.hash)
+        }
+
+        
         response.status(200).json(savedUser)
 
     } catch(exception){

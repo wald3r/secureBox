@@ -3,6 +3,14 @@ const AppendInitVect = require('./AppendInitVect')
 const fs = require('fs');
 
 
+
+const createRandomHash = () => {
+
+  const current_date = (new Date()).valueOf().toString()
+  const random = Math.random().toString()
+  return crypto.createHash('sha1').update(current_date + random).digest('hex')
+}
+
 const encrypt = (password, pathToObject) => {
 
 
@@ -51,4 +59,4 @@ const decrypt = (password, pathToObject) => {
 const getCipherKey = (password) => crypto.createHash('sha256').update(password).digest();
 
 
-module.exports = { encrypt, decrypt }
+module.exports = { encrypt, decrypt, createRandomHash }
