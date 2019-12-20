@@ -28,8 +28,8 @@ const Login = ( props ) => {
     }catch(exception){
       props.handleError('Login failed!', 5000)
     }
-    setPassword('')
-    setUsername('')
+    //setPassword('')
+    //setUsername('')
   }
 
 
