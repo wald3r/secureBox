@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
+const roles = require('../utils/roleManagement')
+
 
 const userSchema = mongoose.Schema({
     username: {
@@ -21,6 +23,10 @@ const userSchema = mongoose.Schema({
     active: {
         type: Boolean,
         default: false
+    },
+    role: {
+        type: String,
+        default: roles.USER
     }
 })
 

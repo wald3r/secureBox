@@ -30,7 +30,8 @@ const App = ( props ) => {
     }
   }, [])
 
-  const padding = { padding: 5 }
+  const noPriorityStyle = { padding: 5 }
+  const priorityStyle = { padding: 5, display: props.user.role === 'admin' ? 'none' : '' }
 
   const handleLogout = () => {
     props.removeUser()
@@ -48,8 +49,8 @@ const App = ( props ) => {
             <div className='row'>
               <div className='col-md-15'>
                 <h1>SecureBox</h1>
-                <Link style={padding} to='/'>Login</Link>
-                <Link style={padding} to='/registration'>Registration</Link>
+                <Link style={noPriorityStyle} to='/'>Login</Link>
+                <Link style={noPriorityStyle} to='/registration'>Registration</Link>
               </div>
             </div>
           </div>
@@ -69,11 +70,11 @@ const App = ( props ) => {
             <div className='row'>
               <div className='col-md-15'>
                 <h1 className='title'>SecureBox</h1>
-                <Link style={padding} to='/'>Home</Link>
-                <Link style={padding} to='/upload'>Upload</Link>
-                <Link style={padding} to='/myfiles'>Files</Link>
-                <Link style={padding} to='/profile'>Profile</Link>
-                <Link style={padding} to='/admin'>Admin</Link>
+                <Link style={noPriorityStyle} to='/'>Home</Link>
+                <Link style={noPriorityStyle} to='/upload'>Upload</Link>
+                <Link style={noPriorityStyle} to='/myfiles'>Files</Link>
+                <Link style={noPriorityStyle} to='/profile'>Profile</Link>
+                <Link style={priorityStyle} to='/admin'>Admin</Link>
                 {props.user.username} is logged in <Button onClick={handleLogout}>Logout</Button>
               </div>
             </div>
