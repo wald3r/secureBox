@@ -2,13 +2,17 @@ const usersRouter = require('express').Router()
 const User = require('../models/user')
 const bcrypt = require('bcrypt')
 const authenticationHelper = require('../utils/authenticationHelper')
-const roles = require('../utils/roleManagement')
+const roleManagement = require('../utils/roleManagement')
 
 usersRouter.get('/', async (request, response, next) => {
     try{
+
       const authenticatedUser = await authenticationHelper.isLoggedIn(request.token)
       if(authenticatedUser == undefined){
         return response.status(400).send('Not Authenticated')
+      }
+      if(authenticatedUser.role !== roleManagement.roles.ADMIN){
+        return response.status(400).send('Wrong user role')
       }
 
       const users = await User.find({})
@@ -30,7 +34,6 @@ usersRouter.put('/check/:id', async (request, response, next) => {
       const body = request.body
       const user = await User.findById(request.params.id)
       
-      console.log(body)
       const passwordCorrect = user === null 
         ? false  
         : await bcrypt.compare(body.password, user.password)
@@ -75,24 +78,25 @@ usersRouter.put('/password/:id', async (request, response, next) => {
 
 usersRouter.get('/roles/:id', async (request, response, next) => {
   try{
-    console.log(request.token)
-    console.log(request.params.id)
-    const authenticatedUser = await authenticationHelper.isLoggedIn(request.token)
-      if(authenticatedUser == undefined){
-        return response.status(400).send('Not Authenticated')
-      }
 
-    console.log('start changeing')
+    const authenticatedUser = await authenticationHelper.isLoggedIn(request.token)
+    if(authenticatedUser == undefined){
+      return response.status(400).send('Not Authenticated')
+    }
+    if(authenticatedUser.role !== roleManagement.roles.ADMIN){
+      return response.status(400).send('Wrong user role')
+    }
+
     const userToChange = await User.findById(request.params.id)
 
     if(userToChange !== undefined){
-      if(userToChange.role === roles.ADMIN){
-        userToChange.role = roles.USER
+      if(userToChange.role === roleManagement.roles.ADMIN){ 
+        userToChange.role = roleManagement.roles.USER
       }else{
-        userToChange.role = roles.ADMIN
+        userToChange.role = roleManagement.roles.ADMIN
       }
       await userToChange.save()
-      response.status(200).send('User role changed!')
+      response.status(200).json(userToChange)
     } 
 
     response.status(500).send('Nothing happened!')

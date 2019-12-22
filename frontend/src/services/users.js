@@ -6,11 +6,16 @@ let token = null
 
 
 const setToken = (newToken) => {
-  token = newToken
+  token = `bearer ${newToken}`
 }
 
 const getAllUsers = async () => {
-  const response = await axios.get(baseUrl)
+
+  const config = {
+    headers: { Authorization: token },
+  }
+
+  const response = await axios.get(baseUrl, config)
   return response
 }
 
@@ -21,7 +26,6 @@ const changeRole = async (id) =>  {
     headers: { Authorization: token },
   }
 
-  console.log(config)
   const response = await axios.get(`${baseUrl}/roles/${id}`, config)
   return response
 }

@@ -7,19 +7,19 @@ const nodemailer = require('../utils/nodemailer')
 
 registrationRouter.get('/verify/:id', async (request, response) => {
   try{
-    console.log('test')
     const waitingActivation = await Registration.find({hash: request.params.id})
     console.log(waitingActivation)
     if(waitingActivation.length > 0){
-      console.log('test')
       const user = await User.findById(waitingActivation[0].userid)
       if(user !== undefined){
         user.active = true
         await user.save()
       }
-      response.status(200).send('User got activated.')
+      await Registration.findOneAndDelete({userid: waitingActivation._id})
+      return response.status(200).send('User got activated.')
+    
     }
-    response.status(500).send('Activation did not work. Please contact the administrator.')
+    return response.status(500).send('Activation did not work. Please contact the administrator.')
   }
   catch(exception){
     console.log(exception.message)

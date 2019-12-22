@@ -4,6 +4,7 @@ import { Table, Button } from 'react-bootstrap'
 import usersService from '../services/users'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
+import { changeUser } from '../reducers/usersReducer'
 
 const Admin = (props) => {
 
@@ -13,12 +14,13 @@ const Admin = (props) => {
     return null
   }
 
-  
+  const priorityStyle = { display: props.user.role === 'admin' ? 'none' : '' }
+
   const handleRole = async (id) => {
-    console.log('Change role of', id)
     const response = await usersService.changeRole(id)
     if(response.status === 200){
       props.handleNotification('Role changed', 5000)
+      props.changeUser(response.data)
     }
     else{
       props.handleError('Role did not change', 5000)
@@ -51,7 +53,7 @@ const Admin = (props) => {
                       <td>{user.email}</td>
                       <td>{user.role}</td>
                       <td>{user.password}</td>
-                      <td><Button onClick={() => handleRole(user._id)}>Change Role</Button></td>
+                      <td style={priorityStyle}><Button onClick={() => handleRole(user._id)}>Change Role</Button></td>
 
                     </tr>
                   ) }
@@ -66,14 +68,15 @@ const Admin = (props) => {
 
 const mapStateToProps = (state) => {
   return {
+    user: state.user,
     users: state.users,
-    user: state.user
   }
 }
 
 const mapDispatchToProps = {
   handleNotification,
   handleError,
+  changeUser,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Admin)

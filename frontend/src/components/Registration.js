@@ -26,17 +26,17 @@ const Registration = (props) => {
         const responst = await registrationService.register({ username: newname, password: newpwd1, name: name, email: email })
         console.log(responst)
         props.handleNotification('Registration successfull', 5000)
+        setNewname('')
+        setEmail('')
+        setNewpwd1('')
+        setNewpwd2('')
+        setName('')
       }else{
         props.handleError('Passwords do not match', 5000)
       }
     }catch(exception){
       props.handleError(exception.message, 5000)
     }
-    setNewname('')
-    setEmail('')
-    setNewpwd1('')
-    setNewpwd2('')
-    setName('')
   }
 
   return(

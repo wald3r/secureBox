@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
-const roles = require('../utils/roleManagement')
+const roleManagement = require('../utils/roleManagement')
 
 
 const userSchema = mongoose.Schema({
@@ -26,7 +26,7 @@ const userSchema = mongoose.Schema({
     },
     role: {
         type: String,
-        default: roles.USER
+        default: roleManagement.roles.USER
     }
 })
 
