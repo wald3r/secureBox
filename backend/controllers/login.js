@@ -15,7 +15,7 @@ loginRouter.post('/', async(request, response) => {
             error: 'invalid username or password'
         })
     }
-    if(user.activate !== true){
+    if(user.active !== true){
         return response.status(401).json({
             error: 'not active'
         })
