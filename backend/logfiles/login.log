@@ -1,0 +1,8 @@
+2019-12-22 17:06:55.598 INFO  LoginManager: Trying to logindaniel 
+2019-12-22 17:06:55.891 INFO  LoginManager: Logged indaniel 
+2019-12-22 17:07:55.199 INFO  LoginManager: Trying to login daniel 
+2019-12-22 17:08:49.018 INFO  LoginManager: Trying to login daniel 
+2019-12-22 17:09:24.583 INFO  LoginManager: Trying to login daniel 
+2019-12-22 17:09:40.763 INFO  LoginManager: Trying to login daniel 
+2019-12-22 17:10:27.572 INFO  LoginManager: Trying to login daniel 
+2019-12-22 17:10:27.860 WARN  LoginManager: Failed to login daniel 

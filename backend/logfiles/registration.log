@@ -1,0 +1,14 @@
+2019-12-22 17:19:46.251 INFO  RegistrationsManager: Registered {"active":false,"role":"user","_id":"5dff899043fcf455b1b769d9","username":"test","name":"test","password":"$2b$10$VbSL5ujjtPHEST0EwClZ1.jREX.R78PT/eVPKFpdb6b7rGK5/PsT2","email":"walder2@gmx.at","__v":0} 
+2019-12-22 17:19:46.251 INFO  RegistrationsManager: Hash for activation created {"_id":"5dff899143fcf455b1b769da","userid":"5dff899043fcf455b1b769d9","hash":"b953440d442ddd956dc1102f58164584c4f76182","__v":0} 
+2019-12-22 17:19:46.251 INFO  RegistrationsManager: Mail for activation sent 
+2019-12-22 17:23:03.833 ERROR RegistrationsManager:registration is not defined 
+2019-12-22 17:23:33.890 ERROR RegistrationsManager:User validation failed: username: Error, expected `username` to be unique. Value: `test1` 
+2019-12-22 17:24:19.253 INFO  RegistrationsManager: Registered test2test2walder2@gmx.at 
+2019-12-22 17:24:19.558 INFO  RegistrationsManager: Hash for activation created {"_id":"5dff8aa3c0895657da09762f","userid":"5dff8aa2c0895657da09762e","hash":"f5f37f6a6adcdd78dc1e8a1d38dd6ca2a6a56c8b","__v":0} 
+2019-12-22 17:24:19.559 INFO  RegistrationsManager: Mail for activation sent 
+2019-12-22 17:25:38.019 INFO  RegistrationsManager: Registered user: test333, name: test333, email: test333 
+2019-12-22 17:25:38.415 INFO  RegistrationsManager: Hash for activation created {"_id":"5dff8af2c371c5589a7c7c2b","userid":"5dff8af0c371c5589a7c7c2a","hash":"25cf7f9c047e7160a8d70dc9c8d193cf606f6d41","__v":0} 
+2019-12-22 17:25:38.415 INFO  RegistrationsManager: Mail for activation sent 
+2019-12-22 17:27:55.673 INFO  RegistrationsManager: Registered id: 5dff8b7af22d395946a5a19e user: test99, email: test99 
+2019-12-22 17:27:55.952 INFO  RegistrationsManager: Activation link created: hash: 337e7bf5ebe6b0431f4243457616174d9d8a327e, user: 5dff8b7af22d395946a5a19e 
+2019-12-22 17:27:55.953 INFO  RegistrationsManager: Mail for activation sent 

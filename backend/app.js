@@ -11,7 +11,7 @@ const loginRouter = require('./controllers/login')
 const usersRouter = require('./controllers/users')
 const registrationRouter = require('./controllers/registration')
 const filesRouter = require('./controllers/files')
-
+const logging = require('./middleware/logging')
 
 mongoose.connect(config.DB_URI, { useNewUrlParser: true})
 
@@ -22,6 +22,7 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(fileUpload())
 app.use(auth.getTokenFrom)
+app.use(logging.logRequests)
 app.use('/api/login', limiter.loginLimiter)
 app.use('/api/login', loginRouter)
 app.use('/api/users', usersRouter)

@@ -4,6 +4,7 @@ const Registration = require('../models/registration')
 const bcrypt = require('bcrypt')
 const cryptoHelper = require('../utils/cryptoHelper.js')
 const nodemailer = require('../utils/nodemailer')
+const logger = require('../utils/logger')
 
 registrationRouter.get('/verify/:id', async (request, response) => {
   try{
@@ -15,14 +16,16 @@ registrationRouter.get('/verify/:id', async (request, response) => {
         user.active = true
         await user.save()
       }
-      await Registration.findOneAndDelete({userid: waitingActivation._id})
+      await Registration.findByIdAndDelete(waitingActivation._id)
+      logger.verification(waitingActivation.userid)
       return response.status(200).send('User got activated.')
     
     }
+    logger.verificationFailed(`Verification failed for ${waitingActivation.userid}`)
     return response.status(500).send('Activation did not work. Please contact the administrator.')
   }
   catch(exception){
-    console.log(exception.message)
+    logger.verificationFailed(exception.message)
   }
 
 })
@@ -34,7 +37,6 @@ registrationRouter.post('/', async (request, response, next) => {
         const body = request.body
         const salt = 10
         const passwordHash = await bcrypt.hash(body.password, salt)
-        console.log(body)
         const user = new User({
             username: body.username,
             name: body.name,
@@ -42,6 +44,7 @@ registrationRouter.post('/', async (request, response, next) => {
             email: body.email
         })
         const savedUser = await user.save()
+        logger.logRegistrations(savedUser, null, 0)
         if(savedUser !== undefined){
           const registration = new Registration({
             userid: savedUser._id,
@@ -49,14 +52,16 @@ registrationRouter.post('/', async (request, response, next) => {
           })
 
           await registration.save()
+          logger.logRegistrations(null, registration, 1)
           //await nodemailer.sendRegistrationMail(savedUser, registration.hash)
+          logger.logRegistrations(null, null, 2)
         }
 
         
         response.status(200).json(savedUser)
 
     } catch(exception){
-      console.log(exception.message)
+      logger.logFailedRegistration(exception.message)
       //response.status(500).send({error: exception.message})
       next(exception)
     }
