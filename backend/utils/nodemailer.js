@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer')
+require('dotenv').config()
 
 var user = 'securebox20@gmail.com'
 
@@ -9,19 +10,12 @@ const transporter = nodemailer.createTransport({
   auth: {
     type: 'OAuth2',
     user: 'securebox20@gmail.com',
+    clientId: process.env.CLIENTID,
+    clientSecret: process.env.CLIENTSECRET,
+    refreshToken: process.env.REFRESHTOKEN,
   }
 })
-/*
-let transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465,
-  secure: true,
-  auth: {
-      type: 'OAuth2',
-      user: 'user@example.com'
-  }
-});
-*/
+
 transporter.set('oauth2_provision_cb', (user, renew, callback)=>{
   let accessToken = userTokens[user];
   if(!accessToken){

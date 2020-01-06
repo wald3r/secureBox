@@ -5,6 +5,8 @@ const fs = require('fs');
 const config = require('../utils/config')
 const nameCreation = require('../utils/nameCreation')
 const cryptoHelper = require('../utils/cryptoHelper')
+const logger = require('../utils/logger')
+
 
 filesRouter.get('/', async (request, response, next) => {
 
@@ -35,7 +37,7 @@ filesRouter.get('/download/:id', async(request, response) => {
   readStream.on('close', async () => {
     await response.sendFile(filePath , { root : config.FILE_DIR})
   }) 
-  
+  logger.downloadFile(filePath)
 })
 
 
@@ -49,10 +51,11 @@ filesRouter.delete('/dremove/:id', async(request, response) => {
   const filePath = `${fileDb.path}/${fileDb.name}`
   try{
       fs.unlink(`${config.FILE_DIR}${filePath}`, (err) => {
-        if(err) throw console.log(err)
+        if(err) throw logger.failedDeleteFile(err.message)
      })
+     logger.deleteFile(filePath)
   } catch(exception) {
-      console.error(`File Removal Helper: ${exception.message}`)
+      logger.failedDeleteFile(exception.message)
   }
 
 
@@ -76,7 +79,7 @@ filesRouter.delete('/eremove/:id', async(request, response) => {
         await File.findByIdAndDelete(request.params.id)
         response.status(200).send('File removed')
       } catch(exception) {
-        console.error(`File Removal Helper: ${exception.message}`)
+        logger.failedDeleteFile(exception.message)
       }
     } else {
       response.status(404).send('File does not exist')
@@ -121,12 +124,13 @@ filesRouter.post('/upload', async (request, response) => {
     const savedFile = await newFile.save()
     file.mv(`${path}/${fileName}`, err => {
       if (err){
-         console.log(`File Post Helper: ${err.message}`)
+         logger.failedUploadFile(err.message)
          return response.status(500).send(err)}
   
   
     })
     cryptoHelper.encrypt('test', `${config.FILE_DIR}${path}/${fileName}`)
+    logger.uploadFile(`${config.FILE_DIR}${path}/${fileName}`)
   })
 
 

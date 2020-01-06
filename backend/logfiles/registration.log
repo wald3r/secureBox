@@ -12,3 +12,22 @@
 2019-12-22 17:27:55.673 INFO  RegistrationsManager: Registered id: 5dff8b7af22d395946a5a19e user: test99, email: test99 
 2019-12-22 17:27:55.952 INFO  RegistrationsManager: Activation link created: hash: 337e7bf5ebe6b0431f4243457616174d9d8a327e, user: 5dff8b7af22d395946a5a19e 
 2019-12-22 17:27:55.953 INFO  RegistrationsManager: Mail for activation sent 
+2020-01-06 17:53:16.835 INFO  RegistrationsManager: Registered id: 5e1357ebb10fcf2030aa6b25 user: Testuser, email: walder2@gmx.at 
+2020-01-06 17:53:17.104 INFO  RegistrationsManager: Activation link created hash: c7b1cbc46fe57a10c4547cc6fc0b0e90c010edeb, user: 5e1357ebb10fcf2030aa6b25 
+2020-01-06 17:53:17.424 ERROR RegistrationsManager:Can't create new access token for user 
+2020-01-06 18:04:41.093 ERROR RegistrationsManager:User validation failed: username: Error, expected `username` to be unique. Value: `Testuser` 
+2020-01-06 18:04:53.367 INFO  RegistrationsManager: Registered id: 5e135aa5fb94e520d49a100c user: Testuser1, email: walder2@gmx.at 
+2020-01-06 18:04:53.669 INFO  RegistrationsManager: Activation link created hash: 436618b99f492ff453d92480a4550486a4cc4aca, user: 5e135aa5fb94e520d49a100c 
+2020-01-06 18:04:53.806 ERROR RegistrationsManager:Can't create new access token for user 
+2020-01-06 18:19:49.682 INFO  RegistrationsManager: Registered id: 5e135e2462f6ed253fe651c9 user: Testuser12, email: walder2@gmx.at 
+2020-01-06 18:19:50.089 INFO  RegistrationsManager: Activation link created hash: e466baff8eb78281df62425d7ac6f5331e962616, user: 5e135e2462f6ed253fe651c9 
+2020-01-06 18:19:50.335 ERROR RegistrationsManager:unauthorized_client 
+2020-01-06 18:24:48.308 INFO  RegistrationsManager: Registered id: 5e135f4f62f6ed253fe651cb user: Testuser123, email: walder2@gmx.at 
+2020-01-06 18:24:48.588 INFO  RegistrationsManager: Activation link created hash: e898b7547084fab423175f191fcea416c7761834, user: 5e135f4f62f6ed253fe651cb 
+2020-01-06 18:24:48.820 ERROR RegistrationsManager:deleted_client 
+2020-01-06 18:30:08.411 INFO  RegistrationsManager: Registered id: 5e13608fe2065c283e89129c user: dfdf, email: walder2@gmx.at 
+2020-01-06 18:30:08.651 INFO  RegistrationsManager: Activation link created hash: 96fa84a9b67e4214f85c3f35bc2e81c65e825c3f, user: 5e13608fe2065c283e89129c 
+2020-01-06 18:30:08.886 ERROR RegistrationsManager:invalid_grant 
+2020-01-06 18:34:37.087 INFO  RegistrationsManager: Registered id: 5e13619ce2065c283e89129e user: dddd, email: walder2@gmx.at 
+2020-01-06 18:34:37.328 INFO  RegistrationsManager: Activation link created hash: 2f7d398c17d4ce81775c3a4f0f492d6f9386bef9, user: 5e13619ce2065c283e89129e 
+2020-01-06 18:34:37.602 ERROR RegistrationsManager:invalid_grant 

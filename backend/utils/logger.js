@@ -97,5 +97,81 @@ const verificationFailed = (exception) => {
 
 }
 
+const downloadFile = (filePath) => {
+  
+  const opts = {
+    logFilePath:'logfiles/download.log',
+    timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
+  }
+  
+  const log = SimpleNodeLogger.createSimpleLogger(opts)
 
-module.exports = { logLogins, logRegistrations, logFailedRegistration, verificationFailed, verification}
+  log.setLevel('info')
+  log.info(`DownloadManager: ${filePath}`)
+  return
+
+}
+
+
+const deleteFile = (filePath) => {
+  
+  const opts = {
+    logFilePath:'logfiles/delete.log',
+    timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
+  }
+  
+  const log = SimpleNodeLogger.createSimpleLogger(opts)
+
+  log.setLevel('info')
+  log.info(`DeleteManager: ${filePath}`)
+  return
+
+}
+
+const failedDeleteFile = (exception) => {
+  
+  const opts = {
+    logFilePath:'logfiles/delete.log',
+    timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
+  }
+  
+  const log = SimpleNodeLogger.createSimpleLogger(opts)
+
+  log.setLevel('error')
+  log.error(`DeleteManager: ${exception}`)
+  return
+
+}
+
+
+const uploadFile = (filePath) => {
+  
+  const opts = {
+    logFilePath:'logfiles/upload.log',
+    timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
+  }
+  
+  const log = SimpleNodeLogger.createSimpleLogger(opts)
+
+  log.setLevel('info')
+  log.info(`UploadManager: ${filePath}`)
+  return
+
+}
+
+
+const failedUploadFile = (message) => {
+  
+  const opts = {
+    logFilePath:'logfiles/upload.log',
+    timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
+  }
+  
+  const log = SimpleNodeLogger.createSimpleLogger(opts)
+
+  log.setLevel('error')
+  log.error(`UploadManager: ${message}`)
+  return
+
+}
+module.exports = { failedUploadFile, uploadFile, deleteFile, failedDeleteFile, downloadFile, logLogins, logRegistrations, logFailedRegistration, verificationFailed, verification}
