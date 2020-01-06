@@ -92,7 +92,7 @@ const verificationFailed = (exception) => {
   const log = SimpleNodeLogger.createSimpleLogger(opts)
 
   log.setLevel('error')
-  log.error(`RegistrationsManager: Verification failed ${exception}`)
+  log.error(`RegistrationsManager: ${exception}`)
   return
 
 }

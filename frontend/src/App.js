@@ -17,7 +17,6 @@ import Profile from './components/Profile'
 import Admin from './components/Admin'
 import './stylesheets/general.css'
 
-
 const App = ( props ) => {
   //window.localStorage.removeItem('loggedappUser')
   useEffect(() => {
@@ -32,6 +31,7 @@ const App = ( props ) => {
 
   const noPriorityStyle = { padding: 5 }
 
+  
 
   const handleLogout = () => {
     props.removeUser()
@@ -83,7 +83,7 @@ const App = ( props ) => {
             </div>
           </div>
           <br></br>
-          <Route exact path='/' render={() => <Home /> } />
+          <Route exact path='/' render={() => <Home /> }/>
           <Route exact path='/upload' render={(props) => <Upload {...props}/> } />
           <Route exact path='/myfiles' render={(props) => <AllMyFiles {...props}/> } />
           <Route exact path='/profile' render={(props) => <Profile {...props}/> } />

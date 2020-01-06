@@ -20,14 +20,14 @@ const getAllUsers = async () => {
 }
 
 
-const changeRole = async (id) =>  {
+const getUser = async (id) =>  {
 
   const config = {
     headers: { Authorization: token },
   }
 
-  const response = await axios.get(`${baseUrl}/roles/${id}`, config)
-  return response
+  const response = await axios.get(`${baseUrl}/user/${id}`, config)
+  return response.data
 }
 
 const updateUserDetails = async (details, id) => {
@@ -62,4 +62,4 @@ const updateUserPassword = async (password, id) => {
 }
 
 
-export default { updateUserDetails, updateUserPassword, setToken, getAllUsers, checkUserPassword, changeRole }
+export default { updateUserDetails, updateUserPassword, setToken, getAllUsers, checkUserPassword, getUser }

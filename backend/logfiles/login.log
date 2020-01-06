@@ -6,3 +6,49 @@
 2019-12-22 17:09:40.763 INFO  LoginManager: Trying to login daniel 
 2019-12-22 17:10:27.572 INFO  LoginManager: Trying to login daniel 
 2019-12-22 17:10:27.860 WARN  LoginManager: Failed to login daniel 
+2019-12-22 17:45:38.232 INFO  LoginManager: Trying to login daniel 
+2019-12-22 17:45:38.560 INFO  LoginManager: Logged in daniel 
+2019-12-23 10:25:28.425 INFO  LoginManager: Trying to login daniel 
+2019-12-23 10:25:28.748 INFO  LoginManager: Logged in daniel 
+2020-01-06 10:12:43.451 INFO  LoginManager: Trying to login daniel 
+2020-01-06 10:12:43.687 INFO  LoginManager: Logged in daniel 
+2020-01-06 10:13:08.731 INFO  LoginManager: Trying to login test 
+2020-01-06 10:13:08.971 WARN  LoginManager: Failed to login test 
+2020-01-06 10:13:15.342 INFO  LoginManager: Trying to login chris 
+2020-01-06 10:13:15.528 WARN  LoginManager: Failed to login chris 
+2020-01-06 10:13:20.805 INFO  LoginManager: Trying to login daniel 
+2020-01-06 10:13:21.054 INFO  LoginManager: Logged in daniel 
+2020-01-06 10:13:57.806 INFO  LoginManager: Trying to login test99 
+2020-01-06 10:13:58.040 WARN  LoginManager: Failed to login test99 
+2020-01-06 10:16:23.582 INFO  LoginManager: Trying to login daniel 
+2020-01-06 10:16:23.847 INFO  LoginManager: Logged in daniel 
+2020-01-06 13:46:27.826 INFO  LoginManager: Trying to login daniel 
+2020-01-06 13:46:28.122 INFO  LoginManager: Logged in daniel 
+2020-01-06 13:53:01.893 INFO  LoginManager: Trying to login daniel 
+2020-01-06 13:53:02.121 INFO  LoginManager: Logged in daniel 
+2020-01-06 13:59:57.860 INFO  LoginManager: Trying to login daniel 
+2020-01-06 13:59:58.178 INFO  LoginManager: Logged in daniel 
+2020-01-06 14:00:56.765 INFO  LoginManager: Trying to login daniel 
+2020-01-06 14:00:57.135 INFO  LoginManager: Logged in daniel 
+2020-01-06 14:10:30.163 INFO  LoginManager: Trying to login daniel 
+2020-01-06 14:10:30.417 INFO  LoginManager: Logged in daniel 
+2020-01-06 15:02:41.377 INFO  LoginManager: Trying to login daniel 
+2020-01-06 15:02:41.636 INFO  LoginManager: Logged in daniel 
+2020-01-06 15:06:05.607 INFO  LoginManager: Trying to login daniel 
+2020-01-06 15:06:05.833 INFO  LoginManager: Logged in daniel 
+2020-01-06 15:06:18.077 INFO  LoginManager: Trying to login test 
+2020-01-06 15:06:18.366 INFO  LoginManager: Logged in test 
+2020-01-06 15:06:23.821 INFO  LoginManager: Trying to login daniel 
+2020-01-06 15:06:24.151 INFO  LoginManager: Logged in daniel 
+2020-01-06 15:22:58.752 INFO  LoginManager: Trying to login daniel 
+2020-01-06 15:22:58.968 INFO  LoginManager: Logged in daniel 
+2020-01-06 15:28:05.798 INFO  LoginManager: Trying to login test 
+2020-01-06 15:28:06.149 INFO  LoginManager: Logged in test 
+2020-01-06 15:28:10.642 INFO  LoginManager: Trying to login daniel 
+2020-01-06 15:28:10.887 INFO  LoginManager: Logged in daniel 
+2020-01-06 15:42:15.633 INFO  LoginManager: Trying to login test 
+2020-01-06 15:42:15.930 WARN  LoginManager: Failed to login test 
+2020-01-06 15:42:16.883 INFO  LoginManager: Trying to login test 
+2020-01-06 15:42:17.140 WARN  LoginManager: Failed to login test 
+2020-01-06 15:42:19.981 INFO  LoginManager: Trying to login test 
+2020-01-06 15:42:20.312 INFO  LoginManager: Logged in test 

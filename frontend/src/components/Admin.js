@@ -1,22 +1,37 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Table, Button } from 'react-bootstrap'
-import usersService from '../services/users'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
 import { changeUser } from '../reducers/usersReducer'
+import ChangeUser from './ChangeUser'
+import ChangePassword from './ChangePassword'
+
 
 const Admin = (props) => {
 
-
+  const [showUserDialog, setShowUserDialog] = useState(false)
+  const [showPasswordDialog, setShowPasswordDialog] = useState(false)
+  const [user, setUser] = useState(null)
 
   if(props.user.role !== 'admin'){
     return null
   }
 
-  const priorityStyle = { display: props.user.role === 'admin' ? 'none' : '' }
+  const priorityStyle = { display: props.user.role === 'admin' ? '' : '' }
 
-  const handleRole = async (id) => {
+  const handleUserChange = (user) => {
+    setUser(user)
+    setShowUserDialog(true)
+
+  }
+
+  const handlePasswordChange = (user) => {
+    setUser(user)
+    setShowPasswordDialog(true)
+  }
+
+  /*const handleRole = async (id) => {
     const response = await usersService.changeRole(id)
     if(response.status === 200){
       props.handleNotification('Role changed', 5000)
@@ -26,13 +41,19 @@ const Admin = (props) => {
       props.handleError('Role did not change', 5000)
     }
 
-  }
+  }*/
 
   return (
 
     <div className='container'>
           <div className='row'>
             <div className='col-md-15'>
+              <ChangeUser showDialog={showUserDialog}
+                          handleShowDialog={setShowUserDialog}
+                          user={user}/>
+              <ChangePassword showDialog={showPasswordDialog}
+                          handleShowDialog={setShowPasswordDialog}
+                          user={user}/>
               <Table className='table'>
                 <thead className='thead-dark'>
                   <tr>
@@ -41,6 +62,7 @@ const Admin = (props) => {
                     <th>Fullname</th>
                     <th>Mail</th>
                     <th>Role</th>
+                    <th>Active</th>
                     <th>Password</th>
                   </tr>
                 </thead>
@@ -52,8 +74,10 @@ const Admin = (props) => {
                       <td>{user.name}</td>
                       <td>{user.email}</td>
                       <td>{user.role}</td>
+                      <td>{user.active.toString()}</td>
                       <td>{user.password}</td>
-                      <td style={priorityStyle}><Button onClick={() => handleRole(user._id)}>Change Role</Button></td>
+                      <td style={priorityStyle}><Button onClick={() => handleUserChange(user)}>Edit Profile</Button></td>
+                      <td style={priorityStyle}><Button onClick={() => handlePasswordChange(user)}>Edit Password</Button></td>
 
                     </tr>
                   ) }

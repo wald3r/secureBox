@@ -9,9 +9,9 @@ import { setFiles } from '../reducers/filesReducer'
 
 const AllMyFiles = ({ ...props }) => {
 
+
   const [selectedFiles, setSelectedFiles] = useState([])
   const [allSelected, setAllSelected] = useState(false)
-
   const fileDownload = require('js-file-download')
 
   const showSelectedButtons = { display: props.files.length === 0 ? 'none' : '' }
@@ -84,7 +84,7 @@ const AllMyFiles = ({ ...props }) => {
     }else{
       setAllSelected(false)
     }
-  }
+  }  
 
   return (
     <div className='container'>
@@ -134,4 +134,5 @@ const mapDispatchToProps = {
   handleNotification,
   handleError
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(AllMyFiles)

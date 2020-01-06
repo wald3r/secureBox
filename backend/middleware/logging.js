@@ -12,7 +12,6 @@ const logRequests = (request, response, next) => {
   log.setLevel('info')
   log.info('Method:', request.method)
   log.info('Path:', request.path)
-  log.info('Body:', request.body)
   log.info('-----')
   next()
 }

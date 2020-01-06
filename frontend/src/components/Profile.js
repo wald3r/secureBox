@@ -40,7 +40,9 @@ const Profile = ( props ) => {
     const response = await usersService.updateUserDetails({
       username: usernameflag === true ? props.user.username : username,
       name: nameflag === true ? props.user.name : name,
-      email: emailflag === true ? props.user.email : email },
+      email: emailflag === true ? props.user.email : email,
+      active: props.user.active,
+      role: props.user.role },
       props.user.id)
 
     props.updateUser(response.data)

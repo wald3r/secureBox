@@ -1,6 +1,7 @@
 import React from 'react'
 import '../stylesheets/general.css'
 
+
 const Home = (props) => {
 
 

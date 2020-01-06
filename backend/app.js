@@ -17,7 +17,7 @@ mongoose.connect(config.DB_URI, { useNewUrlParser: true})
 
 
 
-
+app.use(express.static('build'))
 app.use(cors())
 app.use(bodyParser.json())
 app.use(fileUpload())

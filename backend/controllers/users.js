@@ -75,8 +75,8 @@ usersRouter.put('/password/:id', async (request, response, next) => {
     }
   })
 
-
-usersRouter.get('/roles/:id', async (request, response, next) => {
+/*
+usersRouter.get('/role/:id', async (request, response, next) => {
   try{
 
     const authenticatedUser = await authenticationHelper.isLoggedIn(request.token)
@@ -105,6 +105,29 @@ usersRouter.get('/roles/:id', async (request, response, next) => {
       console.log(exception.message)
     }
 })
+*/
+
+  usersRouter.get('/user/:id', async (request, response, next) => {
+    try{
+
+      const authenticatedUser = await authenticationHelper.isLoggedIn(request.token)
+      if(authenticatedUser == undefined){
+        return response.status(400).send('Not Authenticated')
+      }
+      if(authenticatedUser.role !== roleManagement.roles.ADMIN){
+        return response.status(400).send('Wrong user role')
+      }
+
+      const getUser = await User.findById(request.params.id)
+
+     
+      response.status(200).json(getUser)
+       
+    } catch(exception){
+      console.log(exception.message)
+    }
+  })
+
 
   usersRouter.put('/details/:id', async (request, response, next) => {
     try{
@@ -114,10 +137,12 @@ usersRouter.get('/roles/:id', async (request, response, next) => {
       }
 
       const user = await User.findById(request.params.id)
-    
+      console.log(request.body)
       user.name = request.body.name
       user.username = request.body.username
       user.email = request.body.email
+      user.active = request.body.active
+      user.role = request.body.role
 
 
       const savedUser = await user.save()
@@ -126,6 +151,7 @@ usersRouter.get('/roles/:id', async (request, response, next) => {
 
     } catch(exception){
       console.log(exception.message)
+      return response.status(500)
     }
   })
 
