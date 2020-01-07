@@ -34,6 +34,7 @@ const Login = ( props ) => {
       }else{
         props.handleError(error.message, 5000)
       }
+      console.log(error)
     }
   }
 
@@ -54,7 +55,7 @@ const Login = ( props ) => {
                         </td>
 
                         <td>
-                          <input autoComplete='off' onChange={({ target }) => setUsername(target.value)}/>
+                          <input autoComplete='off' required onChange={({ target }) => setUsername(target.value)}/>
                         </td>
                     </tr>
                     <tr>
@@ -63,7 +64,7 @@ const Login = ( props ) => {
                         </td>
 
                         <td>
-                          <input autoComplete='off' type='password' onChange={({ target }) => setPassword(target.value)}/>
+                          <input autoComplete='off' type='password' required onChange={({ target }) => setPassword(target.value)}/>
                         </td>
                     </tr>
                 </tbody>

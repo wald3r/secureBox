@@ -13,7 +13,6 @@ const createRandomHash = () => {
 
 const encrypt = (password, pathToObject) => {
 
-
     const readStream = fs.createReadStream(pathToObject)
     const key = getCipherKey(password)
     const iv = crypto.randomBytes(16)

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import fileService from '../services/files'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, ButtonGroup, ButtonToolbar } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
@@ -10,6 +10,22 @@ import '../stylesheets/general.css'
 const Upload = ( { ...props } ) => {
 
   const [files, setFiles] = useState([])
+  const [type, setType] = useState('')
+  const [name, setName] = useState('')
+  const [style, setStyle]= useState(false)
+
+  const priorityStyle = {
+    padding: 5,
+    borderStyle: 'solid',
+    borderColor: 'red',
+    borderWidth: 'thin'
+  }
+
+  const noPriorityStyle = {
+    padding: 5,
+  }
+
+  const chosenStyle = style ? priorityStyle : noPriorityStyle
 
   const checkMimeType= () => {
     const types = ['image/png', 'image/jpeg', 'image/gif', 'application/pdf', 'application/txt']
@@ -40,6 +56,7 @@ const Upload = ( { ...props } ) => {
         }
         const response = await fileService.sendFiles(data)
         if(response.status === 200){
+          setStyle(false)
           props.handleNotification(response.data, 5000)
           props.getFiles()
         }
@@ -66,10 +83,27 @@ const Upload = ( { ...props } ) => {
     setFiles(event.target.files)
   }
 
+  const handleSettings = (e) => {
+    e.preventDefault()
+    setStyle(!style)
+    var items = document.getElementsByClassName('secondary')
+    console.log(items)
+  }
+
   return (
     <div className='container'>
       <div className='row'>
         <div className='col-md-15'>
+          <div style={chosenStyle} >
+            <Form onSubmit={handleSettings}>
+            <ButtonGroup className="mr-2" aria-label="First group">
+              <Button variant="secondary">Documents</Button>
+              <Button variant="secondary">Pictures</Button>
+            </ButtonGroup>
+            <input onChange={({ target }) => setName(target.value)}/>
+            <Button type="submit">Save</Button>
+            </Form>
+          </div>
           <div className='form-group files' >
             <Form method='POST' encType='multipart/form-data' onSubmit={uploadHandler} >
               <input type='file' autoComplete='off' name='files' multiple onChange={onChangeHandler}/>

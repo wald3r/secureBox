@@ -94,7 +94,7 @@ const ChangeUser = ( { showDialog, handleShowDialog, user, ...props } ) => {
                     </td>
 
                     <td>
-                      <input autoComplete='off' defaultValue={user.username} onChange={handleUsernameChange}/>
+                      <input autoComplete='off' required defaultValue={user.username} onChange={handleUsernameChange}/>
                     </td>
                   </tr>
                   <tr>
@@ -112,7 +112,7 @@ const ChangeUser = ( { showDialog, handleShowDialog, user, ...props } ) => {
                     </td>
 
                     <td>
-                      <input autoComplete='off' defaultValue={user.email} onChange={handleMailChange}/>
+                      <input autoComplete='off' required defaultValue={user.email} onChange={handleMailChange}/>
                     </td>
                   </tr>
                   <tr>

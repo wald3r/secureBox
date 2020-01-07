@@ -18,7 +18,7 @@ const Admin = (props) => {
     return null
   }
 
-  const priorityStyle = { display: props.user.role === 'admin' ? '' : '' }
+  const priorityStyle = { display: props.user.role === 'admin' ? '' : 'none' }
 
   const handleUserChange = (user) => {
     setUser(user)

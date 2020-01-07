@@ -71,7 +71,7 @@ const Registration = (props) => {
                         </td>
 
                         <td>
-                          <input autoComplete='off' onChange={({ target }) => setNewname(target.value)}/>
+                          <input autoComplete='off' required onChange={({ target }) => setNewname(target.value)}/>
                         </td>
                     </tr>
                     <tr>
@@ -80,7 +80,7 @@ const Registration = (props) => {
                         </td>
 
                         <td>
-                          <input autoComplete='off' onChange={({ target }) => setEmail(target.value)}/>
+                          <input autoComplete='off' required onChange={({ target }) => setEmail(target.value)}/>
                         </td>
                     </tr>
                     <tr>
@@ -89,7 +89,7 @@ const Registration = (props) => {
                         </td>
 
                         <td>
-                          <input autoComplete='off' type='password' onChange={({ target }) => setNewpwd1(target.value)} />
+                          <input autoComplete='off' type='password' required onChange={({ target }) => setNewpwd1(target.value)} />
                         </td>
                     </tr>
                     <tr>
@@ -98,7 +98,7 @@ const Registration = (props) => {
                         </td>
 
                         <td>
-                          <input autoComplete='off' type='password' onChange={({ target }) => setNewpwd2(target.value)} />
+                          <input autoComplete='off' type='password' required onChange={({ target }) => setNewpwd2(target.value)} />
                         </td>
                     </tr>
                 </tbody>
