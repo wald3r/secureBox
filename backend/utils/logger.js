@@ -52,17 +52,17 @@ const logRegistrations = (user, hash, status) => {
 
 }
 
-const logFailedRegistration = (exception) => {
+const validationError = (exception) => {
   
   const opts = {
-    logFilePath:'logfiles/registration.log',
+    logFilePath:'logfiles/validation.log',
      timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
   }
   
   const log = SimpleNodeLogger.createSimpleLogger(opts)
 
   log.setLevel('error')
-  log.error('RegistrationsManager:', exception)
+  log.error('ValidationManager:', exception)
   return
 
 }
@@ -174,4 +174,20 @@ const failedUploadFile = (message) => {
   return
 
 }
-module.exports = { failedUploadFile, uploadFile, deleteFile, failedDeleteFile, downloadFile, logLogins, logRegistrations, logFailedRegistration, verificationFailed, verification}
+
+
+const errorHandler = (message) => {
+  
+  const opts = {
+    logFilePath:'logfiles/handler.log',
+    timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
+  }
+  
+  const log = SimpleNodeLogger.createSimpleLogger(opts)
+
+  log.setLevel('error')
+  log.error(`ErrorHandler: ${message}`)
+  return
+
+}
+module.exports = { errorHandler, failedUploadFile, uploadFile, deleteFile, failedDeleteFile, downloadFile, logLogins, logRegistrations, validationError, verificationFailed, verification}

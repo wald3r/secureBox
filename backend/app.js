@@ -12,6 +12,7 @@ const usersRouter = require('./controllers/users')
 const registrationRouter = require('./controllers/registration')
 const filesRouter = require('./controllers/files')
 const logging = require('./middleware/logging')
+const errorHandler = require('./middleware/errorHandler')
 
 mongoose.connect(config.DB_URI, { useNewUrlParser: true})
 
@@ -29,6 +30,7 @@ app.use('/api/users', usersRouter)
 app.use('/api/registration', limiter.accountLimiter)
 app.use('/api/registration', registrationRouter)
 app.use('/api/files/', filesRouter)
+app.use(errorHandler)
 
 
 module.exports = app

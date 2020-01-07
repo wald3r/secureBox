@@ -20,11 +20,9 @@ const Registration = (props) => {
 
   const handleRegistration =  async (event) => {
     event.preventDefault()
-    console.log('register:', newname, name)
     try{
       if(newpwd1 === newpwd2){
-        const responst = await registrationService.register({ username: newname, password: newpwd1, name: name, email: email })
-        console.log(responst)
+        await registrationService.register({ username: newname, password: newpwd1, name: name, email: email })
         props.handleNotification('Registration successfull', 5000)
         setNewname('')
         setEmail('')
@@ -34,8 +32,16 @@ const Registration = (props) => {
       }else{
         props.handleError('Passwords do not match', 5000)
       }
-    }catch(exception){
-      props.handleError(exception.message, 5000)
+    }catch(error){
+      if(error.response){
+        props.handleError(error.response.data, 5000)
+      }
+      else if(error.request){
+        props.handleError(error.request.data, 5000)
+      }else{
+        props.handleError(error.message, 5000)
+      }
+      console.error(error)
     }
   }
 

@@ -1,0 +1,5 @@
+2020-01-07 11:24:39.114 ERROR ErrorHandler: Cannot set property 'active' of null 
+2020-01-07 11:25:14.131 ERROR ErrorHandler: Cannot set property 'active' of null 
+2020-01-07 11:30:52.793 ERROR ErrorHandler: User validation failed: username: Path `username` (`t`) is shorter than the minimum allowed length (3). 
+2020-01-07 11:39:17.518 ERROR ErrorHandler: User validation failed: username: Path `username` (`t`) is shorter than the minimum allowed length (3). 
+2020-01-07 11:49:56.628 ERROR ErrorHandler: User validation failed: username: Path `username` (`t`) is shorter than the minimum allowed length (3). 

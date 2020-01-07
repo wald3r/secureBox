@@ -6,16 +6,13 @@ const cryptoHelper = require('../utils/cryptoHelper.js')
 const nodemailer = require('../utils/nodemailer')
 const logger = require('../utils/logger')
 
-registrationRouter.get('/verify/:id', async (request, response) => {
+registrationRouter.get('/verify/:id', async (request, response, next) => {
   try{
     const waitingActivation = await Registration.find({hash: request.params.id})
-    console.log(waitingActivation)
     if(waitingActivation.length > 0){
       const user = await User.findById(waitingActivation[0].userid)
-      if(user !== undefined){
-        user.active = true
-        await user.save()
-      }
+      user.active = true
+      await user.save()
       await Registration.findByIdAndDelete(waitingActivation._id)
       logger.verification(waitingActivation.userid)
       return response.status(200).send('User got activated.')
@@ -25,7 +22,7 @@ registrationRouter.get('/verify/:id', async (request, response) => {
     return response.status(500).send('Activation did not work. Please contact the administrator.')
   }
   catch(exception){
-    logger.verificationFailed(exception.message)
+    next(exception)
   }
 
 })
@@ -53,16 +50,14 @@ registrationRouter.post('/', async (request, response, next) => {
 
           await registration.save()
           logger.logRegistrations(null, registration, 1)
-          await nodemailer.sendRegistrationMail(savedUser, registration.hash)
-          logger.logRegistrations(null, null, 2)
+          //await nodemailer.sendRegistrationMail(savedUser, registration.hash)
+          //logger.logRegistrations(null, null, 2)
         }
 
         
         response.status(200).json(savedUser)
 
     } catch(exception){
-      logger.logFailedRegistration(exception.message)
-      //response.status(500).send({error: exception.message})
       next(exception)
     }
   })

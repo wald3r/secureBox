@@ -6,7 +6,6 @@ import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
 import { updateUser } from '../reducers/userReducer'
 import { changeUser } from '../reducers/usersReducer'
-
 import usersService from '../services/users'
 
 const Profile = ( props ) => {
@@ -37,21 +36,30 @@ const Profile = ( props ) => {
       emailflag = true
     }
     console.log('change user details to', username, name, email)
-    const response = await usersService.updateUserDetails({
-      username: usernameflag === true ? props.user.username : username,
-      name: nameflag === true ? props.user.name : name,
-      email: emailflag === true ? props.user.email : email,
-      active: props.user.active,
-      role: props.user.role },
-      props.user.id)
+    try{
+      const response = await usersService.updateUserDetails({
+        username: usernameflag === true ? props.user.username : username,
+        name: nameflag === true ? props.user.name : name,
+        email: emailflag === true ? props.user.email : email,
+        active: props.user.active,
+        role: props.user.role },
+        props.user.id)
 
-    props.updateUser(response.data)
-    props.changeUser(response.data)
-    props.handleNotification('User updated', 5000)
-    setUsername('')
-    setName('')
-    setEmail('')
-
+      props.updateUser(response.data)
+      props.changeUser(response.data)
+      props.handleNotification('User updated', 5000)
+      setUsername('')
+      setName('')
+      setEmail('')
+    }catch(error){
+      if(error.response){
+        props.handleError(error.response.data, 5000)
+      }else if (error.request){
+        props.handleError(error.request.data, 5000)
+      }else{
+        props.handleError(error.message, 5000)
+      }
+    }
   }
 
   const handlePassword = async (event) => {
@@ -73,9 +81,14 @@ const Profile = ( props ) => {
           setPassword1('')
           setPassword2('')
         }
-      }catch(exception){
-        console.log(exception.message)
-        props.handleError('Old password is not correct', 5000)
+      }catch(error){
+        if(error.response){
+          props.handleError(error.response.data, 5000)
+        }else if (error.request){
+          props.handleError(error.request.data, 5000)
+        }else{
+          props.handleError(error.message, 5000)
+        }
       }
     }
 

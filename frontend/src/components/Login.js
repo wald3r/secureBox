@@ -17,7 +17,6 @@ const Login = ( props ) => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    console.log('login with: ', username, password)
     try{
       const newUser = await loginService.login({ username, password })
       props.setUser(newUser)
@@ -25,13 +24,18 @@ const Login = ( props ) => {
       props.getFiles()
       props.getUsers()
       props.handleNotification('Login successfull!', 5000)
-    }catch(exception){
-      props.handleError('Login failed!', 5000)
+      setPassword('')
+      setUsername('')
+    }catch(error){
+      if(error.response){
+        props.handleError(error.response.data, 5000)
+      }else if (error.request){
+        props.handleError(error.request.data, 5000)
+      }else{
+        props.handleError(error.message, 5000)
+      }
     }
-    //setPassword('')
-    //setUsername('')
   }
-
 
   return (
 

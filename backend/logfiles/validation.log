@@ -1,0 +1,2 @@
+2020-01-07 11:39:17.509 ERROR ValidationManager:User validation failed: username: Path `username` (`t`) is shorter than the minimum allowed length (3). 
+2020-01-07 11:49:56.625 ERROR ValidationManager:User validation failed: username: Path `username` (`t`) is shorter than the minimum allowed length (3). 

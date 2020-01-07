@@ -58,3 +58,57 @@
 2020-01-06 17:45:32.956 INFO  LoginManager: Logged in daniel 
 2020-01-06 18:37:58.647 INFO  LoginManager: Trying to login daniel 
 2020-01-06 18:37:58.918 INFO  LoginManager: Logged in daniel 
+2020-01-07 10:03:04.484 INFO  LoginManager: Trying to login d 
+2020-01-07 10:03:04.639 WARN  LoginManager: Failed to login d 
+2020-01-07 10:03:45.009 INFO  LoginManager: Trying to login d 
+2020-01-07 10:03:45.190 WARN  LoginManager: Failed to login d 
+2020-01-07 10:04:54.028 INFO  LoginManager: Trying to login d 
+2020-01-07 10:04:54.144 WARN  LoginManager: Failed to login d 
+2020-01-07 10:12:20.895 INFO  LoginManager: Trying to login d 
+2020-01-07 10:12:21.088 WARN  LoginManager: Failed to login d 
+2020-01-07 10:19:29.298 INFO  LoginManager: Trying to login d 
+2020-01-07 10:19:29.411 WARN  LoginManager: Failed to login d 
+2020-01-07 10:19:59.218 INFO  LoginManager: Trying to login d 
+2020-01-07 10:19:59.561 WARN  LoginManager: Failed to login d 
+2020-01-07 10:22:02.538 INFO  LoginManager: Trying to login d 
+2020-01-07 10:22:02.668 WARN  LoginManager: Failed to login d 
+2020-01-07 10:22:46.167 INFO  LoginManager: Trying to login d 
+2020-01-07 10:22:46.309 WARN  LoginManager: Failed to login d 
+2020-01-07 10:23:13.743 INFO  LoginManager: Trying to login d 
+2020-01-07 10:23:13.895 WARN  LoginManager: Failed to login d 
+2020-01-07 10:27:48.184 INFO  LoginManager: Trying to login d 
+2020-01-07 10:27:48.310 WARN  LoginManager: Failed to login d 
+2020-01-07 10:28:10.144 INFO  LoginManager: Trying to login d 
+2020-01-07 10:28:10.347 WARN  LoginManager: Failed to login d 
+2020-01-07 10:29:33.831 INFO  LoginManager: Trying to login d 
+2020-01-07 10:29:34.011 WARN  LoginManager: Failed to login d 
+2020-01-07 10:29:36.160 INFO  LoginManager: Trying to login d 
+2020-01-07 10:29:36.367 WARN  LoginManager: Failed to login d 
+2020-01-07 10:29:37.172 INFO  LoginManager: Trying to login d 
+2020-01-07 10:29:37.294 WARN  LoginManager: Failed to login d 
+2020-01-07 10:29:37.818 INFO  LoginManager: Trying to login d 
+2020-01-07 10:29:38.001 WARN  LoginManager: Failed to login d 
+2020-01-07 10:29:38.539 INFO  LoginManager: Trying to login d 
+2020-01-07 10:29:38.657 WARN  LoginManager: Failed to login d 
+2020-01-07 10:29:39.194 INFO  LoginManager: Trying to login d 
+2020-01-07 10:29:39.332 WARN  LoginManager: Failed to login d 
+2020-01-07 10:29:41.395 INFO  LoginManager: Trying to login d 
+2020-01-07 10:29:41.516 WARN  LoginManager: Failed to login d 
+2020-01-07 10:29:55.834 INFO  LoginManager: Trying to login d 
+2020-01-07 10:29:55.955 WARN  LoginManager: Failed to login d 
+2020-01-07 10:29:56.963 INFO  LoginManager: Trying to login d 
+2020-01-07 10:29:57.151 WARN  LoginManager: Failed to login d 
+2020-01-07 10:29:57.783 INFO  LoginManager: Trying to login d 
+2020-01-07 10:29:57.969 WARN  LoginManager: Failed to login d 
+2020-01-07 10:29:58.608 INFO  LoginManager: Trying to login d 
+2020-01-07 10:29:58.726 WARN  LoginManager: Failed to login d 
+2020-01-07 10:29:59.320 INFO  LoginManager: Trying to login d 
+2020-01-07 10:29:59.507 WARN  LoginManager: Failed to login d 
+2020-01-07 10:30:00.205 INFO  LoginManager: Trying to login d 
+2020-01-07 10:30:00.441 WARN  LoginManager: Failed to login d 
+2020-01-07 11:29:10.501 INFO  LoginManager: Trying to login test 
+2020-01-07 11:29:10.789 WARN  LoginManager: Failed to login test 
+2020-01-07 11:29:14.877 INFO  LoginManager: Trying to login daniel 
+2020-01-07 11:29:16.210 INFO  LoginManager: Logged in daniel 
+2020-01-07 11:29:45.423 INFO  LoginManager: Trying to login test 
+2020-01-07 11:29:45.697 INFO  LoginManager: Logged in test 
