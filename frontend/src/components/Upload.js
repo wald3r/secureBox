@@ -28,26 +28,37 @@ const Upload = ( { ...props } ) => {
   }
 
   const uploadHandler = async (event) => {
-    event.preventDefault()
-    if(files.length === 0){
-      props.handleError('No files!', 5000)
-    }else if(checkMimeType()){
-      console.log('start uploading')
-      const data = new FormData()
-      for(var x = 0; x<files.length; x++) {
-        data.append('file', files[x])
+    try{
+      event.preventDefault()
+      if(files.length === 0){
+        props.handleError('No files!', 5000)
+      }else if(checkMimeType()){
+        console.log('start uploading')
+        const data = new FormData()
+        for(var x = 0; x<files.length; x++) {
+          data.append('file', files[x])
+        }
+        const response = await fileService.sendFiles(data)
+        if(response.status === 200){
+          props.handleNotification(response.data, 5000)
+          props.getFiles()
+        }
+        else{
+          props.handleError(response.data, 5000)
+        }
+        setFiles([])
       }
-      const response = await fileService.sendFiles(data)
-      if(response.status === 200){
-        props.handleNotification(response.data, 5000)
-        props.getFiles()
+      window.location.reload()
+    }catch(error){
+      if(error.response){
+        props.handleError(error.response.data, 5000)
+      }else if (error.request){
+        props.handleError(error.request.data, 5000)
+      }else{
+        props.handleError(error.message, 5000)
       }
-      else{
-        props.handleError(response.data, 5000)
-      }
-      setFiles([])
+      console.error(error)
     }
-    window.location.reload()
   }
 
   const onChangeHandler = (event) => {

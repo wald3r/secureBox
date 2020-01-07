@@ -19,18 +19,27 @@ const ChangePassword = ( { showDialog, handleShowDialog, user, ...props } ) => {
 
 
   const saveChanges = async () => {
+    try{
+      if(password !== ''){
+        const response = await userService.updateUserPassword({ password: password }, user._id)
+        if(response.status === 200){
+          props.handleNotification('User password got updated!', 5000)
+          handleShowDialog(false)
+        }
 
-    if(password !== ''){
-      const response = await userService.updateUserPassword({ password: password }, user._id)
-      if(response.status === 200){
-        props.handleNotification('User password got updated!', 5000)
+      }else{
         handleShowDialog(false)
       }
-
-    }else{
-      handleShowDialog(false)
+    }catch(error){
+      if(error.response){
+        props.handleError(error.response.data, 5000)
+      }else if (error.request){
+        props.handleError(error.request.data, 5000)
+      }else{
+        props.handleError(error.message, 5000)
+      }
+      console.log(error)
     }
-
   }
 
 

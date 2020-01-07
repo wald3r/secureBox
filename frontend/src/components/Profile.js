@@ -59,6 +59,7 @@ const Profile = ( props ) => {
       }else{
         props.handleError(error.message, 5000)
       }
+      console.error(error)
     }
   }
 

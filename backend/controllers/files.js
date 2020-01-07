@@ -40,6 +40,8 @@ filesRouter.get('/download/:id', async(request, response, next) => {
     logger.downloadFile(filePath)
   }
   catch(exception){
+    console.log(exception.name)
+    console.log(exception.message)
     next(exception)
   }
 })
@@ -145,6 +147,8 @@ filesRouter.post('/upload', async (request, response, next) => {
 
     response.status(200).send('Files uploaded')
   }catch(exception){
+    console.log(exception.name)
+    console.log(exception.message)
     next(exception)
   }
 })

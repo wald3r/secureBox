@@ -16,7 +16,7 @@ const ChangeUser = ( { showDialog, handleShowDialog, user, ...props } ) => {
   if (user === null){
     return null
   }
- 
+
 
 
   const saveChanges = async () => {
@@ -29,13 +29,22 @@ const ChangeUser = ( { showDialog, handleShowDialog, user, ...props } ) => {
     if(email !== ''){
       user.email = email
     }
-
-    const response = await userService.updateUserDetails(user, user._id)
-    if(response.status === 200){
-      props.handleNotification('User got updated!', 5000)
-      handleShowDialog(false)
+    try{
+      const response = await userService.updateUserDetails(user, user._id)
+      if(response.status === 200){
+        props.handleNotification('User got updated!', 5000)
+        handleShowDialog(false)
+      }
+    }catch(error){
+      if(error.response){
+        props.handleError(error.response.data, 5000)
+      }else if (error.request){
+        props.handleError(error.request.data, 5000)
+      }else{
+        props.handleError(error.message, 5000)
+      }
+      console.log(error)
     }
-
 
   }
 

@@ -18,12 +18,22 @@ const AllMyFiles = ({ ...props }) => {
   const showCheckedAllName = allSelected === true ? 'Remove selection' : 'Select all'
 
   const handleSingleDownload = async (file) => {
-    const response = await fileService.getFile(file.id)
-    console.log(response.data)
-    fileDownload(response.data, file.name)
-    props.handleNotification('Download started...', 2500)
-    await fileService.removeUnencryptedFile(file.id)
-
+    try{
+      const response = await fileService.getFile(file.id)
+      console.log(response.data)
+      fileDownload(response.data, file.name)
+      props.handleNotification('Download started...', 2500)
+      await fileService.removeUnencryptedFile(file.id)
+    }catch(error){
+      if(error.response){
+        props.handleError(error.response.data, 5000)
+      }else if (error.request){
+        props.handleError(error.request.data, 5000)
+      }else{
+        props.handleError(error.message, 5000)
+      }
+      console.log(error)
+    }
   }
 
   const handleSingleRemoval = async (file) => {
@@ -33,8 +43,15 @@ const AllMyFiles = ({ ...props }) => {
         props.handleNotification(`File ${file.name} removed`, 5000)
         props.setFiles(props.files.filter(oFile => oFile.id !== file.id))
       }
-    }catch(exception){
-      props.handleError('File removal failed', 5000)
+    }catch(error){
+      if(error.response){
+        props.handleError(error.response.data, 5000)
+      }else if (error.request){
+        props.handleError(error.request.data, 5000)
+      }else{
+        props.handleError(error.message, 5000)
+      }
+      console.log(error)
     }
   }
 
@@ -56,19 +73,38 @@ const AllMyFiles = ({ ...props }) => {
           props.handleNotification(`File ${sfile.name} removed`, 5000)
         })
         props.setFiles([])
-      }catch(exception){
-        props.handleError('File removal failed', 5000)
+      }catch(error){
+        if(error.response){
+          props.handleError(error.response.data, 5000)
+        }else if (error.request){
+          props.handleError(error.request.data, 5000)
+        }else{
+          props.handleError(error.message, 5000)
+        }
+        console.log(error)
       }
     }
   }
 
   const handleSelectedDownload = async () => {
-    if(allSelected){
-      await props.files.map(async sfile => {
-        const response = await fileService.getFile(sfile.id)
-        fileDownload(response.data, sfile.name)
-        props.handleNotification('Download started...', 2500)
-      })
+
+    try{
+      if(allSelected){
+        await props.files.map(async sfile => {
+          const response = await fileService.getFile(sfile.id)
+          fileDownload(response.data, sfile.name)
+          props.handleNotification('Download started...', 2500)
+        })
+      }
+    }catch(error){
+      if(error.response){
+        props.handleError(error.response.data, 5000)
+      }else if (error.request){
+        props.handleError(error.request.data, 5000)
+      }else{
+        props.handleError(error.message, 5000)
+      }
+      console.log(error)
     }
   }
 

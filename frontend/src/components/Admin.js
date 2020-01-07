@@ -31,18 +31,6 @@ const Admin = (props) => {
     setShowPasswordDialog(true)
   }
 
-  /*const handleRole = async (id) => {
-    const response = await usersService.changeRole(id)
-    if(response.status === 200){
-      props.handleNotification('Role changed', 5000)
-      props.changeUser(response.data)
-    }
-    else{
-      props.handleError('Role did not change', 5000)
-    }
-
-  }*/
-
   return (
 
     <div className='container'>
