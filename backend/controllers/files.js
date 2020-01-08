@@ -40,8 +40,6 @@ filesRouter.get('/download/:id', async(request, response, next) => {
     logger.downloadFile(filePath)
   }
   catch(exception){
-    console.log(exception.name)
-    console.log(exception.message)
     next(exception)
   }
 })
@@ -112,23 +110,23 @@ filesRouter.post('/upload', async (request, response, next) => {
     if (!fs.existsSync(path)){
       fs.mkdirSync(path);
     } 
-    
     let files = []
     if(request.files.file.length === undefined){
       files = files.concat(request.files.file)
     }else{
       files = request.files.file
     }
-
+    
     await files.map(async file => {  
-      const fileName = nameCreation.createDocumentName(file.name, file.mimetype, path)
+      const splitName = file.name.split('_')
+      const fileName = nameCreation.createDocumentName(splitName[1], file.mimetype, path)
       const newFile = new File ({
         name: fileName,
         path: path,
         mimetype: file.mimetype,
         size: file.size,
-        user: user._id
-        
+        user: user._id,
+        category: splitName[0]  
       })
 
       const savedFile = await newFile.save()
@@ -147,8 +145,6 @@ filesRouter.post('/upload', async (request, response, next) => {
 
     response.status(200).send('Files uploaded')
   }catch(exception){
-    console.log(exception.name)
-    console.log(exception.message)
     next(exception)
   }
 })

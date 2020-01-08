@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
+var timestamps = require('mongoose-timestamp');
 
 const fileSchema = mongoose.Schema({
     name: {
@@ -23,9 +24,13 @@ const fileSchema = mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },
+    category: {
+      type: String,
+      required: true,
+    },
 })
 
-
+mongoose.plugin(timestamps)
 fileSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()

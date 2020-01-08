@@ -46,7 +46,7 @@ const removeUnencryptedFile = async (id) => {
   await axios.delete(`${baseUrl}/dremove/${id}`, config)
 }
 
-const sendFiles = async data => {
+const sendFiles = async (data) => {
 
   const config = {
     headers: { Authorization: token },

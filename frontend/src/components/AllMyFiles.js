@@ -1,21 +1,30 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { Table, Button } from 'react-bootstrap'
+import { Table, Button, DropdownButton, Dropdown } from 'react-bootstrap'
 import fileService from '../services/files'
 import '../stylesheets/general.css'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
 import { setFiles } from '../reducers/filesReducer'
+import helperClass from '../utils/helperClass'
 
 const AllMyFiles = ({ ...props }) => {
 
 
   const [selectedFiles, setSelectedFiles] = useState([])
   const [allSelected, setAllSelected] = useState(false)
+  const [chosenType, setChosenType] = useState('All')
+  const [searchName, setSearchName] = useState('')
   const fileDownload = require('js-file-download')
+
 
   const showSelectedButtons = { display: props.files.length === 0 ? 'none' : '' }
   const showCheckedAllName = allSelected === true ? 'Remove selection' : 'Select all'
+
+
+  const categoryFilter = (chosenType === 'All' ? props.files : props.files.filter(file => file.category === chosenType))
+  const nameFilter = searchName === '' ? categoryFilter : categoryFilter.filter(file => file.name.includes(searchName))
+
 
   const handleSingleDownload = async (file) => {
     try{
@@ -120,28 +129,47 @@ const AllMyFiles = ({ ...props }) => {
     }else{
       setAllSelected(false)
     }
-  }  
+  }
+
+  const handleSearch = (e) => {
+    e.preventDefault()
+    console.log(e.target.value)
+    setSearchName(e.target.value)
+
+  }
 
   return (
     <div className='container'>
       <div className='row'>
         <div className='col-md-15'>
+          <div>
+            <DropdownButton id="dropdown-basic-button" title={chosenType}>
+              <Dropdown.Item onClick={() => setChosenType('All')} >All</Dropdown.Item>
+              <Dropdown.Item onClick={() => setChosenType('Picture')} >Picture</Dropdown.Item>
+              <Dropdown.Item onClick={() => setChosenType('Document')} >Document</Dropdown.Item>
+            </DropdownButton>
+            <input onChange={handleSearch}/>
+          </div>
           <Table className='table'>
             <thead className='thead-dark'>
               <tr>
                 <th>Select</th>
+                <th>Category</th>
                 <th>Name</th>
                 <th>Mimetype</th>
                 <th>Size</th>
+                <th>Date</th>
               </tr>
             </thead>
             <tbody>
-              {props.files.map(file =>
+              {nameFilter.map(file =>
                 <tr key={file.id}>
                   <td><input onClick={() => handleOneSelection(file, event)} type="checkbox" className='checkbox'/></td>
+                  <td>{file.category}</td>
                   <td>{file.name}</td>
                   <td>{file.mimetype}</td>
                   <td>{file.size}</td>
+                  <td>{helperClass.formatTime(file.createdAt)}</td>
                   <td><Button onClick={() => handleSingleDownload(file)}><i className="fa fa-folder"></i></Button></td>
                   <td><Button onClick={() => handleSingleRemoval(file)}><i className="fa fa-trash"></i></Button></td>
                 </tr>

@@ -3,3 +3,12 @@
 2020-01-07 11:30:52.793 ERROR ErrorHandler: User validation failed: username: Path `username` (`t`) is shorter than the minimum allowed length (3). 
 2020-01-07 11:39:17.518 ERROR ErrorHandler: User validation failed: username: Path `username` (`t`) is shorter than the minimum allowed length (3). 
 2020-01-07 11:49:56.628 ERROR ErrorHandler: User validation failed: username: Path `username` (`t`) is shorter than the minimum allowed length (3). 
+2020-01-08 10:32:14.460 ERROR ErrorHandler: type is not defined 
+2020-01-08 10:33:35.371 ERROR ErrorHandler: type is not defined 
+2020-01-08 10:33:35.388 ERROR ErrorHandler: type is not defined 
+2020-01-08 10:33:41.728 ERROR ErrorHandler: type is not defined 
+2020-01-08 11:10:25.652 ERROR ErrorHandler: Cannot read property 'length' of undefined 
+2020-01-08 11:11:42.974 ERROR ErrorHandler: Cannot read property 'length' of undefined 
+2020-01-08 11:17:31.510 ERROR ErrorHandler: Cannot read property 'length' of undefined 
+2020-01-08 11:18:53.916 ERROR ErrorHandler: files.map is not a function 
+2020-01-08 11:19:47.850 ERROR ErrorHandler: Cannot read property 'map' of undefined 

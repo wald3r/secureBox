@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import fileService from '../services/files'
-import { Form, Button, ButtonGroup, ButtonToolbar } from 'react-bootstrap'
+import { Form, Button, ButtonGroup } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
@@ -43,16 +43,31 @@ const Upload = ( { ...props } ) => {
     return true
   }
 
+  const nameCreation = (mime, fileName) => {
+
+    const mimes = mime.split('/')
+    var newName
+    if(name !== ''){
+      newName = `${type}_${name}.${mimes[1]}`
+    }else{
+      newName = `${type}_${fileName}.${mimes[1]}`
+    }
+
+    return newName
+  }
+
   const uploadHandler = async (event) => {
     try{
       event.preventDefault()
       if(files.length === 0){
         props.handleError('No files!', 5000)
+      }else if(type === ''){
+        props.handleError('Is it a document or a picture?', 5000)
       }else if(checkMimeType()){
         console.log('start uploading')
         const data = new FormData()
         for(var x = 0; x<files.length; x++) {
-          data.append('file', files[x])
+          data.append('file', files[x], nameCreation(files[x].type, files[x].name))
         }
         const response = await fileService.sendFiles(data)
         if(response.status === 200){
@@ -64,8 +79,8 @@ const Upload = ( { ...props } ) => {
           props.handleError(response.data, 5000)
         }
         setFiles([])
+        window.location.reload()
       }
-      window.location.reload()
     }catch(error){
       if(error.response){
         props.handleError(error.response.data, 5000)
@@ -84,10 +99,13 @@ const Upload = ( { ...props } ) => {
   }
 
   const handleSettings = (e) => {
-    e.preventDefault()
     setStyle(!style)
-    var items = document.getElementsByClassName('secondary')
-    console.log(items)
+    if(!style){
+      e.preventDefault()
+    }else{
+      setName('')
+      setType('')
+    }
   }
 
   return (
@@ -97,11 +115,11 @@ const Upload = ( { ...props } ) => {
           <div style={chosenStyle} >
             <Form onSubmit={handleSettings}>
             <ButtonGroup className="mr-2" aria-label="First group">
-              <Button variant="secondary">Documents</Button>
-              <Button variant="secondary">Pictures</Button>
+              <Button className='fileButton' active={type === 'Document'} onClick={() => setType('Document')} variant="secondary">Documents</Button>
+              <Button className='fileButton' active={type === 'Picture'} onClick={() => setType('Picture')} variant="secondary">Pictures</Button>
             </ButtonGroup>
             <input onChange={({ target }) => setName(target.value)}/>
-            <Button type="submit">Save</Button>
+            <Button type="submit">{!style ? 'Save' : 'Remove'}</Button>
             </Form>
           </div>
           <div className='form-group files' >
