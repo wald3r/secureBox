@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
 const roleManagement = require('../utils/roleManagement')
+var timestamps = require('mongoose-timestamp');
 
 
 const userSchema = mongoose.Schema({
@@ -31,6 +32,6 @@ const userSchema = mongoose.Schema({
 })
 
 
-
+userSchema.plugin(timestamps)
 userSchema.plugin(uniqueValidator)
 module.exports = mongoose.model('User', userSchema)

@@ -5,7 +5,10 @@ import { connect } from 'react-redux'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
 import { getFiles } from '../reducers/filesReducer'
+import helperClass from '../utils/helperClass'
 import '../stylesheets/general.css'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 const Upload = ( { ...props } ) => {
 
@@ -13,6 +16,7 @@ const Upload = ( { ...props } ) => {
   const [type, setType] = useState('')
   const [name, setName] = useState('')
   const [style, setStyle]= useState(false)
+  const [newDate, setNewDate] = useState('')
 
   const priorityStyle = {
     padding: 5,
@@ -43,19 +47,6 @@ const Upload = ( { ...props } ) => {
     return true
   }
 
-  const nameCreation = (mime, fileName) => {
-
-    const mimes = mime.split('/')
-    var newName
-    if(name !== ''){
-      newName = `${type}_${name}.${mimes[1]}`
-    }else{
-      newName = `${type}_${fileName}.${mimes[1]}`
-    }
-
-    return newName
-  }
-
   const uploadHandler = async (event) => {
     try{
       event.preventDefault()
@@ -63,11 +54,13 @@ const Upload = ( { ...props } ) => {
         props.handleError('No files!', 5000)
       }else if(type === ''){
         props.handleError('Is it a document or a picture?', 5000)
+      }else if(style === false){
+        props.handleError('Save your settings!', 5000)
       }else if(checkMimeType()){
         console.log('start uploading')
         const data = new FormData()
         for(var x = 0; x<files.length; x++) {
-          data.append('file', files[x], nameCreation(files[x].type, files[x].name))
+          data.append('file', files[x], helperClass.createName(type, files[x].type, files[x].name, name, newDate))
         }
         const response = await fileService.sendFiles(data)
         if(response.status === 200){
@@ -108,6 +101,12 @@ const Upload = ( { ...props } ) => {
     }
   }
 
+  const handleTimeChange = (date) => {
+    console.log(date)
+    setNewDate(date)
+
+  }
+
   return (
     <div className='container'>
       <div className='row'>
@@ -118,6 +117,7 @@ const Upload = ( { ...props } ) => {
               <Button className='fileButton' active={type === 'Document'} onClick={() => setType('Document')} variant="secondary">Documents</Button>
               <Button className='fileButton' active={type === 'Picture'} onClick={() => setType('Picture')} variant="secondary">Pictures</Button>
             </ButtonGroup>
+            <DatePicker onChange={handleTimeChange} selected={newDate} />
             <input onChange={({ target }) => setName(target.value)}/>
             <Button type="submit">{!style ? 'Save' : 'Remove'}</Button>
             </Form>

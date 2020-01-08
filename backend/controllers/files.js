@@ -118,17 +118,19 @@ filesRouter.post('/upload', async (request, response, next) => {
     }
     
     await files.map(async file => {  
+      console.log(file.name)
       const splitName = file.name.split('_')
-      const fileName = nameCreation.createDocumentName(splitName[1], file.mimetype, path)
+      const fileName = nameCreation.createDocumentName(splitName[2], file.mimetype, path)
       const newFile = new File ({
         name: fileName,
         path: path,
         mimetype: file.mimetype,
         size: file.size,
         user: user._id,
-        category: splitName[0]  
+        category: splitName[0],
+        date: splitName[1]  
       })
-
+      console.log(splitName[1])
       const savedFile = await newFile.save()
       file.mv(`${path}/${fileName}`, err => {
         if (err){

@@ -6,7 +6,6 @@ import '../stylesheets/general.css'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
 import { setFiles } from '../reducers/filesReducer'
-import helperClass from '../utils/helperClass'
 
 const AllMyFiles = ({ ...props }) => {
 
@@ -29,7 +28,6 @@ const AllMyFiles = ({ ...props }) => {
   const handleSingleDownload = async (file) => {
     try{
       const response = await fileService.getFile(file.id)
-      console.log(response.data)
       fileDownload(response.data, file.name)
       props.handleNotification('Download started...', 2500)
       await fileService.removeUnencryptedFile(file.id)
@@ -74,7 +72,6 @@ const AllMyFiles = ({ ...props }) => {
 
 
   const handleSelectedRemoval = async () => {
-    console.log(allSelected)
     if(allSelected){
       try{
         await props.files.map(async sfile => {
@@ -133,7 +130,6 @@ const AllMyFiles = ({ ...props }) => {
 
   const handleSearch = (e) => {
     e.preventDefault()
-    console.log(e.target.value)
     setSearchName(e.target.value)
 
   }
@@ -164,12 +160,12 @@ const AllMyFiles = ({ ...props }) => {
             <tbody>
               {nameFilter.map(file =>
                 <tr key={file.id}>
-                  <td><input onClick={() => handleOneSelection(file, event)} type="checkbox" className='checkbox'/></td>
+                  <td><input onClick={({ event }) => handleOneSelection(file, event)} type="checkbox" className='checkbox'/></td>
                   <td>{file.category}</td>
                   <td>{file.name}</td>
                   <td>{file.mimetype}</td>
                   <td>{file.size}</td>
-                  <td>{helperClass.formatTime(file.createdAt)}</td>
+                  <td>{file.date}</td>
                   <td><Button onClick={() => handleSingleDownload(file)}><i className="fa fa-folder"></i></Button></td>
                   <td><Button onClick={() => handleSingleRemoval(file)}><i className="fa fa-trash"></i></Button></td>
                 </tr>
