@@ -35,7 +35,6 @@ const Profile = ( props ) => {
     if(email === ''){
       emailflag = true
     }
-    console.log('change user details to', username, name, email)
     try{
       const response = await usersService.updateUserDetails({
         username: usernameflag === true ? props.user.username : username,

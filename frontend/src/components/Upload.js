@@ -14,7 +14,7 @@ const Upload = ( { ...props } ) => {
 
   const [files, setFiles] = useState([])
   const [type, setType] = useState('')
-  const [name, setName] = useState('')
+  const [newName, setNewName] = useState('')
   const [style, setStyle]= useState(false)
   const [newDate, setNewDate] = useState('')
 
@@ -60,7 +60,7 @@ const Upload = ( { ...props } ) => {
         console.log('start uploading')
         const data = new FormData()
         for(var x = 0; x<files.length; x++) {
-          data.append('file', files[x], helperClass.createName(type, files[x].type, files[x].name, name, newDate))
+          data.append('file', files[x], helperClass.createName(type, files[x].type, files[x].name, newName, newDate))
         }
         const response = await fileService.sendFiles(data)
         if(response.status === 200){
@@ -96,7 +96,7 @@ const Upload = ( { ...props } ) => {
     if(!style){
       e.preventDefault()
     }else{
-      setName('')
+      setNewName('')
       setType('')
     }
   }
@@ -117,8 +117,8 @@ const Upload = ( { ...props } ) => {
               <Button className='fileButton' active={type === 'Document'} onClick={() => setType('Document')} variant="secondary">Documents</Button>
               <Button className='fileButton' active={type === 'Picture'} onClick={() => setType('Picture')} variant="secondary">Pictures</Button>
             </ButtonGroup>
-            <DatePicker onChange={handleTimeChange} selected={newDate} />
-            <input onChange={({ target }) => setName(target.value)}/>
+            <DatePicker onChange={handleTimeChange} selected={newDate} dateFormat='dd-mm-yyyy' locale='en-GB'/>
+            <input onChange={({ target }) => setNewName(target.value)}/>
             <Button type="submit">{!style ? 'Save' : 'Remove'}</Button>
             </Form>
           </div>

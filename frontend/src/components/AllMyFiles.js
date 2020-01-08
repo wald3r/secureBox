@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { Table, Button, DropdownButton, Dropdown } from 'react-bootstrap'
+import { Table, Button, DropdownButton, Dropdown, ButtonToolbar } from 'react-bootstrap'
 import fileService from '../services/files'
 import '../stylesheets/general.css'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
+import fileDownload from 'js-file-download'
 import { setFiles } from '../reducers/filesReducer'
 
 const AllMyFiles = ({ ...props }) => {
@@ -14,7 +15,7 @@ const AllMyFiles = ({ ...props }) => {
   const [allSelected, setAllSelected] = useState(false)
   const [chosenType, setChosenType] = useState('All')
   const [searchName, setSearchName] = useState('')
-  const fileDownload = require('js-file-download')
+  const [searchDate, setSearchDate] = useState('')
 
 
   const showSelectedButtons = { display: props.files.length === 0 ? 'none' : '' }
@@ -23,7 +24,14 @@ const AllMyFiles = ({ ...props }) => {
 
   const categoryFilter = (chosenType === 'All' ? props.files : props.files.filter(file => file.category === chosenType))
   const nameFilter = searchName === '' ? categoryFilter : categoryFilter.filter(file => file.name.includes(searchName))
+  const dateFilter = searchDate === '' ? nameFilter : nameFilter.filter(file => file.date.includes(searchDate))
 
+  const filterStyle = {
+    padding: 5,
+    borderStyle: 'solid',
+    borderColor: 'black',
+    borderWidth: 'thin'
+  }
 
   const handleSingleDownload = async (file) => {
     try{
@@ -128,23 +136,33 @@ const AllMyFiles = ({ ...props }) => {
     }
   }
 
-  const handleSearch = (e) => {
+  const handleNameSearch = (e) => {
     e.preventDefault()
     setSearchName(e.target.value)
+  }
 
+  const handleDateSearch = (e) => {
+    e.preventDefault()
+    setSearchDate(e.target.value)
   }
 
   return (
     <div className='container'>
       <div className='row'>
         <div className='col-md-15'>
-          <div>
-            <DropdownButton id="dropdown-basic-button" title={chosenType}>
-              <Dropdown.Item onClick={() => setChosenType('All')} >All</Dropdown.Item>
-              <Dropdown.Item onClick={() => setChosenType('Picture')} >Picture</Dropdown.Item>
-              <Dropdown.Item onClick={() => setChosenType('Document')} >Document</Dropdown.Item>
-            </DropdownButton>
-            <input onChange={handleSearch}/>
+          <div style={filterStyle}>
+            Filter:
+            <ButtonToolbar>
+              <div style={{ padding: 5 }}>
+                <DropdownButton id="dropdown-basic-button" title={chosenType}>
+                  <Dropdown.Item onClick={() => setChosenType('All')} >All</Dropdown.Item>
+                  <Dropdown.Item onClick={() => setChosenType('Picture')} >Picture</Dropdown.Item>
+                  <Dropdown.Item onClick={() => setChosenType('Document')} >Document</Dropdown.Item>
+                </DropdownButton>
+              </div>
+            <div style={{ padding: 5 }}>Name: <input onChange={handleNameSearch}/></div>
+            <div style={{ padding: 5 }}>Date: <input onChange={handleDateSearch}/></div>
+            </ButtonToolbar>
           </div>
           <Table className='table'>
             <thead className='thead-dark'>
@@ -158,7 +176,7 @@ const AllMyFiles = ({ ...props }) => {
               </tr>
             </thead>
             <tbody>
-              {nameFilter.map(file =>
+              {dateFilter.map(file =>
                 <tr key={file.id}>
                   <td><input onClick={({ event }) => handleOneSelection(file, event)} type="checkbox" className='checkbox'/></td>
                   <td>{file.category}</td>
