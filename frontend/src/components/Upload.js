@@ -27,6 +27,9 @@ const Upload = ( { ...props } ) => {
 
   const noPriorityStyle = {
     padding: 5,
+    borderStyle: 'solid',
+    borderColor: 'black',
+    borderWidth: 'thin'
   }
 
   const chosenStyle = style ? priorityStyle : noPriorityStyle
@@ -112,6 +115,7 @@ const Upload = ( { ...props } ) => {
       <div className='row'>
         <div className='col-md-15'>
           <div style={chosenStyle} >
+            Settings:
             <Form onSubmit={handleSettings}>
             <ButtonGroup className="mr-2" aria-label="First group">
               <Button className='fileButton' active={type === 'Document'} onClick={() => setType('Document')} variant="secondary">Documents</Button>
