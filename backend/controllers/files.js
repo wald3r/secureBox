@@ -117,8 +117,9 @@ filesRouter.post('/upload', async (request, response, next) => {
       files = request.files.file
     }
     await files.map(async file => {  
-      const splitName = file.name.split('_')
-      const fileName = nameCreation.createDocumentName(splitName[3], files.length === 1 ? '' : splitName[0] ,file.mimetype, path)
+      const splitName = file.name.split('__')
+      const fileName = nameCreation.createDocumentName(splitName[3], splitName[1], splitName[2], files.length === 1 ? '' : splitName[0] ,file.mimetype, path)
+      console.log(fileName)
       const newFile = new File ({
         name: fileName,
         path: path,
@@ -133,9 +134,8 @@ filesRouter.post('/upload', async (request, response, next) => {
         if (err){
           logger.failedUploadFile(err.message)
           return response.status(500).send(err)}
-    
-    
       })
+
       if(fs.existsSync(`${config.FILE_DIR}${path}/${fileName}`)){
         console.log('start encrypting', fileName)
         cryptoHelper.encrypt('test', `${config.FILE_DIR}${path}/${fileName}`)
