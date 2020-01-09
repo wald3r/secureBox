@@ -13,12 +13,14 @@ const registrationRouter = require('./controllers/registration')
 const filesRouter = require('./controllers/files')
 const logging = require('./middleware/logging')
 const errorHandler = require('./middleware/errorHandler')
+const helmet = require('helmet')
 
 mongoose.connect(config.DB_URI, { useNewUrlParser: true})
 
 
 
 app.use(express.static('build'))
+app.use(helmet())
 app.use(cors())
 app.use(bodyParser.json())
 app.use(fileUpload())

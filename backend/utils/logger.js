@@ -175,6 +175,19 @@ const failedUploadFile = (message) => {
 
 }
 
+const cryptoError = (message) => {
+  const opts = {
+    logFilePath:'logfiles/crypto.log',
+    timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
+  }
+  
+  const log = SimpleNodeLogger.createSimpleLogger(opts)
+
+  log.setLevel('error')
+  log.error(`CryptoManager: ${message}`)
+  return
+
+}
 
 const errorHandler = (message) => {
   
@@ -190,4 +203,4 @@ const errorHandler = (message) => {
   return
 
 }
-module.exports = { errorHandler, failedUploadFile, uploadFile, deleteFile, failedDeleteFile, downloadFile, logLogins, logRegistrations, validationError, verificationFailed, verification}
+module.exports = { cryptoError, errorHandler, failedUploadFile, uploadFile, deleteFile, failedDeleteFile, downloadFile, logLogins, logRegistrations, validationError, verificationFailed, verification}

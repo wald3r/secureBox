@@ -114,3 +114,11 @@
 2020-01-07 11:29:45.697 INFO  LoginManager: Logged in test 
 2020-01-07 18:56:50.813 INFO  LoginManager: Trying to login daniel 
 2020-01-07 18:56:51.177 INFO  LoginManager: Logged in daniel 
+2020-01-08 19:00:42.703 INFO  LoginManager: Trying to login daniel 
+2020-01-08 19:00:42.989 INFO  LoginManager: Logged in daniel 
+2020-01-08 19:01:39.479 INFO  LoginManager: Trying to login daniel 
+2020-01-08 19:01:39.691 WARN  LoginManager: Failed to login daniel 
+2020-01-08 19:01:42.541 INFO  LoginManager: Trying to login daniel 
+2020-01-08 19:01:42.757 INFO  LoginManager: Logged in daniel 
+2020-01-09 10:28:56.441 INFO  LoginManager: Trying to login daniel 
+2020-01-09 10:28:56.738 INFO  LoginManager: Logged in daniel 

@@ -12,3 +12,4 @@
 2020-01-08 11:17:31.510 ERROR ErrorHandler: Cannot read property 'length' of undefined 
 2020-01-08 11:18:53.916 ERROR ErrorHandler: files.map is not a function 
 2020-01-08 11:19:47.850 ERROR ErrorHandler: Cannot read property 'map' of undefined 
+2020-01-09 11:01:00.660 ERROR ErrorHandler: ENOENT: no such file or directory, unlink 'files/daniel/thailand.jpeg.enc' 

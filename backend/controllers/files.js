@@ -58,7 +58,6 @@ filesRouter.delete('/dremove/:id', async(request, response, next) => {
       fs.unlink(`${config.FILE_DIR}${filePath}`, (err) => {
         if(err) throw logger.failedDeleteFile(err.message)
      })
-     logger.deleteFile(filePath)
   } catch(exception) {
       logger.failedDeleteFile(exception.message)
       next(exception)
@@ -84,6 +83,7 @@ filesRouter.delete('/eremove/:id', async(request, response, next) => {
         fs.unlinkSync(filePath)
         await File.findByIdAndDelete(request.params.id)
         response.status(200).send('File removed')
+        logger.deleteFile(filePath)
       } catch(exception) {
         logger.failedDeleteFile(exception.message)
         next(exception)
@@ -116,21 +116,18 @@ filesRouter.post('/upload', async (request, response, next) => {
     }else{
       files = request.files.file
     }
-    
     await files.map(async file => {  
-      console.log(file.name)
       const splitName = file.name.split('_')
-      const fileName = nameCreation.createDocumentName(splitName[2], file.mimetype, path)
+      const fileName = nameCreation.createDocumentName(splitName[3], files.length === 1 ? '' : splitName[0] ,file.mimetype, path)
       const newFile = new File ({
         name: fileName,
         path: path,
         mimetype: file.mimetype,
         size: file.size,
         user: user._id,
-        category: splitName[0],
-        date: splitName[1]  
+        category: splitName[1],
+        date: splitName[2]  
       })
-      console.log(splitName[1])
       const savedFile = await newFile.save()
       file.mv(`${path}/${fileName}`, err => {
         if (err){
@@ -139,11 +136,15 @@ filesRouter.post('/upload', async (request, response, next) => {
     
     
       })
-      cryptoHelper.encrypt('test', `${config.FILE_DIR}${path}/${fileName}`)
-      logger.uploadFile(`${config.FILE_DIR}${path}/${fileName}`)
+      if(fs.existsSync(`${config.FILE_DIR}${path}/${fileName}`)){
+        console.log('start encrypting', fileName)
+        cryptoHelper.encrypt('test', `${config.FILE_DIR}${path}/${fileName}`)
+        logger.uploadFile(`${config.FILE_DIR}${path}/${fileName}`)
+      }
+      else{
+        console.error('problem')
+      }
     })
-
-
 
     response.status(200).send('Files uploaded')
   }catch(exception){

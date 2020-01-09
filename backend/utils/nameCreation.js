@@ -10,7 +10,7 @@ const padding = (digits) => {
   }
 }
 
-const createDocumentName = (name, type, path) => {
+const createDocumentName = (name, number, type, path) => {
 
   const types = type.split('/')
   var newName = name.replace(`.${types[1]}`, '')
@@ -20,27 +20,28 @@ const createDocumentName = (name, type, path) => {
   }
   const date = new Date()
   //const dateString = `${padding(date.getDay())}-${padding(date.getMonth()+1)}-${date.getFullYear()}`
-  let docName = `${config.FILE_DIR}${path}/${newName}.${types[1]}`
+
+  let docName = `${config.FILE_DIR}${path}/${newName}${number}.${types[1]}`
+
   let counter = 0
   let dup = ''
-  for(let a = 0; a < 10; a++){
+  for(;;){
     if(!alreadyExists(docName)){
       break
     }else{
       counter += 1
-      let str = '(1)'
-      dup = str.repeat(counter)
-      docName = `${config.FILE_DIR}${path}/${newName}${dup}.${types[1]}`
+      dup = counter
+      docName = `${config.FILE_DIR}${path}/${newName}${number}${dup}.${types[1]}`
     }
   }
-
-  return `${newName}${dup}.${types[1]}`
+  
+  return `${newName}${number}${dup}.${types[1]}`
 
 }
 
 
 const alreadyExists = (path) => {
-  if(fs.existsSync(path+'.enc')){
+  if(fs.existsSync(path+'.enc') || fs.existsSync(path+'.enc')){
     return true
   }else{
     return false
