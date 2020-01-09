@@ -6,7 +6,7 @@ const config = require('../utils/config')
 const nameCreation = require('../utils/nameCreation')
 const cryptoHelper = require('../utils/cryptoHelper')
 const logger = require('../utils/logger')
-
+const helperFunctions = require ('../utils/helperFunctions')
 
 filesRouter.get('/', async (request, response, next) => {
 
@@ -118,16 +118,16 @@ filesRouter.post('/upload', async (request, response, next) => {
     }
     await files.map(async file => {  
       const splitName = file.name.split('__')
-      const fileName = nameCreation.createDocumentName(splitName[3], splitName[1], splitName[2], files.length === 1 ? '' : splitName[0] ,file.mimetype, path)
-      console.log(fileName)
+      console.log(splitName)
+      const fileName = nameCreation.createDocumentName(user.username, splitName[4], splitName[2], splitName[3], files.length === 1 ? '' : splitName[1] ,file.mimetype, path)
       const newFile = new File ({
         name: fileName,
         path: path,
         mimetype: file.mimetype,
         size: file.size,
         user: user._id,
-        category: splitName[1],
-        date: splitName[2]  
+        category: splitName[2],
+        date: splitName[3]  
       })
       const savedFile = await newFile.save()
       file.mv(`${path}/${fileName}`, err => {
@@ -136,13 +136,16 @@ filesRouter.post('/upload', async (request, response, next) => {
           return response.status(500).send(err)}
       })
 
-      if(fs.existsSync(`${config.FILE_DIR}${path}/${fileName}`)){
-        console.log('start encrypting', fileName)
-        cryptoHelper.encrypt('test', `${config.FILE_DIR}${path}/${fileName}`)
-        logger.uploadFile(`${config.FILE_DIR}${path}/${fileName}`)
-      }
-      else{
-        console.error('problem')
+      for(let a = 0; a < 10; a++){
+        if(fs.existsSync(`${config.FILE_DIR}${path}/${fileName}`)){
+          console.log('start encrypting', fileName)
+          cryptoHelper.encrypt('test', `${config.FILE_DIR}${path}/${fileName}`)
+          logger.uploadFile(`${config.FILE_DIR}${path}/${fileName}`)
+          break
+        }
+        else{
+          await helperFunctions.sleep(1000)
+        }
       }
     })
 

@@ -10,7 +10,7 @@ const padding = (digits) => {
   }
 }
 
-const createDocumentName = (name, category, date, number, type, path) => {
+const createDocumentName = (username, name, category, date, number, type, path) => {
 
   const types = type.split('/')
   var newName = name.replace(`.${types[1]}`, '')
@@ -19,7 +19,7 @@ const createDocumentName = (name, category, date, number, type, path) => {
     newName = newName.replace(`.JPG`, '')
   }
 
-  let docName = `${config.FILE_DIR}${path}/${category}__${date}__${newName}__${number}.${types[1]}`
+  let docName = `${config.FILE_DIR}${path}/${username}__${category}__${date}__${newName}__${number}.${types[1]}`
 
   let counter = 0
   let dup = ''
@@ -30,11 +30,11 @@ const createDocumentName = (name, category, date, number, type, path) => {
       counter += 1
       str='(1)'
       dup = str.repeat(counter)
-      docName = `${config.FILE_DIR}${path}/${category}__${date}__${newName}__${number}${dup}.${types[1]}`
+      docName = `${config.FILE_DIR}${path}/${username}__${category}__${date}__${newName}__${number}${dup}.${types[1]}`
     }
   }
   
-  return `${category}__${date}__${newName}__${number}${dup}.${types[1]}`
+  return `${username}__${category}__${date}__${newName}__${number}${dup}.${types[1]}`
 
 }
 
