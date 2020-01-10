@@ -15,7 +15,7 @@ usersRouter.get('/', async (request, response, next) => {
         return response.status(401).send('Wrong user role')
       }
 
-      const users = await User.find({})
+      const users = await User.find({}).populate('lastUsed')
       return response.json(users)
     } catch(exception){
       next(exception)
@@ -58,7 +58,7 @@ usersRouter.put('/password/:id', async (request, response, next) => {
       }
 
 
-      const user = await User.findById(request.params.id)
+      const user = await User.findById(request.params.id).populate('lastUsed')
       const body = request.body
       
       const salt = 10
@@ -85,7 +85,7 @@ usersRouter.put('/password/:id', async (request, response, next) => {
         return response.status(401).send('Wrong user role')
       }
 
-      const getUser = await User.findById(request.params.id)
+      const getUser = await User.findById(request.params.id).populate('lastUsed')
 
      
       response.status(200).json(getUser)
@@ -103,7 +103,7 @@ usersRouter.put('/password/:id', async (request, response, next) => {
         return response.status(401).send('Not Authenticated')
       }
 
-      const user = await User.findById(request.params.id)
+      const user = await User.findById(request.params.id).populate('lastUsed')
       user.name = request.body.name
       user.username = request.body.username
       user.email = request.body.email

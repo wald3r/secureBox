@@ -12,7 +12,7 @@ import Home from './components/Home'
 import Upload from './components/Upload'
 import Error from './components/Error'
 import { Button } from 'react-bootstrap'
-import AllMyFiles from './components/AllMyFiles'
+import AllFiles from './components/AllFiles'
 import Profile from './components/Profile'
 import Admin from './components/Admin'
 import './stylesheets/general.css'
@@ -24,8 +24,9 @@ const App = ( props ) => {
     if (loggedUserJSON) {
       const newUser = JSON.parse(loggedUserJSON)
       props.setUser(newUser)
-      props.getFiles()
-      props.getUsers()
+      if(newUser.role === 'admin'){
+        props.getUsers()
+      }
     }
   }, [])
 
@@ -75,7 +76,7 @@ const App = ( props ) => {
                 <h1 className='title'>SecureBox</h1>
                 <Link style={noPriorityStyle} to='/'>Home</Link>
                 <Link style={noPriorityStyle} to='/upload'>Upload</Link>
-                <Link style={noPriorityStyle} to='/myfiles'>Files</Link>
+                <Link style={noPriorityStyle} to='/allfiles'>Files</Link>
                 <Link style={noPriorityStyle} to='/profile'>Profile</Link>
                 <Link style={priorityStyle} to='/admin'>Admin</Link>
                 {props.user.username} is logged in <Button onClick={handleLogout}>Logout</Button>
@@ -85,7 +86,7 @@ const App = ( props ) => {
           <br></br>
           <Route exact path='/' render={() => <Home /> }/>
           <Route exact path='/upload' render={(props) => <Upload {...props}/> } />
-          <Route exact path='/myfiles' render={(props) => <AllMyFiles {...props}/> } />
+          <Route exact path='/allfiles' render={(props) => <AllFiles {...props}/> } />
           <Route exact path='/profile' render={(props) => <Profile {...props}/> } />
           <Route exact path='/admin' render={(props) => <Admin {...props}/> } />
         </Router>

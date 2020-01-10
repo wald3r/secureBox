@@ -17,6 +17,7 @@ const Upload = ( { ...props } ) => {
   const [newName, setNewName] = useState('')
   const [style, setStyle]= useState(false)
   const [newDate, setNewDate] = useState('')
+  const [disableInput, setDisableInput] = useState(false)
 
   const priorityStyle = {
     padding: 5,
@@ -63,13 +64,12 @@ const Upload = ( { ...props } ) => {
         console.log('start uploading')
         const data = new FormData()
         for(var x = 0; x<files.length; x++) {
-          data.append('file', files[x], helperClass.createName(type, files[x].type, files[x].name, newName, newDate))
+          data.append('file', files[x], `${helperClass.createName(props.user.username, type, files[x].type, files[x].name, newName, newDate, x+1)}`)
         }
         const response = await fileService.sendFiles(data)
         if(response.status === 200){
           setStyle(false)
           props.handleNotification(response.data, 5000)
-          props.getFiles()
         }
         else{
           props.handleError(response.data, 5000)
@@ -98,14 +98,15 @@ const Upload = ( { ...props } ) => {
     setStyle(!style)
     if(!style){
       e.preventDefault()
+      setDisableInput(true)
     }else{
+      setDisableInput(false)
       setNewName('')
       setType('')
     }
   }
 
   const handleTimeChange = (date) => {
-    console.log(date)
     setNewDate(date)
 
   }
@@ -118,11 +119,11 @@ const Upload = ( { ...props } ) => {
             Settings:
             <Form onSubmit={handleSettings}>
             <ButtonGroup className="mr-2" aria-label="First group">
-              <Button className='fileButton' active={type === 'Document'} onClick={() => setType('Document')} variant="secondary">Documents</Button>
-              <Button className='fileButton' active={type === 'Picture'} onClick={() => setType('Picture')} variant="secondary">Pictures</Button>
+              <Button className='fileButton' active={type === 'Document'} disabled={disableInput} onClick={() => setType('Document')} variant="secondary">Documents</Button>
+              <Button className='fileButton' active={type === 'Picture'}  disabled={disableInput} onClick={() => setType('Picture')} variant="secondary">Pictures</Button>
             </ButtonGroup>
-            <DatePicker onChange={handleTimeChange} selected={newDate} dateFormat='dd-mm-yyyy' locale='en-GB'/>
-            <input onChange={({ target }) => setNewName(target.value)}/>
+            <DatePicker onChange={handleTimeChange} selected={newDate} disabled={disableInput}/>
+            <input onChange={({ target }) => setNewName(target.value)} disabled={disableInput}/>
             <Button type="submit">{!style ? 'Save' : 'Remove'}</Button>
             </Form>
           </div>
@@ -138,6 +139,11 @@ const Upload = ( { ...props } ) => {
   )
 }
 
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  }
+}
 
 const mapDispatchToProps = {
   handleNotification,
@@ -145,4 +151,4 @@ const mapDispatchToProps = {
   getFiles
 }
 
-export default connect(null, mapDispatchToProps)(Upload)
+export default connect(mapStateToProps, mapDispatchToProps)(Upload)

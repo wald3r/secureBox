@@ -14,7 +14,7 @@ const errorHandler = (error, request, response, next) => {
   response.status(500).send(error.message)
   
 
-  next()
+  next(error)
 }
 
 

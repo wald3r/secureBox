@@ -108,15 +108,15 @@ const Profile = ( props ) => {
           <tbody>
           <tr>
               <td>Username</td>
-              <td><input defaultValue={props.user.username} type='text' onChange={({ target }) => setUsername(target.value)}></input></td>
+              <td><input autoComplete='off' defaultValue={props.user.username} type='text' onChange={({ target }) => setUsername(target.value)}></input></td>
            </tr>
            <tr>
               <td>Name</td>
-              <td><input defaultValue={props.user.name} type='text' onChange={({ target }) => setName(target.value)}></input></td>
+              <td><input autoComplete='off' defaultValue={props.user.name} type='text' onChange={({ target }) => setName(target.value)}></input></td>
            </tr>
            <tr>
               <td>E-Mail</td>
-              <td><input defaultValue={props.user.email} type='text' onChange={({ target }) => setEmail(target.value)}></input></td>
+              <td><input autoComplete='off' defaultValue={props.user.email} type='email' onChange={({ target }) => setEmail(target.value)}></input></td>
            </tr>
            </tbody>
           </Table>
@@ -132,15 +132,15 @@ const Profile = ( props ) => {
           <tbody>
            <tr>
               <td>Old password</td>
-              <td><input type='password' onChange={({ target }) => setOldPassword(target.value)}></input></td>
+              <td><input autoComplete='off' type='password' onChange={({ target }) => setOldPassword(target.value)}></input></td>
            </tr>
            <tr>
               <td>New password</td>
-              <td><input type='password' onChange={({ target }) => setPassword1(target.value)}></input></td>
+              <td><input autoComplete='off' type='password' onChange={({ target }) => setPassword1(target.value)}></input></td>
            </tr>
            <tr>
               <td>Repeat new password</td>
-              <td><input type='password' onChange={({ target }) => setPassword2(target.value)}></input></td>
+              <td><input autoComplete='off' type='password' onChange={({ target }) => setPassword2(target.value)}></input></td>
            </tr>
            </tbody>
           </Table>

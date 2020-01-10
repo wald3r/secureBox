@@ -7,7 +7,8 @@ const logger = require('../utils/logger')
 loginRouter.post('/', async(request, response) => {
     logger.logLogins(request.body.username, 0)
     const body = request.body
-    const user = await User.findOne({ username: body.username })
+    const user = await User.findOne({ username: body.username }).populate('lastUsed')
+    console.log(user)
     const passwordCorrect = user === null 
         ? false  
         : await bcrypt.compare(body.password, user.password)
@@ -29,7 +30,7 @@ loginRouter.post('/', async(request, response) => {
     const token = jwt.sign(userForToken, process.env.SECRET)
     response
         .status(200)
-        .send({ token, username: user.username, name: user.name, id: user.id, email: user.email, role: user.role, active: user.active })
+        .send({ token, username: user.username, name: user.name, id: user.id, email: user.email, role: user.role, active: user.active, lastUsed: user.lastUsed })
 })
 
 module.exports = loginRouter

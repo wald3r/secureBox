@@ -23,6 +23,37 @@ filesRouter.get('/', async (request, response, next) => {
   }
 })
 
+filesRouter.get('/documents/', async (request, response, next) => {
+
+  try {
+
+    const user = await authenticationHelper.isLoggedIn(request.token)
+    if(user == undefined){
+      return response.status(401).send('Not Authenticated')
+    }
+    const files = await File.find({ user: user.id, category: 'Document' }).populate('user')
+    return response.status(200).json(files)
+  }catch(exception){
+    next(exception)
+  }
+})
+
+
+filesRouter.get('/pictures/', async (request, response, next) => {
+
+  try {
+
+    const user = await authenticationHelper.isLoggedIn(request.token)
+    if(user == undefined){
+      return response.status(401).send('Not Authenticated')
+    }
+    const files = await File.find({ user: user.id, category: 'Picture' }).populate('user')
+    return response.status(200).json(files)
+  }catch(exception){
+    next(exception)
+  }
+})
+
 
 filesRouter.get('/download/:id', async(request, response, next) => {
   try{
@@ -38,6 +69,8 @@ filesRouter.get('/download/:id', async(request, response, next) => {
       await response.sendFile(filePath , { root : config.FILE_DIR})
     }) 
     logger.downloadFile(filePath)
+    const modifiedUser = helperFunctions.modifyLastUsed(user, fileDb)
+    await modifiedUser.save()
   }
   catch(exception){
     next(exception)
@@ -51,7 +84,7 @@ filesRouter.delete('/dremove/:id', async(request, response, next) => {
   if(user == undefined){
     return response.status(401).send('Not Authenticated')
   }
-
+  console.log(user)
   const fileDb = await File.findById(request.params.id)
   const filePath = `${fileDb.path}/${fileDb.name}`
   try{
@@ -82,6 +115,8 @@ filesRouter.delete('/eremove/:id', async(request, response, next) => {
       try{
         fs.unlinkSync(filePath)
         await File.findByIdAndDelete(request.params.id)
+        const modifiedUser = helperFunctions.removeLastUsed(user, fileDb)
+        await modifiedUser.save()
         response.status(200).send('File removed')
         logger.deleteFile(filePath)
       } catch(exception) {

@@ -8,13 +8,24 @@ const padding = (digits) => {
   }
 }
 
+function formatName(name){
+
+  const splitName = name.split('__')
+  let newName = name
+  if(splitName.length > 1){
+    newName = splitName[3]
+    newName += splitName[4]
+  }
+  return newName
+}
+
 function formatTime(timestamp){
   var dateobject = new Date(timestamp)
   var datestring = `${dateobject.getFullYear()}-${padding(dateobject.getMonth()+1)}-${padding(dateobject.getDay())}`
   return datestring
 }
 
-const createName = (type, mime, oldFileName, newFileName, newDate) => {
+const createName = (username, type, mime, oldFileName, newFileName, newDate, number) => {
 
   const mimes = mime.split('/')
   var newName
@@ -25,11 +36,11 @@ const createName = (type, mime, oldFileName, newFileName, newDate) => {
     date = newDate
   }
   if(newFileName !== ''){
-    newName = `${type}_${padding(date.getDate())}-${padding(date.getMonth()+1)}-${date.getFullYear()}_${newFileName}.${mimes[1]}`
+    newName = `${username}__${number}__${type}__${padding(date.getDate())}-${padding(date.getMonth()+1)}-${date.getFullYear()}__${newFileName}.${mimes[1]}`
   }else{
-    newName = `${type}_${padding(date.getDate())}-${padding(date.getMonth()+1)}-${date.getFullYear()}_${oldFileName}.${mimes[1]}`
+    newName = `${username}__${number}__${type}__${padding(date.getDate())}-${padding(date.getMonth()+1)}-${date.getFullYear()}__${oldFileName}.${mimes[1]}`
   }
   return newName
 }
 
-export default { formatTime, createName }
+export default { formatTime, createName, formatName }

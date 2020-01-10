@@ -13,3 +13,9 @@
 2020-01-08 11:18:53.916 ERROR ErrorHandler: files.map is not a function 
 2020-01-08 11:19:47.850 ERROR ErrorHandler: Cannot read property 'map' of undefined 
 2020-01-09 11:01:00.660 ERROR ErrorHandler: ENOENT: no such file or directory, unlink 'files/daniel/thailand.jpeg.enc' 
+2020-01-10 19:53:37.101 ERROR ErrorHandler: modifiedUser.save is not a function 
+2020-01-10 19:56:10.219 ERROR ErrorHandler: modifiedUser.save is not a function 
+2020-01-10 19:56:44.412 ERROR ErrorHandler: modifiedUser.save is not a function 
+2020-01-10 20:16:28.782 ERROR ErrorHandler: lastUsed is not defined 
+2020-01-10 20:20:58.083 ERROR ErrorHandler: object_id is not defined 
+2020-01-10 20:29:08.385 ERROR ErrorHandler: object_id is not defined 

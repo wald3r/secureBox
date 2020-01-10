@@ -21,6 +21,7 @@ const Login = ( props ) => {
       const newUser = await loginService.login({ username, password })
       props.setUser(newUser)
       fileService.setToken(newUser.token)
+      console.log(newUser.lastUsed)
       props.getFiles()
       props.getUsers()
       props.handleNotification('Login successfull!', 5000)

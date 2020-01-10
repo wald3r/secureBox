@@ -62,7 +62,7 @@ const Registration = (props) => {
                         </td>
 
                         <td>
-                          <input autoComplete='off' onChange={({ target }) => setName(target.value)}/>
+                          <input autoComplete='off' type='text' onChange={({ target }) => setName(target.value)}/>
                         </td>
                     </tr>
                     <tr>
@@ -71,7 +71,7 @@ const Registration = (props) => {
                         </td>
 
                         <td>
-                          <input autoComplete='off' required onChange={({ target }) => setNewname(target.value)}/>
+                          <input autoComplete='off' required type='text' onChange={({ target }) => setNewname(target.value)}/>
                         </td>
                     </tr>
                     <tr>
@@ -80,7 +80,7 @@ const Registration = (props) => {
                         </td>
 
                         <td>
-                          <input autoComplete='off' required onChange={({ target }) => setEmail(target.value)}/>
+                          <input autoComplete='off' required type='email' onChange={({ target }) => setEmail(target.value)}/>
                         </td>
                     </tr>
                     <tr>

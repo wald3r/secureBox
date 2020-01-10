@@ -15,6 +15,34 @@ export const getFiles = () => {
   }
 }
 
+export const getDocuments = () => {
+  return async dispatch => {
+    const response = await fileService.getDocuments()
+    if(response.status === 400){
+      return
+    }
+    let data = response.data
+    dispatch({
+      type: 'GETDOCUMENTS',
+      data
+    })
+  }
+}
+
+export const getPictures = () => {
+  return async dispatch => {
+    const response = await fileService.getPictures()
+    if(response.status === 400){
+      return
+    }
+    let data = response.data
+    dispatch({
+      type: 'GETPICTURES',
+      data
+    })
+  }
+}
+
 export const setFiles = (data) => {
   return async dispatch => {
     dispatch({
@@ -26,11 +54,14 @@ export const setFiles = (data) => {
 
 const filesReducer = (state = [], action) => {
 
-  console.log(action.type)
   switch (action.type){
   case 'GETFILES':
     return action.data
   case 'SETFILES':
+    return action.data
+  case 'GETDOCUMENTS':
+    return action.data
+  case 'GETPICTURES':
     return action.data
   default:
     return state

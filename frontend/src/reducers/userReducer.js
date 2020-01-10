@@ -13,6 +13,14 @@ export const setUser = ( user ) => {
   }
 }
 
+export const addLastUsed = ( id ) => {
+  return async dispatch => {
+    dispatch({
+      type: 'ADDLASTUSED',
+      id
+    })
+  }
+}
 
 export const updateUser = ( details ) => {
   return async dispatch => {
@@ -34,8 +42,18 @@ export const removeUser = () => {
 
 const userReducer = (state = null, action) => {
 
-  console.log(action.type)
   switch (action.type){
+  case 'ADDLASTUSED':
+      var user = state
+      user.lastUsed = user.lastUsed.filter(file => String(file) !== String(action.id))
+
+      if(user.lastUsed.length < 20){
+        user.lastUsed = user.lastUsed.unshift(action.id)
+      }else{
+        user.lastUsed.pop()
+        user.lastUsed = user.lastUsed.unshift(action.id)
+      }
+    return user
   case 'SETUSER':
     return action.user
   case 'REMOVEUSER':

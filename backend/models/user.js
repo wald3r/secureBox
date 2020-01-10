@@ -28,7 +28,13 @@ const userSchema = mongoose.Schema({
     role: {
         type: String,
         default: roleManagement.roles.USER
-    }
+    },
+    lastUsed: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'File'
+        }
+    ]
 })
 
 

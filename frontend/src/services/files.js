@@ -26,6 +26,25 @@ const getFiles = async () => {
   return response
 }
 
+const getDocuments = async () => {
+
+  const config = {
+    headers: { Authorization: token },
+  }
+  const response = await axios.get(`${baseUrl}/documents/`, config)
+  return response
+}
+
+const getPictures = async () => {
+
+  const config = {
+    headers: { Authorization: token },
+  }
+  const response = await axios.get(`${baseUrl}/pictures/`, config)
+  return response
+}
+
+
 
 const getFile = async (id) => {
 
@@ -59,4 +78,4 @@ const sendFiles = async (data) => {
 
 
 
-export default { sendFiles, setToken, getFiles, getFile, removeFile, removeUnencryptedFile }
+export default { sendFiles, setToken, getFiles, getFile, removeFile, removeUnencryptedFile, getPictures, getDocuments }
