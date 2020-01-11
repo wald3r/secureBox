@@ -24,18 +24,15 @@ const App = ( props ) => {
     const loggedUserJSON = window.localStorage.getItem('loggedappUser')
     if (loggedUserJSON) {
       const newUser = JSON.parse(loggedUserJSON)
-      handleUserSettings(newUser)
+      props.setUser(newUser)
+        if(newUser.role === 'admin'){
+          props.getUsers()
+        }
     }
+// eslint-disable-next-line react-hooks/exhaustive-deps,
   }, [])
 
   const noPriorityStyle = { padding: 5 }
-
-  const handleUserSettings = (newUser) => {
-    props.setUser(newUser)
-      if(newUser.role === 'admin'){
-        props.getUsers()
-      }
-  }
 
   const handleLogout = () => {
     props.removeUser()
