@@ -22,6 +22,13 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
   const removeSelection = () => {
     setAllSelected(false)
     setSelectedFiles([])
+    var items = document.getElementsByClassName('checkbox')
+  
+    for(let a = 0; a < items.length; a++){
+      if(items[a].type === 'checkbox'){
+          items[a].checked = false
+      }
+    }
   }
 
   const handleSingleDownload = async (file) => {
