@@ -156,8 +156,14 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
     }
    
   }
-
-  return (
+  if(filteredFiles.length === 0){
+    return (
+      <div>
+        No files
+      </div>
+    )
+  }else{
+    return (
         <div >
           <Table className='table table-fixed table-hover' responsive style={tableStyle}>
             <thead className='thead-dark'>
@@ -191,7 +197,8 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
             <Button  onClick={handleSelectedDownload}><i className="fa fa-folder"></i></Button>
           </div>
         </div>
-  )
+    )
+  }
 }
 
 const mapStateToProps = (state) => {

@@ -53,6 +53,8 @@ const AllFiles = (props) => {
               Name: <input type='search' onChange={handleNameSearch}/>
               Date: <input type='search' onChange={handleDateSearch}/>
           </div>
+          <br></br>
+          <br></br>
           <div style={{ textAlign: 'center' }}>
             <Tabs id="controlled-tab-example" activeKey={chosenType} onSelect={handleTypeChange}>
               <Tab eventKey="LastUsed" title="Last Used">

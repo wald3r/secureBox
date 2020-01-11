@@ -41,23 +41,23 @@ const App = ( props ) => {
   }
   if (props.user === null){
     return (
-      <div>
+      <div className='bg'>
+      <div className='container'>
+      <div className='row'>
+      <div className='col-md-15'>
         <Error />
         <Notification />
         <Router>
-          <div className='container'>
-            <div className='row'>
-              <div className='col-md-15'>
-                <h1>SecureBox</h1>
-                <Link style={noPriorityStyle} to='/'>Login</Link>
-                <Link style={noPriorityStyle} to='/registration'>Registration</Link>
-              </div>
-            </div>
-          </div>
+          <h1>SecureBox</h1>
+          <Link style={noPriorityStyle} to='/'>Login</Link>
+          <Link style={noPriorityStyle} to='/registration'>Registration</Link>  
           <br></br>
           <Route exact path='/' render={() => <Login/> } />
           <Route exact path='/registration' render={() => <Registration /> } />
         </Router>
+      </div>
+      </div>
+      </div>
       </div>
     )
   }else{
@@ -71,13 +71,14 @@ const App = ( props ) => {
               <Notification />
               <Router>
                 <h1 className='title'>SecureBox</h1>
+                <br></br>
                 <Link style={noPriorityStyle} to='/'>Home</Link>
                 <Link style={noPriorityStyle} to='/upload'>Upload</Link>
                 <Link style={noPriorityStyle} to='/allfiles'>Files</Link>
                 <Link style={noPriorityStyle} to='/profile'>Profile</Link>
                 <Link style={priorityStyle} to='/admin'>Admin</Link>
                 {props.user.username} is logged in <Button onClick={handleLogout}>Logout</Button>
-         
+                <br></br>
                 <br></br>
                 <Route exact path='/' render={() => <Home /> }/>
                 <Route exact path='/upload' render={(props) => <Upload {...props}/> } />

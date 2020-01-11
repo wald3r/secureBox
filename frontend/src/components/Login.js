@@ -38,9 +38,7 @@ const Login = ( props ) => {
 
   return (
 
-    <div className='container'>
-      <div className='row'>
-        <div className='col-md-15'>
+    <div>
           <Form onSubmit={handleLogin}>
             <table className='table .table-striped' width="10">
                 <thead className='thead-dark'>
@@ -69,8 +67,6 @@ const Login = ( props ) => {
             </table>
             <Button className='button' type="submit">login</Button>
           </Form>
-        </div>
-      </div>
     </div>
   )
 }

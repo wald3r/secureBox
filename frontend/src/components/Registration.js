@@ -47,9 +47,7 @@ const Registration = (props) => {
 
   return(
 
-    <div className='container'>
-      <div className='row'>
-        <div className='col-md-15'>
+    <div>
           <Form onSubmit={handleRegistration}>
             <table className='table .table-striped' width="10">
                 <thead className='thead-dark'>
@@ -105,8 +103,6 @@ const Registration = (props) => {
             </table>
             <div><Button className='button' type="submit">Register</Button></div>
           </Form>
-        </div>
-      </div>
     </div>
   )
 }

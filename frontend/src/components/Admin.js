@@ -33,9 +33,7 @@ const Admin = (props) => {
 
   return (
 
-    <div className='container'>
-          <div className='row'>
-            <div className='col-md-15'>
+    <div>
               <ChangeUser showDialog={showUserDialog}
                           handleShowDialog={setShowUserDialog}
                           user={user}/>
@@ -68,9 +66,8 @@ const Admin = (props) => {
                   ) }
                 </tbody>
               </Table>
-            </div>
-          </div>
-        </div>
+
+    </div>
   )
 }
 
