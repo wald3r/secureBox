@@ -19,20 +19,23 @@ import './stylesheets/general.css'
 
 const App = ( props ) => {
   //window.localStorage.removeItem('loggedappUser')
+
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedappUser')
     if (loggedUserJSON) {
       const newUser = JSON.parse(loggedUserJSON)
-      props.setUser(newUser)
-      if(newUser.role === 'admin'){
-        props.getUsers()
-      }
+      handleUserSettings(newUser)
     }
   }, [])
 
   const noPriorityStyle = { padding: 5 }
 
-  
+  const handleUserSettings = (newUser) => {
+    props.setUser(newUser)
+      if(newUser.role === 'admin'){
+        props.getUsers()
+      }
+  }
 
   const handleLogout = () => {
     props.removeUser()

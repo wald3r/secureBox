@@ -37,18 +37,21 @@ const Upload = ( { ...props } ) => {
 
   const checkMimeType= () => {
     const types = ['image/png', 'image/jpeg', 'image/gif', 'application/pdf', 'application/txt']
-    let err = []
+    let noErr = false
     for(var x = 0; x<files.length; x++) {
-      if(types.every(type => files[x].type !== type)){
-        err = err.concat(files[x].type)
+      for(let i = 0; i < types.length; i++){
+        if(types[i] === files[x].type){
+          noErr = true
+        }
+      }
+      if(noErr === false){
+        props.handleError(`${files[x].type} not supported format`, 5000)
+        return noErr
       }
     }
 
-    if(err.length !== 0){
-      props.handleError(`${err} not supported format`, 5000)
-      return false
-    }
-    return true
+  
+    return noErr
   }
 
   const uploadHandler = async (event) => {
@@ -61,7 +64,6 @@ const Upload = ( { ...props } ) => {
       }else if(style === false){
         props.handleError('Save your settings!', 5000)
       }else if(checkMimeType()){
-        console.log('start uploading')
         const data = new FormData()
         for(var x = 0; x<files.length; x++) {
           data.append('file', files[x], `${helperClass.createName(props.user.username, type, files[x].type, files[x].name, newName, newDate, x+1)}`)

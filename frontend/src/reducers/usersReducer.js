@@ -27,7 +27,7 @@ const userReducer = (state = [], action) => {
   case 'GETUSERS':
     return action.data
   case 'CHANGEUSER':
-    const users = state.filter(u => u._id !== action.user._id)
+    const users = state.filter(u => u.id !== action.user.id)
     users.concat(action.user)
     return users.concat(action.user)
   default:

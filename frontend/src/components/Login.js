@@ -11,7 +11,6 @@ import { Button, Form } from 'react-bootstrap'
 import '../stylesheets/general.css'
 
 const Login = ( props ) => {
-
   const [ username, setUsername ] = useState('')
   const [ password, setPassword ] = useState('')
 
@@ -25,8 +24,6 @@ const Login = ( props ) => {
         props.getUsers()
       }
       props.handleNotification('Login successfull!', 5000)
-      setPassword('')
-      setUsername('')
     }catch(error){
       if(error.response){
         props.handleError(error.response.data, 5000)
