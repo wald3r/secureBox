@@ -19,3 +19,35 @@
 2020-01-10 20:16:28.782 ERROR ErrorHandler: lastUsed is not defined 
 2020-01-10 20:20:58.083 ERROR ErrorHandler: object_id is not defined 
 2020-01-10 20:29:08.385 ERROR ErrorHandler: object_id is not defined 
+2020-01-11 10:28:13.990 ERROR ErrorHandler: file is not defined 
+2020-01-11 10:49:14.441 ERROR ErrorHandler: Cast to ObjectId failed for value "pictures" at path "_id" for model "File" 
+2020-01-11 10:49:16.285 ERROR ErrorHandler: Cast to ObjectId failed for value "documents" at path "_id" for model "File" 
+2020-01-11 10:49:42.810 ERROR ErrorHandler: Cast to ObjectId failed for value "pictures" at path "_id" for model "File" 
+2020-01-11 10:51:13.605 ERROR ErrorHandler: Cast to ObjectId failed for value "pictures" at path "_id" for model "File" 
+2020-01-11 10:54:49.622 ERROR ErrorHandler: Cannot read property 'caster' of undefined 
+2020-01-11 10:55:27.916 ERROR ErrorHandler: Cannot read property 'caster' of undefined 
+2020-01-11 10:56:02.542 ERROR ErrorHandler: Cannot read property 'caster' of undefined 
+2020-01-11 10:56:23.408 ERROR ErrorHandler: Cannot read property 'caster' of undefined 
+2020-01-11 10:57:50.416 ERROR ErrorHandler: Cannot read property 'caster' of undefined 
+2020-01-11 10:58:13.476 ERROR ErrorHandler: Cannot read property 'caster' of undefined 
+2020-01-11 10:58:35.989 ERROR ErrorHandler: Cannot read property 'caster' of undefined 
+2020-01-11 10:59:00.885 ERROR ErrorHandler: Cannot read property 'caster' of undefined 
+2020-01-11 10:59:27.204 ERROR ErrorHandler: Cannot read property 'caster' of undefined 
+2020-01-11 11:00:56.456 ERROR ErrorHandler: modifiedUser.save is not a function 
+2020-01-11 11:02:12.917 ERROR ErrorHandler: modifiedUser.save is not a function 
+2020-01-11 11:02:38.505 ERROR ErrorHandler: modifiedUser.save is not a function 
+2020-01-11 11:05:02.887 ERROR ErrorHandler: modifiedUser.save is not a function 
+2020-01-11 11:05:26.435 ERROR ErrorHandler: modifiedUser.save is not a function 
+2020-01-11 11:10:03.213 ERROR ErrorHandler: Cannot read property 'caster' of undefined 
+2020-01-11 11:12:26.369 ERROR ErrorHandler: Cannot read property 'caster' of undefined 
+2020-01-11 11:14:30.682 ERROR ErrorHandler: Cannot read property 'caster' of undefined 
+2020-01-11 11:14:51.181 ERROR ErrorHandler: Cannot read property 'caster' of undefined 
+2020-01-11 11:16:05.501 ERROR ErrorHandler: object_id is not defined 
+2020-01-11 11:18:52.409 ERROR ErrorHandler: Cast to ObjectId failed for value "documents" at path "_id" for model "File" 
+2020-01-11 11:21:55.093 ERROR ErrorHandler: Cast to ObjectId failed for value "documents" at path "_id" for model "File" 
+2020-01-11 11:22:27.451 ERROR ErrorHandler: Cast to ObjectId failed for value "pictures" at path "_id" for model "File" 
+2020-01-11 11:22:31.466 ERROR ErrorHandler: Cast to ObjectId failed for value "documents" at path "_id" for model "File" 
+2020-01-11 11:23:50.396 ERROR ErrorHandler: Cast to ObjectId failed for value "documents" at path "_id" for model "File" 
+2020-01-11 11:24:43.762 ERROR ErrorHandler: Cast to ObjectId failed for value "pictures" at path "_id" for model "File" 
+2020-01-11 11:24:46.211 ERROR ErrorHandler: Cast to ObjectId failed for value "documents" at path "_id" for model "File" 
+2020-01-11 11:29:13.870 ERROR ErrorHandler: undefined 

@@ -16,8 +16,8 @@ filesRouter.get('/', async (request, response, next) => {
     if(user == undefined){
       return response.status(401).send('Not Authenticated')
     }
-    const files = await File.find({ user: user.id }).populate('user')
-    return response.status(200).json(files)
+    const files = await File.find({ user: user._id }).populate('user')
+    return response.status(200).json(files.map(file => file.toJSON()))
   }catch(exception){
     next(exception)
   }
@@ -26,13 +26,12 @@ filesRouter.get('/', async (request, response, next) => {
 filesRouter.get('/documents/', async (request, response, next) => {
 
   try {
-
     const user = await authenticationHelper.isLoggedIn(request.token)
     if(user == undefined){
       return response.status(401).send('Not Authenticated')
     }
-    const files = await File.find({ user: user.id, category: 'Document' }).populate('user')
-    return response.status(200).json(files)
+    const files = await File.find({ user: user._id, category: 'Document' })
+    return response.status(200).json(files.map(file => file.toJSON()))
   }catch(exception){
     next(exception)
   }
@@ -47,17 +46,18 @@ filesRouter.get('/pictures/', async (request, response, next) => {
     if(user == undefined){
       return response.status(401).send('Not Authenticated')
     }
-    const files = await File.find({ user: user.id, category: 'Picture' }).populate('user')
-    return response.status(200).json(files)
+    const files = await File.find({ user: user._id, category: 'Picture' }).populate('user')
+    return response.status(200).json(files.map(file => file.toJSON()))
   }catch(exception){
     next(exception)
   }
 })
 
 
+
 filesRouter.get('/download/:id', async(request, response, next) => {
   try{
-    const user = await authenticationHelper.isLoggedIn(request.token)
+    var user = await authenticationHelper.isLoggedIn(request.token)
     if(user == undefined){
       return response.status(401).send('Not Authenticated')
     }
@@ -69,6 +69,7 @@ filesRouter.get('/download/:id', async(request, response, next) => {
       await response.sendFile(filePath , { root : config.FILE_DIR})
     }) 
     logger.downloadFile(filePath)
+
     const modifiedUser = helperFunctions.modifyLastUsed(user, fileDb)
     await modifiedUser.save()
   }
@@ -84,7 +85,6 @@ filesRouter.delete('/dremove/:id', async(request, response, next) => {
   if(user == undefined){
     return response.status(401).send('Not Authenticated')
   }
-  console.log(user)
   const fileDb = await File.findById(request.params.id)
   const filePath = `${fileDb.path}/${fileDb.name}`
   try{
@@ -102,7 +102,7 @@ filesRouter.delete('/dremove/:id', async(request, response, next) => {
 
 filesRouter.delete('/eremove/:id', async(request, response, next) => {
 
-  const user = await authenticationHelper.isLoggedIn(request.token)
+  var user = await authenticationHelper.isLoggedIn(request.token)
   if(user == undefined){
     return response.status(401).send('Not Authenticated')
   }
@@ -153,7 +153,6 @@ filesRouter.post('/upload', async (request, response, next) => {
     }
     await files.map(async file => {  
       const splitName = file.name.split('__')
-      console.log(splitName)
       const fileName = nameCreation.createDocumentName(user.username, splitName[4], splitName[2], splitName[3], files.length === 1 ? '' : splitName[1] ,file.mimetype, path)
       const newFile = new File ({
         name: fileName,

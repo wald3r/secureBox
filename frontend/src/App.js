@@ -39,7 +39,6 @@ const App = ( props ) => {
     props.handleNotification('Logout successfull!', 5000)
 
   }
-  console.log(props.user)
   if (props.user === null){
     return (
       <div>
@@ -62,8 +61,6 @@ const App = ( props ) => {
       </div>
     )
   }else{
-
-    console.log(props.user.role)
     const priorityStyle = { padding: 5, display: props.user.role === 'admin' ? '' : 'none' }
     return(
       <div>

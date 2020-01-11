@@ -7,7 +7,7 @@ import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
 import fileDownload from 'js-file-download'
 import { setFiles } from '../reducers/filesReducer'
-import { addLastUsed } from '../reducers/userReducer'
+import { addLastUsed, removeLastUsed } from '../reducers/userReducer'
 
 import helperClass from '../utils/helperClass'
 
@@ -19,13 +19,19 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
   const showSelectedButtons = { display: props.files.length === 0 ? 'none' : '' }
   const showCheckedAllName = allSelected === true ? 'Remove selection' : 'Select all'
 
+  const removeSelection = () => {
+    setAllSelected(false)
+    setSelectedFiles([])
+  }
+
   const handleSingleDownload = async (file) => {
     try{
-      const response = await fileService.getFile(file.id)
+      const response = await fileService.downloadFile(file.id)
       fileDownload(response.data, file.name)
-      //props.addLastUsed(file.id)
+      props.addLastUsed(file, props.user)
       props.handleNotification('Download started...', 2500)
       await fileService.removeUnencryptedFile(file.id)
+      removeSelection()
     }catch(error){
       if(error.response){
         props.handleError(error.response.data, 5000)
@@ -43,7 +49,9 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
       const response = await fileService.removeFile(file.id)
       if(response.status === 200){
         props.handleNotification(`File ${file.name} removed`, 5000)
+        props.removeLastUsed(file.id, props.user)
         props.setFiles(props.files.filter(oFile => oFile.id !== file.id))
+        removeSelection()
       }
     }catch(error){
       if(error.response){
@@ -71,7 +79,9 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
       selectedFiles.map(async file => {
         await fileService.removeFile(file.id)
         props.setFiles(props.files.filter(oFile => oFile.id !== file.id))
+        props.removeLastUsed(file.id, props.user)
         props.handleNotification(`File ${file.name} removed`, 5000)
+        removeSelection()
       })
     
     }catch(error){
@@ -90,9 +100,11 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
 
     try{
       selectedFiles.map(async file => {
-        const response = await fileService.getFile(file.id)
+        const response = await fileService.downloadFile(file.id)
         fileDownload(response.data, file.name)
+        props.addLastUsed(file, props.user)
         props.handleNotification('Download started...', 2500)
+        removeSelection()
       })
     }catch(error){
       if(error.response){
@@ -180,6 +192,7 @@ const mapDispatchToProps = {
   setFiles,
   handleNotification,
   addLastUsed,
+  removeLastUsed,
   handleError
 }
 

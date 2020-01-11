@@ -16,7 +16,7 @@ usersRouter.get('/', async (request, response, next) => {
       }
 
       const users = await User.find({}).populate('lastUsed')
-      return response.json(users)
+      return response.json(users.map(user => user.toJSON()))
     } catch(exception){
       next(exception)
     }
@@ -67,7 +67,7 @@ usersRouter.put('/password/:id', async (request, response, next) => {
       user.password = passwordHash
       const savedUser = await user.save()
 
-      return response.status(200).json(savedUser)
+      return response.status(200).json(savedUser.toJSON())
 
     } catch(exception){
       next(exception)
@@ -88,7 +88,7 @@ usersRouter.put('/password/:id', async (request, response, next) => {
       const getUser = await User.findById(request.params.id).populate('lastUsed')
 
      
-      response.status(200).json(getUser)
+      response.status(200).json(getUser.toJSON())
        
     } catch(exception){
       next(exception)
@@ -111,7 +111,7 @@ usersRouter.put('/password/:id', async (request, response, next) => {
       user.role = request.body.role
 
       const savedUser = await user.save()
-      return response.status(200).json(savedUser)
+      return response.status(200).json(savedUser.toJSON())
 
     } catch(exception){
       next(exception)

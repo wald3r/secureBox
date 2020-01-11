@@ -8,24 +8,22 @@ function sleep(ms) {
 
 
 function modifyLastUsed(user, object){
-  console.log(user)
   const maxLength = process.env.LASTUSED
-  user.lastUsed = user.lastUsed.filter(file => String(file) !== String(object._id))
-
-  if(user.lastUsed.length < maxLength){
-    user.lastUsed = user.lastUsed.unshift(object._id)
-    return user
+  var list = []
+  list = list.concat(user.lastUsed.filter(file => String(file) !== String(object.id)))
+  if(list.length < maxLength){
+    list.unshift(object.id)
   }else{
-    user.lastUsed.pop()
-    user.lastUsed = user.lastUsed.unshift(object._id)
-    return user
+    list.pop()
+    list.unshift(object.id)
   }
-
+  user.lastUsed = list
+  return user
 }
 
 
 function removeLastUsed(user, object){
-  user.lastUsed = user.lastUsed.filter(file => String(file) !== String(object._id))
+  user.lastUsed = user.lastUsed.filter(file => String(file) !== String(object.id))
   return user
 }
 

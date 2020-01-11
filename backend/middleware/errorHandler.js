@@ -1,8 +1,6 @@
 const logger = require('../utils/logger')
 
-const errorHandler = (error, request, response, next) => {
-
-
+const errorHandler = (error, request, response) => {
 
   if(error.name === 'ValidationError'){
     logger.validationError(error.message)
@@ -12,9 +10,7 @@ const errorHandler = (error, request, response, next) => {
   
   logger.errorHandler(error.message)
   response.status(500).send(error.message)
-  
 
-  next(error)
 }
 
 

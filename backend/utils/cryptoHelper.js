@@ -43,8 +43,7 @@ const decrypt = (password, pathToObject) => {
     readInitVect.on('data', (chunk) => {
       initVect = chunk
     })
-    console.log(typeof String(initVect))
-    console.log(initVect)
+
     readInitVect.on('close', () => {
       const cipherKey = getCipherKey(password)
       const decipher = crypto.createDecipheriv('aes256', cipherKey, initVect)

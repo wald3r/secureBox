@@ -6,6 +6,7 @@ export const setUser = ( user ) => {
     window.localStorage.setItem('loggedappUser', JSON.stringify(user))
     fileService.setToken(user.token)
     usersService.setToken(user.token)
+    
     dispatch({
       type: 'SETUSER',
       user
@@ -13,11 +14,28 @@ export const setUser = ( user ) => {
   }
 }
 
-export const addLastUsed = ( id ) => {
+export const addLastUsed = ( file, user ) => {
   return async dispatch => {
+    var list = user.lastUsed.filter(oFile => oFile.id !== file.id)
+    if(list.length < 20){
+      list.unshift(file)
+    }else{
+      list.pop()
+      list.unshift(file)
+    }
     dispatch({
       type: 'ADDLASTUSED',
-      id
+      list
+    })
+  }
+}
+
+export const removeLastUsed = ( fileId, user ) => {
+  return async dispatch => {
+    var list = user.lastUsed.filter(oFile => oFile.id !== fileId)
+    dispatch({
+      type: 'REMOVELASTUSED',
+      list
     })
   }
 }
@@ -41,19 +59,13 @@ export const removeUser = () => {
 }
 
 const userReducer = (state = null, action) => {
-
   switch (action.type){
   case 'ADDLASTUSED':
-      var user = state
-      user.lastUsed = user.lastUsed.filter(file => String(file) !== String(action.id))
-
-      if(user.lastUsed.length < 20){
-        user.lastUsed = user.lastUsed.unshift(action.id)
-      }else{
-        user.lastUsed.pop()
-        user.lastUsed = user.lastUsed.unshift(action.id)
-      }
-    return user
+    const addedToList = { ...state, lastUsed: action.list}
+    return addedToList
+  case 'REMOVELASTUSED':
+    const removedFromList = { ...state, lastUsed: action.list}
+    return removedFromList
   case 'SETUSER':
     return action.user
   case 'REMOVEUSER':

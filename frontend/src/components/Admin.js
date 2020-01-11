@@ -56,8 +56,8 @@ const Admin = (props) => {
                 </thead>
                 <tbody>
                   {props.users.map(user =>
-                    <tr key={user._id}>
-                      <td>{user._id}</td>
+                    <tr key={user.id}>
+                      <td>{user.id}</td>
                       <td>{user.username}</td>
                       <td>{user.name}</td>
                       <td>{user.email}</td>

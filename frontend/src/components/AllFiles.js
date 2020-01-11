@@ -41,7 +41,7 @@ const AllFiles = (props) => {
       props.getFiles()
     }else if (e === 'Document'){
       props.getDocuments()
-    }else{
+    }else if (e === 'Picture'){
       props.getPictures()
     }
   }
