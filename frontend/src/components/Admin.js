@@ -42,7 +42,7 @@ const Admin = (props) => {
               <ChangePassword showDialog={showPasswordDialog}
                           handleShowDialog={setShowPasswordDialog}
                           user={user}/>
-              <Table className='table'>
+              <Table className='table table-hover table-fixed'>
                 <thead className='thead-dark'>
                   <tr>
                     <th>Id</th>
@@ -51,7 +51,6 @@ const Admin = (props) => {
                     <th>Mail</th>
                     <th>Role</th>
                     <th>Active</th>
-                    <th>Password</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -63,10 +62,8 @@ const Admin = (props) => {
                       <td>{user.email}</td>
                       <td>{user.role}</td>
                       <td>{user.active.toString()}</td>
-                      <td>{user.password}</td>
                       <td style={priorityStyle}><Button onClick={() => handleUserChange(user)}>Edit Profile</Button></td>
                       <td style={priorityStyle}><Button onClick={() => handlePasswordChange(user)}>Edit Password</Button></td>
-
                     </tr>
                   ) }
                 </tbody>

@@ -63,13 +63,13 @@ const App = ( props ) => {
   }else{
     const priorityStyle = { padding: 5, display: props.user.role === 'admin' ? '' : 'none' }
     return(
-      <div>
-        <Error />
-        <Notification />
-        <Router>
-          <div className='container'>
-            <div className='row'>
-              <div className='col-md-15'>
+      <div className='bg'>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-md-15'>
+              <Error />
+              <Notification />
+              <Router>
                 <h1 className='title'>SecureBox</h1>
                 <Link style={noPriorityStyle} to='/'>Home</Link>
                 <Link style={noPriorityStyle} to='/upload'>Upload</Link>
@@ -77,16 +77,17 @@ const App = ( props ) => {
                 <Link style={noPriorityStyle} to='/profile'>Profile</Link>
                 <Link style={priorityStyle} to='/admin'>Admin</Link>
                 {props.user.username} is logged in <Button onClick={handleLogout}>Logout</Button>
-              </div>
+         
+                <br></br>
+                <Route exact path='/' render={() => <Home /> }/>
+                <Route exact path='/upload' render={(props) => <Upload {...props}/> } />
+                <Route exact path='/allfiles' render={(props) => <AllFiles {...props}/> } />
+                <Route exact path='/profile' render={(props) => <Profile {...props}/> } />
+                <Route exact path='/admin' render={(props) => <Admin {...props}/> } />
+              </Router>
             </div>
           </div>
-          <br></br>
-          <Route exact path='/' render={() => <Home /> }/>
-          <Route exact path='/upload' render={(props) => <Upload {...props}/> } />
-          <Route exact path='/allfiles' render={(props) => <AllFiles {...props}/> } />
-          <Route exact path='/profile' render={(props) => <Profile {...props}/> } />
-          <Route exact path='/admin' render={(props) => <Admin {...props}/> } />
-        </Router>
+        </div>
       </div>
     )
   }

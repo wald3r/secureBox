@@ -19,6 +19,16 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
   const showSelectedButtons = { display: props.files.length === 0 ? 'none' : '' }
   const showCheckedAllName = allSelected === true ? 'Remove selection' : 'Select all'
 
+  const tableStyle = {
+    padding: 5,
+    borderStyle: 'solid',
+    borderColor: 'black',
+    borderWidth: 'thin',
+    maxHeight: 800,
+    overflow: 'auto',
+    display: 'block', 
+
+  }
   const removeSelection = () => {
     setAllSelected(false)
     setSelectedFiles([])
@@ -148,10 +158,8 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
   }
 
   return (
-    <div className='container'>
-      <div className='row'>
-        <div className='col-md-15'>
-          <Table className='table'>
+        <div >
+          <Table className='table table-fixed table-hover' responsive style={tableStyle}>
             <thead className='thead-dark'>
               <tr>
                 <th>Select</th>
@@ -162,7 +170,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
                 <th>Date</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody >
               {filteredFiles.map(file =>
                 <tr key={file.id}>
                   <td><input onClick={(event) => handleOneSelection(file, event)} type="checkbox" className='checkbox'/></td>
@@ -183,8 +191,6 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
             <Button  onClick={handleSelectedDownload}><i className="fa fa-folder"></i></Button>
           </div>
         </div>
-      </div>
-    </div>
   )
 }
 

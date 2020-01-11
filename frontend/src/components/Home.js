@@ -1,18 +1,14 @@
 import React from 'react'
 import '../stylesheets/general.css'
-
+import Image from 'react-bootstrap/Image'
 
 const Home = (props) => {
 
 
 
   return (
-    <div className='container'>
-      <div className='row'>
-        <div className='col-md-15'>
-          Welcome to SecureBox!
-        </div>
-      </div>
+    <div>
+      <h1>Welcome to SecureBox</h1>
     </div>
   )
 }

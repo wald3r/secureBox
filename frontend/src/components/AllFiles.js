@@ -22,7 +22,7 @@ const AllFiles = (props) => {
     padding: 5,
     borderStyle: 'solid',
     borderColor: 'black',
-    borderWidth: 'thin'
+    borderWidth: 'thin',
   }
 
   const handleNameSearch = (e) => {
@@ -47,9 +47,7 @@ const AllFiles = (props) => {
   }
 
   return (
-    <div className='container'>
-      <div className='row'>
-        <div className='col-md-15'>
+    <div >
           <div style={filterStyle}>
             <b>Filter</b><br></br>
               Name: <input type='search' onChange={handleNameSearch}/>
@@ -71,8 +69,6 @@ const AllFiles = (props) => {
               </Tab>
             </Tabs>
           </div>
-        </div>
-      </div>
     </div>
   )
 }

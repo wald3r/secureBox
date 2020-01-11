@@ -114,28 +114,24 @@ const Upload = ( { ...props } ) => {
   }
 
   return (
-    <div className='container'>
-      <div className='row'>
-        <div className='col-md-15'>
-          <div style={chosenStyle} >
-            Settings:
-            <Form onSubmit={handleSettings}>
-            <ButtonGroup className="mr-2" aria-label="First group">
-              <Button className='fileButton' active={type === 'Document'} disabled={disableInput} onClick={() => setType('Document')} variant="secondary">Documents</Button>
-              <Button className='fileButton' active={type === 'Picture'}  disabled={disableInput} onClick={() => setType('Picture')} variant="secondary">Pictures</Button>
-            </ButtonGroup>
-            <DatePicker onChange={handleTimeChange} selected={newDate} disabled={disableInput}/>
-            <input onChange={({ target }) => setNewName(target.value)} disabled={disableInput}/>
-            <Button type="submit">{!style ? 'Save' : 'Remove'}</Button>
-            </Form>
-          </div>
-          <div className='form-group files' >
-            <Form method='POST' encType='multipart/form-data' onSubmit={uploadHandler} >
-              <input type='file' autoComplete='off' name='files' multiple onChange={onChangeHandler}/>
-              <Button className='button' type="submit">Upload</Button>
-            </Form>
-          </div>
-        </div>
+    <div>
+      <div style={chosenStyle} >
+        Settings:
+        <Form onSubmit={handleSettings}>
+          <ButtonGroup className="mr-2" aria-label="First group">
+            <Button className='fileButton' active={type === 'Document'} disabled={disableInput} onClick={() => setType('Document')} variant="secondary">Documents</Button>
+            <Button className='fileButton' active={type === 'Picture'}  disabled={disableInput} onClick={() => setType('Picture')} variant="secondary">Pictures</Button>
+          </ButtonGroup>
+          <DatePicker onChange={handleTimeChange} selected={newDate} disabled={disableInput}/>
+          <input onChange={({ target }) => setNewName(target.value)} disabled={disableInput}/>
+          <Button type="submit">{!style ? 'Save' : 'Remove'}</Button>
+        </Form>
+      </div>
+      <div className='form-group files' >
+        <Form method='POST' encType='multipart/form-data' onSubmit={uploadHandler} >
+          <input type='file' autoComplete='off' name='files' multiple onChange={onChangeHandler}/>
+          <Button className='button' type="submit">Upload</Button>
+        </Form>
       </div>
     </div>
   )
