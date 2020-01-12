@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import '../stylesheets/general.css'
 import FilteredFiles from './FilteredFiles'
 import helperClass from '../utils/helperClass'
-import { getPictures, getDocuments, getFiles } from '../reducers/filesReducer'
+import { getPictures, getDocuments, getFiles, getFavourites } from '../reducers/filesReducer'
 
 
 const AllFiles = (props) => {
@@ -43,6 +43,8 @@ const AllFiles = (props) => {
       props.getDocuments()
     }else if (e === 'Picture'){
       props.getPictures()
+    }else if (e === 'Favourite'){
+      props.getFavourites(props.user.id)
     }
   }
 
@@ -57,6 +59,9 @@ const AllFiles = (props) => {
           <br></br>
           <div style={{ textAlign: 'center' }}>
             <Tabs id="controlled-tab-example" activeKey={chosenType} onSelect={handleTypeChange}>
+             <Tab eventKey="Favourite" title="Favourites">
+                <FilteredFiles filteredFiles={dateFilter}/>
+              </Tab>
               <Tab eventKey="LastUsed" title="Last Used">
                 <FilteredFiles filteredFiles={props.user.lastUsed}/>
               </Tab>
@@ -85,7 +90,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   getDocuments,
   getFiles,
-  getPictures
+  getPictures,
+  getFavourites
 }
 
 

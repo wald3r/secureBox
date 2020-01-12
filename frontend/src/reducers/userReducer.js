@@ -30,6 +30,7 @@ export const addLastUsed = ( file, user ) => {
   }
 }
 
+
 export const removeLastUsed = ( fileId, user ) => {
   return async dispatch => {
     var list = user.lastUsed.filter(oFile => oFile.id !== fileId)

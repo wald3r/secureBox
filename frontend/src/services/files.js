@@ -17,6 +17,16 @@ const removeFile = async (id) => {
   return response
 }
 
+const getFavourites = async (id) => {
+  const config = {
+    headers: { Authorization: token },
+  }
+
+  const response = await axios.get(`${baseUrl}/favourites/${id}`, config)
+  return response
+}
+
+
 const getFiles = async () => {
 
   const config = {
@@ -85,4 +95,4 @@ const sendFiles = async (data) => {
 
 
 
-export default { downloadFile, sendFiles, setToken, getFiles, getFile, removeFile, removeUnencryptedFile, getPictures, getDocuments }
+export default { getFavourites, downloadFile, sendFiles, setToken, getFiles, getFile, removeFile, removeUnencryptedFile, getPictures, getDocuments }

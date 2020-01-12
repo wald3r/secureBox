@@ -30,6 +30,10 @@ const fileSchema = mongoose.Schema({
     date: {
       type: String,
       required: true,
+    },
+    counter: {
+      type: Number,
+      default: 0
     }
 })
 

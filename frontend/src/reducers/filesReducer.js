@@ -29,6 +29,20 @@ export const getDocuments = () => {
   }
 }
 
+export const getFavourites = (id) => {
+  return async dispatch => {
+    const response = await fileService.getFavourites(id)
+    if(response.status === 400){
+      return
+    }
+    let data = response.data
+    dispatch({
+      type: 'GETFAVOURITES',
+      data
+    })
+  }
+}
+
 export const getPictures = () => {
   return async dispatch => {
     const response = await fileService.getPictures()
@@ -60,6 +74,8 @@ const filesReducer = (state = [], action) => {
   case 'SETFILES':
     return action.data
   case 'GETDOCUMENTS':
+    return action.data
+  case 'GETFAVOURITES':
     return action.data
   case 'GETPICTURES':
     return action.data
