@@ -21,7 +21,7 @@ const Login = ( props ) => {
       props.setUser(newUser)
       fileService.setToken(newUser.token)
       if(newUser.role === 'admin'){
-        props.getUsers()
+        props.getUsers(newUser)
       }
       props.handleNotification('Login successfull!', 5000)
     }catch(error){

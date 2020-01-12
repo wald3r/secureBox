@@ -2,7 +2,6 @@ const filesRouter = require('express').Router()
 const authenticationHelper = require('../utils/authenticationHelper')
 const File = require ('../models/file')
 const fs = require('fs');
-const config = require('../utils/config')
 const nameCreation = require('../utils/nameCreation')
 const cryptoHelper = require('../utils/cryptoHelper')
 const logger = require('../utils/logger')
@@ -63,10 +62,9 @@ filesRouter.get('/download/:id', async(request, response, next) => {
     }
     const fileDb = await File.findById(request.params.id)
     const filePath = `${fileDb.path}/${fileDb.name}`
-    
-    const readStream = cryptoHelper.decrypt('test', `${config.FILE_DIR}${filePath}.enc`)
+    const readStream = cryptoHelper.decrypt('test', `${helperFunctions.getDir(__dirname)}${filePath}.enc`)
     readStream.on('close', async () => {
-      await response.sendFile(filePath , { root : config.FILE_DIR})
+      await response.sendFile(filePath , { root : helperFunctions.getDir(__dirname)})
     }) 
     logger.downloadFile(filePath)
 
@@ -88,7 +86,7 @@ filesRouter.delete('/dremove/:id', async(request, response, next) => {
   const fileDb = await File.findById(request.params.id)
   const filePath = `${fileDb.path}/${fileDb.name}`
   try{
-      fs.unlink(`${config.FILE_DIR}${filePath}`, (err) => {
+      fs.unlink(`${helperFunctions.getDir(__dirname)}${filePath}`, (err) => {
         if(err) throw logger.failedDeleteFile(err.message)
      })
   } catch(exception) {
@@ -171,10 +169,10 @@ filesRouter.post('/upload', async (request, response, next) => {
       })
 
       for(let a = 0; a < 10; a++){
-        if(fs.existsSync(`${config.FILE_DIR}${path}/${fileName}`)){
+        if(fs.existsSync(`${helperFunctions.getDir(__dirname)}${path}/${fileName}`)){
           console.log('start encrypting', fileName)
-          cryptoHelper.encrypt('test', `${config.FILE_DIR}${path}/${fileName}`)
-          logger.uploadFile(`${config.FILE_DIR}${path}/${fileName}`)
+          cryptoHelper.encrypt('test', `${helperFunctions.getDir(__dirname)}${path}/${fileName}`)
+          logger.uploadFile(`${helperFunctions.getDir(__dirname)}${path}/${fileName}`)
           break
         }
         else{

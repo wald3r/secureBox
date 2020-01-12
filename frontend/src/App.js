@@ -26,7 +26,7 @@ const App = ( props ) => {
       const newUser = JSON.parse(loggedUserJSON)
       props.setUser(newUser)
         if(newUser.role === 'admin'){
-          props.getUsers()
+          props.getUsers(newUser)
         }
     }
 // eslint-disable-next-line react-hooks/exhaustive-deps,
@@ -42,11 +42,11 @@ const App = ( props ) => {
   if (props.user === null){
     return (
       <div className='bg'>
+      <Error />
+      <Notification />
       <div className='container'>
       <div className='row'>
       <div className='col-md-15'>
-        <Error />
-        <Notification />
         <Router>
           <h1>SecureBox</h1>
           <Link style={noPriorityStyle} to='/'>Login</Link>
@@ -64,11 +64,11 @@ const App = ( props ) => {
     const priorityStyle = { padding: 5, display: props.user.role === 'admin' ? '' : 'none' }
     return(
       <div className='bg'>
+        <Error />
+        <Notification />
         <div className='container'>
           <div className='row'>
             <div className='col-md-15'>
-              <Error />
-              <Notification />
               <Router>
                 <h1 className='title'>SecureBox</h1>
                 <br></br>

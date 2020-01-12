@@ -9,7 +9,7 @@ const errorHandler = (error, request, response) => {
 
   
   logger.errorHandler(error.message)
-  response.status(500).send(error.message)
+  //response.status(500).send(error.message)
 
 }
 

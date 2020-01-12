@@ -7,14 +7,16 @@ import welcome4 from '../pictures/welcome4.jpg'
 
 const Home = (props) => {
 
-  const [pictures, setPictures] = useState([welcome1, welcome2, welcome3, welcome4])
+  // eslint-disable-next-line
+  const [pictures, setPictures] = useState(['', welcome1, welcome2, welcome3, welcome4])
 
-  const randInt = Math.floor(Math.random() *4)
-  
+  const randGen = Math.floor(Math.random() *5) 
+  const randInt = randGen === 0 ? 1 : randGen
+
   return (
     <div>
       <br></br>
-      <img src={pictures[randInt]} />
+      <img src={pictures[randInt]} alt='background'/>
     </div>
   )
 }

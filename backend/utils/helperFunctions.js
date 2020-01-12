@@ -6,6 +6,13 @@ function sleep(ms) {
 }
 
 
+function getDir(fullDir){
+  console.log('test', fullDir)
+  const dir = fullDir.replace('/controllers', '/')
+  return dir
+
+}
+
 
 function modifyLastUsed(user, object){
   const maxLength = process.env.LASTUSED
@@ -27,4 +34,4 @@ function removeLastUsed(user, object){
   return user
 }
 
-module.exports = { sleep, modifyLastUsed, removeLastUsed }
+module.exports = { sleep, modifyLastUsed, removeLastUsed, getDir }
