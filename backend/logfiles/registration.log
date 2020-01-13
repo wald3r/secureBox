@@ -48,3 +48,5 @@
 2020-01-07 11:19:53.717 ERROR RegistrationsManager: Cannot set property 'active' of null 
 2020-01-07 11:23:59.484 ERROR RegistrationsManager: Cannot set property 'active' of null 
 2020-01-07 11:30:52.791 ERROR RegistrationsManager:User validation failed: username: Path `username` (`t`) is shorter than the minimum allowed length (3). 
+2020-01-13 10:04:09.806 INFO  RegistrationsManager: Registered id: 5e1c247957eaa04afe2b4ef2 user: testusername, email: walder2@gmx.at 
+2020-01-13 10:04:10.112 INFO  RegistrationsManager: Activation link created hash: 20ab78a6b3953154de2dbeae1244c1a99c0328f9, user: 5e1c247957eaa04afe2b4ef2 

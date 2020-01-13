@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
 const api = supertest(app)
+const bcrypt = require('bcrypt')
 
 
 
@@ -11,13 +12,16 @@ describe('test login user api', () => {
 
   beforeEach(async () => {
       await User.deleteMany({})
-      const user = new User({username: 'testusername', name: 'testname', password: 'testpassword'})
-    
-      await api
+      const passwordHash = await bcrypt.hash('testpassword', 10)
+      const user = new User({username: 'testusername', name: 'testname', password: passwordHash, email: 'walder2@gmx.at', active: true})
+      await user.save()
+    /*  await api
         .post('/api/registration')
         .send(user)
         .expect(200)
   
+      console.log(user)
+*/
   })
 
   test('login with existing user', async () => {
@@ -49,7 +53,7 @@ describe('test login user api', () => {
       .post('/api/login')
       .send(newUser)
       .expect(401)
-      .then(response => response_message = response.body.error)
+      .then(response => response_message = response.text)
 
     expect(response_message).toBe('invalid username or password')
   })
