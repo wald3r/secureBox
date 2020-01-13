@@ -38,6 +38,7 @@ const userSchema = mongoose.Schema({
 })
 
 
+
 userSchema.plugin(timestamps)
 userSchema.plugin(uniqueValidator)
 userSchema.set('toJSON', {

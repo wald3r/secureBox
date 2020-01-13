@@ -58,3 +58,7 @@
 2020-01-13 10:19:38.173 INFO  RegistrationsManager: Activation link created hash: cd0c197dcd9c6da594e9c3af5d753ad834eb43d2, user: 5e1c281978d0b35755911c49 
 2020-01-13 10:20:32.140 INFO  RegistrationsManager: Registered id: 5e1c284f8d41d557f2f05c99 user: daniel, email: 1 
 2020-01-13 10:20:32.376 INFO  RegistrationsManager: Activation link created hash: 933cf9f1b2dc3e5d3b1b58d6c2722cdbc8e5c666, user: 5e1c284f8d41d557f2f05c99 
+2020-01-13 12:16:54.765 INFO  RegistrationsManager: Registered id: 5e1c43969c8ceb1235a69eeb user: daniel, email: testmail 
+2020-01-13 12:16:55.041 INFO  RegistrationsManager: Activation link created hash: 6a0d12fe30f6af0069806231b076e4397815b57e, user: 5e1c43969c8ceb1235a69eeb 
+2020-01-13 12:33:30.740 INFO  RegistrationsManager: Registered id: 5e1c477a7f34e51bb0f9daa8 user: daniel, email: testmail 
+2020-01-13 12:33:31.030 INFO  RegistrationsManager: Activation link created hash: 9c17be75504f2c44736b86b47bad596bdc26770f, user: 5e1c477a7f34e51bb0f9daa8 

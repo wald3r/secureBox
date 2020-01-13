@@ -7,6 +7,11 @@ const errorHandler = (error, request, response) => {
     response.status(500).send(error.message)
   }
 
+  if(error.name === 'CastError'){
+    logger.validationError(error.message)
+    response.status(500).send(error.message)
+  }
+
   
   logger.errorHandler(error.message)
   //response.status(500).send(error.message)
