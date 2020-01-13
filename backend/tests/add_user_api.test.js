@@ -4,15 +4,18 @@ const supertest = require('supertest')
 const app = require('../app')
 const api = supertest(app)
 const helper = require('../utils/testHelper')
+const bcrypt = require('bcrypt')
+
 
 
 describe('test add user api', () => {
 
 
   beforeEach(async () => {
-      await User.deleteMany({})
-      const user = new User({username: 'testusername', name: 'testname', password: 'testpassword'})
-      await user.save()
+    await User.deleteMany({})
+    const passwordHash = await bcrypt.hash('testpassword', 10)
+    const user = new User({username: 'testusername', name: 'testname', password: passwordHash, email: 'walder2@gmx.at', active: true})
+    await user.save()
   })
 
 
@@ -23,6 +26,7 @@ describe('test add user api', () => {
       username: 'da',
       name: 'Daniel Walder',
       password: 'walder',
+      email: 'testmail',
     }
 
     await api
@@ -40,6 +44,7 @@ describe('test add user api', () => {
     const newUser = {
       name: 'Daniel Walder',
       password: 'walder',
+      email: 'testmail',
     }
 
     await api
@@ -58,6 +63,7 @@ describe('test add user api', () => {
       username: 1,
       name: 'Daniel Walder',
       password: 'walder',
+      email: 'testmail',
     }
 
     await api
@@ -77,6 +83,7 @@ describe('test add user api', () => {
       username: 'testusername',
       name: 'Daniel Walder',
       password: 'walder',
+      email: 'testmail',
     }
 
     await api
@@ -95,6 +102,7 @@ describe('test add user api', () => {
       username: 'daniel',
       name: 'Daniel Walder',
       password: 'walder',
+      email:'testmail',
     }
 
     await api
@@ -113,6 +121,7 @@ describe('test add user api', () => {
     const newUser = {
       username: 'daniel',
       name: 'Daniel Walder',
+      email: 'testmail',
     }
 
     await api
@@ -130,7 +139,26 @@ describe('test add user api', () => {
     const newUser = {
       username: 'daniel',
       name: 'Daniel Walder',
-      password: 1
+      password: 1,
+      email: 'testmail',
+    }
+
+    await api
+      .post('/api/registration')
+      .send(newUser)
+      .expect(500)
+    
+    const usersAtEnd = await helper.getUser()
+     expect(usersAtEnd.length).toBe(usersAtStart.length)
+  })
+
+  test('creation fails with a missing email - required', async () => {
+    const usersAtStart = await helper.getUser()
+
+    const newUser = {
+      username: 'daniel',
+      name: 'Daniel Walder',
+      password: 'testpassword',
     }
 
     await api

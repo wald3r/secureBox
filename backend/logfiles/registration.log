@@ -50,3 +50,11 @@
 2020-01-07 11:30:52.791 ERROR RegistrationsManager:User validation failed: username: Path `username` (`t`) is shorter than the minimum allowed length (3). 
 2020-01-13 10:04:09.806 INFO  RegistrationsManager: Registered id: 5e1c247957eaa04afe2b4ef2 user: testusername, email: walder2@gmx.at 
 2020-01-13 10:04:10.112 INFO  RegistrationsManager: Activation link created hash: 20ab78a6b3953154de2dbeae1244c1a99c0328f9, user: 5e1c247957eaa04afe2b4ef2 
+2020-01-13 10:15:01.894 INFO  RegistrationsManager: Registered id: 5e1c270501ef3252a3a6907c user: test, email: testmail 
+2020-01-13 10:15:02.201 INFO  RegistrationsManager: Activation link created hash: 6cc9fce1fa70e97190b382f6cbf306615d09655d, user: 5e1c270501ef3252a3a6907c 
+2020-01-13 10:16:48.187 INFO  RegistrationsManager: Registered id: 5e1c276fc7ae2f5480b1a7b3 user: daniel, email: testmail 
+2020-01-13 10:16:48.494 INFO  RegistrationsManager: Activation link created hash: 727322db55f1d3eddf9c969b8599cd8b7df8a314, user: 5e1c276fc7ae2f5480b1a7b3 
+2020-01-13 10:19:37.866 INFO  RegistrationsManager: Registered id: 5e1c281978d0b35755911c49 user: daniel, email: 1 
+2020-01-13 10:19:38.173 INFO  RegistrationsManager: Activation link created hash: cd0c197dcd9c6da594e9c3af5d753ad834eb43d2, user: 5e1c281978d0b35755911c49 
+2020-01-13 10:20:32.140 INFO  RegistrationsManager: Registered id: 5e1c284f8d41d557f2f05c99 user: daniel, email: 1 
+2020-01-13 10:20:32.376 INFO  RegistrationsManager: Activation link created hash: 933cf9f1b2dc3e5d3b1b58d6c2722cdbc8e5c666, user: 5e1c284f8d41d557f2f05c99 

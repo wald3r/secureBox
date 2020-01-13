@@ -58,6 +58,26 @@ describe('test login user api', () => {
     expect(response_message).toBe('invalid username or password')
   })
 
+  test('login with inactive user', async () => {
+
+    const passwordHash = await bcrypt.hash('testpassword1', 10)
+    const user = new User({username: 'testusername1', name: 'testname', password: passwordHash, email: 'walder2@gmx.at'})
+    await user.save()
+
+    const newUser = {
+      username: 'testusername1',
+      password: 'testpassword1',
+    }
+    let response_message
+     await api
+      .post('/api/login')
+      .send(newUser)
+      .expect(401)
+      .then(response => response_message = response.text)
+
+    expect(response_message).toBe('not active')
+  })
+
 
   afterAll(async () => {
     mongoose.connection.close()
