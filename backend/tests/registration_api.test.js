@@ -5,6 +5,8 @@ const app = require('../app')
 const api = supertest(app)
 const helper = require('../utils/testHelper')
 const bcrypt = require('bcrypt')
+const Registration = require('../models/registration')
+const cryptoHelper = require('../utils/cryptoHelper.js')
 
 
 
@@ -168,6 +170,44 @@ describe('test add user api', () => {
     
     const usersAtEnd = await helper.getUser()
      expect(usersAtEnd.length).toBe(usersAtStart.length)
+  })
+
+
+  test('test registration verification', async () => {
+
+    const newUser = new User({
+      username: 'daniel',
+      name: 'Daniel Walder',
+      password: 'testpassword',
+      email: 'test',
+    })
+    const savedUser = await newUser.save()
+
+    const registration = new Registration({
+      userid: savedUser._id,
+      hash: cryptoHelper.createRandomHash()
+    })
+    await registration.save()
+
+
+    let message
+    await api
+      .get(`/api/registration/verify/${registration.hash}`)
+      .expect(200)
+      .then(response => message = response.text)
+    
+    expect(message).toBe('User got activated.')
+  })
+
+  test('test registration verification - failed', async () => {
+
+    let message
+    await api
+      .get(`/api/registration/verify/${cryptoHelper.createRandomHash()}`)
+      .expect(500)
+      .then(response => message = response.text)
+    
+    expect(message).toBe('Activation did not work. Please contact the administrator.')
   })
 
   afterAll(async () => {

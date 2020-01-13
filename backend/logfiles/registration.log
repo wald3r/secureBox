@@ -62,3 +62,12 @@
 2020-01-13 12:16:55.041 INFO  RegistrationsManager: Activation link created hash: 6a0d12fe30f6af0069806231b076e4397815b57e, user: 5e1c43969c8ceb1235a69eeb 
 2020-01-13 12:33:30.740 INFO  RegistrationsManager: Registered id: 5e1c477a7f34e51bb0f9daa8 user: daniel, email: testmail 
 2020-01-13 12:33:31.030 INFO  RegistrationsManager: Activation link created hash: 9c17be75504f2c44736b86b47bad596bdc26770f, user: 5e1c477a7f34e51bb0f9daa8 
+2020-01-13 12:38:22.487 INFO  RegistrationsManager: Registered id: 5e1c489e775b501d8f93afd1 user: daniel, email: testmail 
+2020-01-13 12:38:22.725 INFO  RegistrationsManager: Activation link created hash: 4e207a3275d771b6d6d18d887a9557cc5ce77c25, user: 5e1c489e775b501d8f93afd1 
+2020-01-13 12:39:55.752 INFO  RegistrationsManager: Registered id: 5e1c48fb52cef91e0c08cb85 user: daniel, email: testmail 
+2020-01-13 12:39:56.163 INFO  RegistrationsManager: Activation link created hash: 7cac6e187d2a8f92131f9b30081dd59b53eb9ae4, user: 5e1c48fb52cef91e0c08cb85 
+2020-01-13 12:42:42.085 INFO  RegistrationsManager: Registered id: 5e1c49a10cc4151ede6c078a user: daniel, email: testmail 
+2020-01-13 12:42:42.328 INFO  RegistrationsManager: Activation link created hash: 76179704bf31aa2566fbc0c1921df89b5952ac4f, user: 5e1c49a10cc4151ede6c078a 
+2020-01-13 15:41:37.614 INFO  RegistrationsManager: User got activated undefined 
+2020-01-13 15:43:55.411 ERROR RegistrationsManager: Verification failed for undefined 
+2020-01-13 15:44:35.149 ERROR RegistrationsManager: Verification failed for undefined 
