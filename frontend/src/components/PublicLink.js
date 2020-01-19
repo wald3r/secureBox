@@ -13,13 +13,15 @@ const PublicLink = ( { showDialog, handleShowDialog, link, ...props } ) => {
     <div>
       <Modal show={showDialog} onHide={noChanges}>
         <Modal.Header closeButton>
-          <Modal.Title>Public link: </Modal.Title>
+          <Modal.Title>Public Link: </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <input autoComplete='off' type='url' value={link} />
+          <div style={{ color: 'red'}}>Attention! This is a one-time-only link. If not used, it will get invalid at midnight.</div>
+          <br></br>
+          <input autoComplete='off' style={{width:'100%'}} type='text' value={link} />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={noChanges}>
+          <Button variant="primary" onClick={noChanges}>
             Close
           </Button>
         </Modal.Footer>

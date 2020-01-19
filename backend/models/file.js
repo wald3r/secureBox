@@ -34,10 +34,6 @@ const fileSchema = mongoose.Schema({
     counter: {
       type: Number,
       default: 0
-    },
-    public: {
-      type: Boolean,
-      default: false,
     }
 })
 

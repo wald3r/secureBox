@@ -203,4 +203,20 @@ const errorHandler = (message) => {
   return
 
 }
-module.exports = { cryptoError, errorHandler, failedUploadFile, uploadFile, deleteFile, failedDeleteFile, downloadFile, logLogins, logRegistrations, validationError, verificationFailed, verification}
+
+
+const cleanUpHandler = (message) => {
+  
+  const opts = {
+    logFilePath:'logfiles/cleanup.log',
+    timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
+  }
+  
+  const log = SimpleNodeLogger.createSimpleLogger(opts)
+
+  log.setLevel('info')
+  log.info(`CleanUp Handler: ${message}`)
+  return
+
+}
+module.exports = { cleanUpHandler, cryptoError, errorHandler, failedUploadFile, uploadFile, deleteFile, failedDeleteFile, downloadFile, logLogins, logRegistrations, validationError, verificationFailed, verification}

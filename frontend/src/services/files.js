@@ -45,16 +45,6 @@ const makePublic = async (id) => {
   return response
 }
 
-const makePrivate = async (id) => {
-
-  const config = {
-    headers: { Authorization: token },
-  }
-  const response = await axios.get(`${baseUrl}/private/${id}`, config)
-  return response
-}
-
-
 const getDocuments = async () => {
 
   const config = {
@@ -108,10 +98,9 @@ const sendFiles = async (data) => {
   }
   const response = await axios.post(`${baseUrl}/upload`, data, config)
   return response
-
-
+  
 }
 
 
 
-export default { makePublic, makePrivate, getFavourites, downloadFile, sendFiles, setToken, getFiles, getFile, removeFile, removeUnencryptedFile, getPictures, getDocuments }
+export default { makePublic, getFavourites, downloadFile, sendFiles, setToken, getFiles, getFile, removeFile, removeUnencryptedFile, getPictures, getDocuments }

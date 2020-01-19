@@ -151,9 +151,9 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
 
 
   const handleConfidentiality = async (file) => {
-    await fileService.makePublic(file.id)
+    const response = await fileService.makePublic(file.id)
     setShowDialog(true)
-    setPublicLink(`localhost:3003/api/files/download/public/${file.id}`)
+    setPublicLink(`localhost:3003/api/files/download/public/${response.data.hash}`)
   }
 
   if(filteredFiles.length === 0){

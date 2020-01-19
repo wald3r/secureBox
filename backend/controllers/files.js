@@ -1,6 +1,7 @@
 const filesRouter = require('express').Router()
 const authenticationHelper = require('../utils/authenticationHelper')
 const File = require ('../models/file')
+const Public = require ('../models/public')
 const fs = require('fs');
 const nameCreation = require('../utils/nameCreation')
 const cryptoHelper = require('../utils/cryptoHelper')
@@ -121,17 +122,18 @@ filesRouter.get('/download/:id', async(request, response, next) => {
 
 filesRouter.get('/download/public/:id', async(request, response, next) => {
   try{
-    const fileDb = await File.findById(request.params.id)
-    if(fileDb.public == false){
-      return response.status(401).send('Not Allowed')
+    const publicLink = await Public.find({hash: request.params.id})
+    if(publicLink[0] === undefined){
+      return response.status(500).send('Does not exist')
     }
-
+    const fileDb = await File.findById(publicLink[0].file)
     const filePath = `${fileDb.path}/${fileDb.name}`
     const readStream = cryptoHelper.decrypt('test', `${helperFunctions.getDir(__dirname)}${filePath}.enc`)
     readStream.on('close', async () => {
       await response.sendFile(filePath , { root : helperFunctions.getDir(__dirname)})
     }) 
     logger.downloadFile(filePath)
+    await Public.findByIdAndDelete(publicLink[0]._id)
   }
   catch(exception){
     next(exception)
@@ -148,30 +150,19 @@ filesRouter.get('/public/:id', async(request, response, next) => {
     fileDb.public = true
     await fileDb.save()
 
-    return response.status(200).send('File made public')
+    const newPublicLink = new Public({
+      file: fileDb._id,
+      hash: cryptoHelper.createRandomHash()
+    })
+
+    await newPublicLink.save()
+
+    return response.status(200).json(newPublicLink.toJSON())
   }
   catch(exception){
     next(exception)
   }
 })
-
-filesRouter.get('/private/:id', async(request, response, next) => {
-  try{
-    var user = await authenticationHelper.isLoggedIn(request.token)
-    if(user == undefined){
-      return response.status(401).send('Not Authenticated')
-    }
-    const fileDb = await File.findById(request.params.id)
-    fileDb.public = false
-    await fileDb.save()
-
-    return response.status(200).send('File made private')
-  }
-  catch(exception){
-    next(exception)
-  }
-})
-
 
 filesRouter.delete('/dremove/:id', async(request, response, next) => {
   

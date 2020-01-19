@@ -14,10 +14,11 @@ const filesRouter = require('./controllers/files')
 const logging = require('./middleware/logging')
 const errorHandler = require('./middleware/errorHandler')
 const helmet = require('helmet')
+const scheduler = require ('./utils/scheduler.js')
 
 mongoose.connect(config.DB_URI, { useNewUrlParser: true})
 
-
+scheduler.clearPublicLinks
 
 app.use(express.static('build'))
 app.use(helmet())
