@@ -8,27 +8,19 @@ import { handleError } from '../reducers/errorReducer'
 import fileDownload from 'js-file-download'
 import { setFiles } from '../reducers/filesReducer'
 import { addLastUsed, removeLastUsed } from '../reducers/userReducer'
-
+import PublicLink from './PublicLink'
 import helperClass from '../utils/helperClass'
 
 const AllMyFiles = ({ filteredFiles, ...props }) => {
 
   const [allSelected, setAllSelected] = useState(false)
   const [selectedFiles, setSelectedFiles] = useState([])
- 
+  const [showDialog, setShowDialog] = useState(false)
+  const [publicLink, setPublicLink] = useState('')
+
   const showSelectedButtons = { display: props.files.length === 0 ? 'none' : '' }
   const showCheckedAllName = allSelected === true ? 'Remove selection' : 'Select all'
 
-  const tableStyle = {
-    padding: 5,
-    borderStyle: 'solid',
-    borderColor: 'black',
-    borderWidth: 'thin',
-    maxHeight: 800,
-    overflow: 'auto',
-    display: 'block', 
-
-  }
   const removeSelection = () => {
     setAllSelected(false)
     setSelectedFiles([])
@@ -156,6 +148,14 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
     }
    
   }
+
+
+  const handleConfidentiality = async (file) => {
+    await fileService.makePublic(file.id)
+    setShowDialog(true)
+    setPublicLink(`localhost:3003/api/files/download/public/${file.id}`)
+  }
+
   if(filteredFiles.length === 0){
     return (
       <div>
@@ -164,8 +164,11 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
     )
   }else{
     return (
-        <div >
-          <Table className='table table-fixed table-hover' responsive style={tableStyle}>
+        <div className='tablehelper'> 
+        <PublicLink showDialog={showDialog}
+                    handleShowDialog={setShowDialog}
+                    link={publicLink}/>
+          <Table responsive className='table table-hover'>
             <thead className='thead-dark'>
               <tr>
                 <th>Select</th>
@@ -176,7 +179,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
                 <th>Date</th>
               </tr>
             </thead>
-            <tbody >
+            <tbody>
               {filteredFiles.map(file =>
                 <tr key={file.id}>
                   <td><input onClick={(event) => handleOneSelection(file, event)} type="checkbox" className='checkbox'/></td>
@@ -187,6 +190,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
                   <td>{file.date}</td>
                   <td><Button onClick={() => handleSingleDownload(file)}><i className="fa fa-folder"></i></Button></td>
                   <td><Button onClick={() => handleSingleRemoval(file)}><i className="fa fa-trash"></i></Button></td>
+                  <td><Button onClick={() => handleConfidentiality(file)}><i className="fa fa-trash"></i></Button></td>
                 </tr>
               )}
             </tbody>

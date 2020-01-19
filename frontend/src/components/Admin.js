@@ -40,7 +40,7 @@ const Admin = (props) => {
               <ChangePassword showDialog={showPasswordDialog}
                           handleShowDialog={setShowPasswordDialog}
                           user={user}/>
-              <Table className='table table-hover table-fixed'>
+              <Table className='table table-hover'>
                 <thead className='thead-dark'>
                   <tr>
                     <th>Id</th>

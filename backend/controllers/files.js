@@ -10,7 +10,6 @@ const helperFunctions = require ('../utils/helperFunctions')
 filesRouter.get('/', async (request, response, next) => {
 
   try {
-
     const user = await authenticationHelper.isLoggedIn(request.token)
     if(user == undefined){
       return response.status(401).send('Not Authenticated')
@@ -89,6 +88,84 @@ filesRouter.get('/download/:id', async(request, response, next) => {
     await modifiedUser.save()
     fileDb.counter += 1
     await fileDb.save()
+  }
+  catch(exception){
+    next(exception)
+  }
+})
+
+
+filesRouter.get('/download/:id', async(request, response, next) => {
+  try{
+    var user = await authenticationHelper.isLoggedIn(request.token)
+    if(user == undefined){
+      return response.status(401).send('Not Authenticated')
+    }
+    const fileDb = await File.findById(request.params.id)
+    const filePath = `${fileDb.path}/${fileDb.name}`
+    const readStream = cryptoHelper.decrypt('test', `${helperFunctions.getDir(__dirname)}${filePath}.enc`)
+    readStream.on('close', async () => {
+      await response.sendFile(filePath , { root : helperFunctions.getDir(__dirname)})
+    }) 
+    logger.downloadFile(filePath)
+
+    const modifiedUser = helperFunctions.modifyLastUsed(user, fileDb)
+    await modifiedUser.save()
+    fileDb.counter += 1
+    await fileDb.save()
+  }
+  catch(exception){
+    next(exception)
+  }
+})
+
+filesRouter.get('/download/public/:id', async(request, response, next) => {
+  try{
+    const fileDb = await File.findById(request.params.id)
+    if(fileDb.public == false){
+      return response.status(401).send('Not Allowed')
+    }
+
+    const filePath = `${fileDb.path}/${fileDb.name}`
+    const readStream = cryptoHelper.decrypt('test', `${helperFunctions.getDir(__dirname)}${filePath}.enc`)
+    readStream.on('close', async () => {
+      await response.sendFile(filePath , { root : helperFunctions.getDir(__dirname)})
+    }) 
+    logger.downloadFile(filePath)
+  }
+  catch(exception){
+    next(exception)
+  }
+})
+
+filesRouter.get('/public/:id', async(request, response, next) => {
+  try{
+    var user = await authenticationHelper.isLoggedIn(request.token)
+    if(user == undefined){
+      return response.status(401).send('Not Authenticated')
+    }
+    const fileDb = await File.findById(request.params.id)
+    fileDb.public = true
+    await fileDb.save()
+
+    return response.status(200).send('File made public')
+  }
+  catch(exception){
+    next(exception)
+  }
+})
+
+filesRouter.get('/private/:id', async(request, response, next) => {
+  try{
+    var user = await authenticationHelper.isLoggedIn(request.token)
+    if(user == undefined){
+      return response.status(401).send('Not Authenticated')
+    }
+    const fileDb = await File.findById(request.params.id)
+    fileDb.public = false
+    await fileDb.save()
+
+    return response.status(200).send('File made private')
   }
   catch(exception){
     next(exception)

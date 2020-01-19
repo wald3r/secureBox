@@ -15,6 +15,7 @@ import { Button } from 'react-bootstrap'
 import AllFiles from './components/AllFiles'
 import Profile from './components/Profile'
 import Admin from './components/Admin'
+import Footer from './components/Footer'
 import './stylesheets/general.css'
 
 const App = ( props ) => {
@@ -34,11 +35,7 @@ const App = ( props ) => {
 
   const noPriorityStyle = { padding: 5 }
 
-  const handleLogout = () => {
-    props.removeUser()
-    props.handleNotification('Logout successfull!', 5000)
-
-  }
+  
   if (props.user === null){
     return (
       <div className='bg'>
@@ -72,12 +69,11 @@ const App = ( props ) => {
               <Router>
                 <h1 className='title'>SecureBox</h1>
                 <br></br>
-                <Link style={noPriorityStyle} to='/'>Home</Link>
-                <Link style={noPriorityStyle} to='/upload'>Upload</Link>
-                <Link style={noPriorityStyle} to='/allfiles'>Files</Link>
-                <Link style={noPriorityStyle} to='/profile'>Profile</Link>
-                <Link style={priorityStyle} to='/admin'>Admin</Link>
-                {props.user.username} is logged in <Button onClick={handleLogout}>Logout</Button>
+                <Link style={noPriorityStyle} to='/'><Button>Home</Button></Link>
+                <Link style={noPriorityStyle} to='/upload'><Button>Upload</Button></Link>
+                <Link style={noPriorityStyle} to='/allfiles'><Button>Files</Button></Link>
+                <Link style={noPriorityStyle} to='/profile'><Button>Profile</Button></Link>
+                <Link style={priorityStyle} to='/admin'><Button>Admin</Button></Link>
                 <br></br>
                 <br></br>
                 <Route exact path='/' render={() => <Home /> }/>
@@ -86,6 +82,9 @@ const App = ( props ) => {
                 <Route exact path='/profile' render={(props) => <Profile {...props}/> } />
                 <Route exact path='/admin' render={(props) => <Admin {...props}/> } />
               </Router>
+              <br></br>
+              <br></br>
+            <Footer />
             </div>
           </div>
         </div>

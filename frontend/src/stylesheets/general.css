@@ -1,9 +1,5 @@
 @import './upload.css';
 
-.container {
-  display: flex;
-  justify-content: center;
-}
 
 .title{
   text-align: center;
@@ -11,22 +7,33 @@
 
 .button {
   display: table-cell;
-
   width: 100%;
+}
+
+table{
+  border: 1px solid black;
+  width: 100%;
+  max-height: 800px;
+  border-collapse: collapse;
+  display: inline-block; 
+  overflow: auto;
 }
 
 .container {
   background-color: rgb(255, 255, 255);
   height: 100%;
   max-height: 100%;
-  opacity: 0.90;
+  opacity: 0.85;
+  margin-right: 30%;
+  display: flex;
+  justify-content: center;
 }
 
 body, html {
   height: 100%;
   }
   .bg {
-  background-image: url('../pictures/coffeebackground.jpg');
+  background-image: url('../pictures/wolf2.jpg');
   height: 100vh;
   background-position: center;
   background-repeat: no-repeat;

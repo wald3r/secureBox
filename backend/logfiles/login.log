@@ -582,3 +582,7 @@
 2020-01-13 12:43:01.016 INFO  LoginManager: Logged in testusername1 
 2020-01-13 12:43:03.925 INFO  LoginManager: Trying to login testusername1 
 2020-01-13 12:43:04.142 INFO  LoginManager: Logged in testusername1 
+2020-01-19 14:52:03.489 INFO  LoginManager: Trying to login daniel 
+2020-01-19 14:52:04.000 INFO  LoginManager: Logged in daniel 
+2020-01-19 15:09:16.939 INFO  LoginManager: Trying to login daniel 
+2020-01-19 15:09:17.428 INFO  LoginManager: Logged in daniel 
