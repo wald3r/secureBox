@@ -24,6 +24,7 @@ const Registration = (props) => {
       if(newpwd1 === newpwd2){
         await registrationService.register({ username: newname, password: newpwd1, name: name, email: email })
         props.handleNotification('Registration successfull', 5000)
+        window.location.push('/')
         setNewname('')
         setEmail('')
         setNewpwd1('')

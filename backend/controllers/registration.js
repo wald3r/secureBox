@@ -50,8 +50,8 @@ registrationRouter.post('/', async (request, response, next) => {
 
           await registration.save()
           logger.logRegistrations(null, registration, 1)
-          //await nodemailer.sendRegistrationMail(savedUser, registration.hash)
-          //logger.logRegistrations(null, null, 2)
+          await nodemailer.sendRegistrationMail(savedUser, registration.hash)
+          logger.logRegistrations(null, null, 2)
         }
 
         

@@ -30,9 +30,7 @@ filesRouter.get('/favourites/:id', async (request, response, next) => {
       return response.status(401).send('Not Authenticated')
     }
     const files = await File.find({ user: user._id}).sort([['counter', -1]]).limit(5).populate('user')
-    console.log(files)
     const usedFiles = files.filter(file => file.counter > 0)
-    console.log(usedFiles)
     return response.status(200).json(usedFiles.map(file => file.toJSON()))
   }catch(exception){
     next(exception)

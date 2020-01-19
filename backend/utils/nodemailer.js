@@ -4,17 +4,13 @@ require('dotenv').config()
 var user = 'securebox20@gmail.com'
 
 const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465,
-  secure: true,
+  host: "smtp.mailtrap.io",
+  port: 2525,
   auth: {
-    type: 'OAuth2',
-    user: 'securebox20@gmail.com',
-    clientId: process.env.CLIENTID,
-    clientSecret: process.env.CLIENTSECRET,
-    refreshToken: process.env.REFRESHTOKEN,
+    user: "0e23ea8dbabae0",
+    pass: "2e18ffad60605d"
   }
-})
+});
 
 transporter.set('oauth2_provision_cb', (user, renew, callback)=>{
   let accessToken = userTokens[user];
@@ -36,8 +32,19 @@ const sendRegistrationMail =  async (userObject, hash) => {
   })
   console.log(`Message sent: ${info.messageId}`
   )
-
-
 }
 
-module.exports = { sendRegistrationMail }
+const sendDownloadLink =  async (userObject, hash) => {
+
+  let info = await transporter.sendMail({
+    from: 'securebox',
+    to: userObject.email,
+    subject: 'Download Email',
+    text: `Follow this link to download the file: http://localhost:3003/api/files/download/public/${hash}`,
+  })
+  console.log(`Message sent: ${info.messageId}`
+  )
+}
+
+
+module.exports = { sendRegistrationMail, sendDownloadLink }

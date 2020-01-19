@@ -65,8 +65,6 @@ const Profile = ( props ) => {
   const handlePassword = async (event) => {
 
     event.preventDefault()
-    console.log('changes', password1, password2, oldPassword)
-
     if(password1 !== password2){
       props.handleError('Passwords have to be the same', 5000)
     }else if(password1 === oldPassword){
