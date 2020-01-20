@@ -7,6 +7,7 @@ const nameCreation = require('../utils/nameCreation')
 const cryptoHelper = require('../utils/cryptoHelper')
 const logger = require('../utils/logger')
 const helperFunctions = require ('../utils/helperFunctions')
+const nodemailer = require('../utils/nodemailer')
 
 filesRouter.get('/', async (request, response, next) => {
 
@@ -68,32 +69,6 @@ filesRouter.get('/pictures/', async (request, response, next) => {
 })
 
 
-
-filesRouter.get('/download/:id', async(request, response, next) => {
-  try{
-    var user = await authenticationHelper.isLoggedIn(request.token)
-    if(user == undefined){
-      return response.status(401).send('Not Authenticated')
-    }
-    const fileDb = await File.findById(request.params.id)
-    const filePath = `${fileDb.path}/${fileDb.name}`
-    const readStream = cryptoHelper.decrypt('test', `${helperFunctions.getDir(__dirname)}${filePath}.enc`)
-    readStream.on('close', async () => {
-      await response.sendFile(filePath , { root : helperFunctions.getDir(__dirname)})
-    }) 
-    logger.downloadFile(filePath)
-
-    const modifiedUser = helperFunctions.modifyLastUsed(user, fileDb)
-    await modifiedUser.save()
-    fileDb.counter += 1
-    await fileDb.save()
-  }
-  catch(exception){
-    next(exception)
-  }
-})
-
-
 filesRouter.get('/download/:id', async(request, response, next) => {
   try{
     var user = await authenticationHelper.isLoggedIn(request.token)
@@ -138,6 +113,7 @@ filesRouter.get('/download/public/:id', async(request, response, next) => {
   }
 })
 
+
 filesRouter.get('/public/:id', async(request, response, next) => {
   try{
     var user = await authenticationHelper.isLoggedIn(request.token)
@@ -145,8 +121,6 @@ filesRouter.get('/public/:id', async(request, response, next) => {
       return response.status(401).send('Not Authenticated')
     }
     const fileDb = await File.findById(request.params.id)
-    fileDb.public = true
-    await fileDb.save()
 
     const newPublicLink = new Public({
       file: fileDb._id,
@@ -154,6 +128,30 @@ filesRouter.get('/public/:id', async(request, response, next) => {
     })
 
     await newPublicLink.save()
+
+    return response.status(200).json(newPublicLink.toJSON())
+  }
+  catch(exception){
+    next(exception)
+  }
+})
+
+filesRouter.post('/public/mail/:id', async(request, response, next) => {
+  try{
+    var user = await authenticationHelper.isLoggedIn(request.token)
+    if(user == undefined){
+      return response.status(401).send('Not Authenticated')
+    }
+    const fileDb = await File.findById(request.params.id)
+    const body = request.body
+
+    const newPublicLink = new Public({
+      file: fileDb._id,
+      hash: cryptoHelper.createRandomHash()
+    })
+
+    await newPublicLink.save()
+    nodemailer.sendDownloadLink(body.mail, newPublicLink.hash)
 
     return response.status(200).json(newPublicLink.toJSON())
   }

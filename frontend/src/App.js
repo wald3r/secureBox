@@ -46,6 +46,7 @@ const App = ( props ) => {
       <div className='col-md-15'>
         <Router>
           <h1>SecureBox</h1>
+          <br></br>
           <Link style={noPriorityStyle} to='/'>Login</Link>
           <Link style={noPriorityStyle} to='/registration'>Registration</Link>  
           <br></br>
@@ -67,6 +68,7 @@ const App = ( props ) => {
           <div className='row'>
             <div className='col-md-15'>
               <Router>
+                <br></br>
                 <h1 className='title'>SecureBox</h1>
                 <br></br>
                 <Link style={noPriorityStyle} to='/'><Button>Home</Button></Link>

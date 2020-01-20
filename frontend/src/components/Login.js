@@ -9,6 +9,7 @@ import { handleError } from '../reducers/errorReducer'
 import { connect } from 'react-redux'
 import { Button, Form } from 'react-bootstrap'
 import '../stylesheets/general.css'
+import parameter from '../utils/parameter'
 
 const Login = ( props ) => {
   const [ username, setUsername ] = useState('')
@@ -23,14 +24,14 @@ const Login = ( props ) => {
       if(newUser.role === 'admin'){
         props.getUsers(newUser)
       }
-      props.handleNotification('Login successfull!', 5000)
+      props.handleNotification('Login successfull!', parameter.notificationTime)
     }catch(error){
       if(error.response){
-        props.handleError(error.response.data, 5000)
+        props.handleError(error.response.data, parameter.errorTime)
       }else if (error.request){
-        props.handleError(error.request.data, 5000)
+        props.handleError(error.request.data, parameter.errorTime)
       }else{
-        props.handleError(error.message, 5000)
+        props.handleError(error.message, parameter.errorTime)
       }
       console.log(error)
     }

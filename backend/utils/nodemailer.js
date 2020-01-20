@@ -34,11 +34,11 @@ const sendRegistrationMail =  async (userObject, hash) => {
   )
 }
 
-const sendDownloadLink =  async (userObject, hash) => {
+const sendDownloadLink =  async (email, hash) => {
 
   let info = await transporter.sendMail({
     from: 'securebox',
-    to: userObject.email,
+    to: email,
     subject: 'Download Email',
     text: `Follow this link to download the file: http://localhost:3003/api/files/download/public/${hash}`,
   })

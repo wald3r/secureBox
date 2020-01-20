@@ -9,15 +9,18 @@ import fileDownload from 'js-file-download'
 import { setFiles } from '../reducers/filesReducer'
 import { addLastUsed, removeLastUsed } from '../reducers/userReducer'
 import PublicLink from './PublicLink'
+import SendPublicLink from './SendPublicLink'
 import helperClass from '../utils/helperClass'
+import parameter from '../utils/parameter'
 
 const AllMyFiles = ({ filteredFiles, ...props }) => {
 
   const [allSelected, setAllSelected] = useState(false)
   const [selectedFiles, setSelectedFiles] = useState([])
-  const [showDialog, setShowDialog] = useState(false)
+  const [showLinkDialog, setShowLinkDialog] = useState(false)
+  const [showEmailDialog, setShowEmailDialog] = useState(false)
   const [publicLink, setPublicLink] = useState('')
-
+  const [file, setFile] = useState(null)
   const showSelectedButtons = { display: props.files.length === 0 ? 'none' : '' }
   const showCheckedAllName = allSelected === true ? 'Remove selection' : 'Select all'
 
@@ -43,11 +46,11 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
       removeSelection()
     }catch(error){
       if(error.response){
-        props.handleError(error.response.data, 5000)
+        props.handleError(error.response.data, parameter.errorTime)
       }else if (error.request){
-        props.handleError(error.request.data, 5000)
+        props.handleError(error.request.data, parameter.errorTime)
       }else{
-        props.handleError(error.message, 5000)
+        props.handleError(error.message, parameter.errorTime)
       }
       console.error(error)
     }
@@ -57,18 +60,18 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
     try{
       const response = await fileService.removeFile(file.id)
       if(response.status === 200){
-        props.handleNotification(`File ${file.name} removed`, 5000)
+        props.handleNotification(`File ${file.name} removed`, parameter.notificationTime)
         props.removeLastUsed(file.id, props.user)
         props.setFiles(props.files.filter(oFile => oFile.id !== file.id))
         removeSelection()
       }
     }catch(error){
       if(error.response){
-        props.handleError(error.response.data, 5000)
+        props.handleError(error.response.data, parameter.errorTime)
       }else if (error.request){
-        props.handleError(error.request.data, 5000)
+        props.handleError(error.request.data, parameter.errorTime)
       }else{
-        props.handleError(error.message, 5000)
+        props.handleError(error.message, parameter.errorTime)
       }
       console.error(error)
     }
@@ -89,17 +92,17 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
         await fileService.removeFile(file.id)
         props.setFiles(props.files.filter(oFile => oFile.id !== file.id))
         props.removeLastUsed(file.id, props.user)
-        props.handleNotification(`File ${file.name} removed`, 5000)
+        props.handleNotification(`File ${file.name} removed`, parameter.notificationTime)
         removeSelection()
       })
     
     }catch(error){
       if(error.response){
-        props.handleError(error.response.data, 5000)
+        props.handleError(error.response.data, parameter.errorTime)
       }else if (error.request){
-        props.handleError(error.request.data, 5000)
+        props.handleError(error.request.data, parameter.errorTime000)
       }else{
-        props.handleError(error.message, 5000)
+        props.handleError(error.message, parameter.errorTime)
      }
       console.error(error)
     }
@@ -117,11 +120,11 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
       })
     }catch(error){
       if(error.response){
-        props.handleError(error.response.data, 5000)
+        props.handleError(error.response.data, parameter.errorTime)
       }else if (error.request){
-        props.handleError(error.request.data, 5000)
+        props.handleError(error.request.data, parameter.errorTime)
       }else{
-        props.handleError(error.message, 5000)
+        props.handleError(error.message, parameter.errorTime)
       }
       console.error(error)
     }
@@ -151,9 +154,25 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
 
 
   const handleConfidentiality = async (file) => {
-    const response = await fileService.makePublic(file.id)
-    setShowDialog(true)
-    setPublicLink(`localhost:3003/api/files/download/public/${response.data.hash}`)
+    try{
+      const response = await fileService.makePublic(file.id)
+      setShowLinkDialog(true)
+      setPublicLink(`${parameter.downloadLink}${response.data.hash}`)
+    }catch(error){
+      if(error.response){
+        props.handleError(error.response.data, parameter.errorTime)
+      }else if (error.request){
+        props.handleError(error.request.data, parameter.errorTime)
+      }else{
+        props.handleError(error.message, parameter.errorTime)
+      }
+      console.error(error)
+    }
+  }
+
+  const handleSendEmail = async (file) => {
+    setFile(file)
+    setShowEmailDialog(true)
   }
 
   if(filteredFiles.length === 0){
@@ -165,9 +184,12 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
   }else{
     return (
         <div className='tablehelper'> 
-        <PublicLink showDialog={showDialog}
-                    handleShowDialog={setShowDialog}
+          <PublicLink showDialog={showLinkDialog}
+                    handleShowDialog={setShowLinkDialog}
                     link={publicLink}/>
+          <SendPublicLink showDialog={showEmailDialog}
+                    handleShowDialog={setShowEmailDialog}
+                    file={file}/>
           <Table responsive className='table table-hover'>
             <thead className='thead-dark'>
               <tr>
@@ -188,9 +210,12 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
                   <td>{file.mimetype}</td>
                   <td>{file.size}</td>
                   <td>{file.date}</td>
-                  <td><Button onClick={() => handleSingleDownload(file)}><i className="fa fa-folder"></i></Button></td>
-                  <td><Button onClick={() => handleSingleRemoval(file)}><i className="fa fa-trash"></i></Button></td>
-                  <td><Button onClick={() => handleConfidentiality(file)}><i className="fa fa-trash"></i></Button></td>
+                  <td>
+                      <Button data-toggle='tooltip' data-placement='top' title='Download file.' onClick={() => handleSingleDownload(file)}><i className="fa fa-download"></i></Button>
+                      <Button data-toggle='tooltip' data-placement='top' title='Delete file.' onClick={() => handleSingleRemoval(file)}><i className="fa fa-trash"></i></Button>
+                      <Button data-toggle='tooltip' data-placement='top' title='Create download link.' onClick={() => handleConfidentiality(file)}><i className="fa fa-reply"></i></Button>
+                      <Button data-toggle='tooltip' data-placement='top' title='Create and send download link per email.' onClick={() => handleSendEmail(file)}><i className="fa fa-envelope"></i></Button>
+                  </td>
                 </tr>
               )}
             </tbody>

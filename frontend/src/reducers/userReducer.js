@@ -1,5 +1,6 @@
 import fileService from '../services/files'
 import usersService from '../services/users'
+import parameter from '../utils/parameter'
 
 export const setUser = ( user ) => {
   return async dispatch => {
@@ -17,7 +18,7 @@ export const setUser = ( user ) => {
 export const addLastUsed = ( file, user ) => {
   return async dispatch => {
     var list = user.lastUsed.filter(oFile => oFile.id !== file.id)
-    if(list.length < 20){
+    if(list.length < parameter.lastUsed){
       list.unshift(file)
     }else{
       list.pop()

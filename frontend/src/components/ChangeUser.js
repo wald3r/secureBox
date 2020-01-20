@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { Modal, Button } from 'react-bootstrap'
+import { Form, Modal, Button } from 'react-bootstrap'
 import userService from '../services/users'
 import { connect } from 'react-redux'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
-
+import parameter from '../utils/parameter'
 
 
 const ChangeUser = ( { showDialog, handleShowDialog, user, ...props } ) => {
@@ -19,7 +19,8 @@ const ChangeUser = ( { showDialog, handleShowDialog, user, ...props } ) => {
 
 
 
-  const saveChanges = async () => {
+  const saveChanges = async (event) => {
+    event.preventDefault()
     if(name !== ''){
       user.name = name
     }
@@ -30,42 +31,26 @@ const ChangeUser = ( { showDialog, handleShowDialog, user, ...props } ) => {
       user.email = email
     }
     try{
-      const response = await userService.updateUserDetails(user, user._id)
+      const response = await userService.updateUserDetails(user, user.id)
       if(response.status === 200){
-        props.handleNotification('User got updated!', 5000)
+        props.handleNotification('User got updated!', parameter.notificationTime)
         handleShowDialog(false)
       }
     }catch(error){
       if(error.response){
-        props.handleError(error.response.data, 5000)
+        props.handleError(error.response.data, parameter.errorTime)
       }else if (error.request){
-        props.handleError(error.request.data, 5000)
+        props.handleError(error.request.data, parameter.errorTime)
       }else{
-        props.handleError(error.message, 5000)
+        props.handleError(error.message, parameter.errorTime)
       }
       console.log(error)
     }
 
   }
 
-
   const noChanges = () => {
     handleShowDialog(false)
-  }
-
-  const handleNameChange = (event) => {
-    event.preventDefault()
-    setName(event.target.value)
-  }
-
-  const handleUsernameChange = (event) => {
-    event.preventDefault()
-    setUsername(event.target.value)
-  }
-
-  const handleMailChange = (event) => {
-    event.preventDefault()
-    SetEmail(event.target.value)
   }
 
   const handleRoleChange = (event) => {
@@ -83,6 +68,7 @@ const ChangeUser = ( { showDialog, handleShowDialog, user, ...props } ) => {
         <Modal.Header closeButton>
           <Modal.Title>Edit user details: </Modal.Title>
         </Modal.Header>
+        <Form onSubmit={saveChanges}>
         <Modal.Body>
           <table className='table .table-striped' width="10">
             <thead className='thead-dark'>
@@ -94,7 +80,7 @@ const ChangeUser = ( { showDialog, handleShowDialog, user, ...props } ) => {
                     </td>
 
                     <td>
-                      <input autoComplete='off' required defaultValue={user.username} type='text' onChange={handleUsernameChange}/>
+                      <input autoComplete='off' required defaultValue={user.username} type='text' onChange={({target}) => setUsername(target.value)}/>
                     </td>
                   </tr>
                   <tr>
@@ -103,7 +89,7 @@ const ChangeUser = ( { showDialog, handleShowDialog, user, ...props } ) => {
                     </td>
 
                     <td>
-                      <input autoComplete='off' defaultValue={user.name} type='text' onChange={handleNameChange}/>
+                      <input autoComplete='off' defaultValue={user.name} type='text' onChange={({target}) => setName(target.value)}/>
                     </td>
                   </tr>
                   <tr>
@@ -112,7 +98,7 @@ const ChangeUser = ( { showDialog, handleShowDialog, user, ...props } ) => {
                     </td>
 
                     <td>
-                      <input autoComplete='off' required defaultValue={user.email} type='email' onChange={handleMailChange}/>
+                      <input autoComplete='off' required defaultValue={user.email} type='email' onChange={({target}) => SetEmail(target.value)}/>
                     </td>
                   </tr>
                   <tr>
@@ -141,10 +127,11 @@ const ChangeUser = ( { showDialog, handleShowDialog, user, ...props } ) => {
           <Button variant="secondary" onClick={noChanges}>
             Close
           </Button>
-          <Button variant="primary" onClick={saveChanges}>
+          <Button variant="primary" type='submit'>
             Save Changes
           </Button>
         </Modal.Footer>
+        </Form>
       </Modal>
     </div>
   )

@@ -7,6 +7,7 @@ import { handleError } from '../reducers/errorReducer'
 import { updateUser } from '../reducers/userReducer'
 import { changeUser } from '../reducers/usersReducer'
 import usersService from '../services/users'
+import parameter from '../utils/parameter'
 
 const Profile = ( props ) => {
 
@@ -46,17 +47,17 @@ const Profile = ( props ) => {
 
       props.updateUser(response.data)
       props.changeUser(response.data)
-      props.handleNotification('User updated', 5000)
+      props.handleNotification('User updated', parameter.notificationTime)
       setUsername('')
       setName('')
       setEmail('')
     }catch(error){
       if(error.response){
-        props.handleError(error.response.data, 5000)
+        props.handleError(error.response.data, parameter.errorTime)
       }else if (error.request){
-        props.handleError(error.request.data, 5000)
+        props.handleError(error.request.data, parameter.errorTime)
       }else{
-        props.handleError(error.message, 5000)
+        props.handleError(error.message, parameter.errorTime)
       }
       console.error(error)
     }
@@ -66,26 +67,26 @@ const Profile = ( props ) => {
 
     event.preventDefault()
     if(password1 !== password2){
-      props.handleError('Passwords have to be the same', 5000)
+      props.handleError('Passwords have to be the same', parameter.errorTime)
     }else if(password1 === oldPassword){
-      props.handleError('Old and new passwords are the same', 5000)
+      props.handleError('Old and new passwords are the same', parameter.errorTime)
     }else{
       try{
         const response = await usersService.checkUserPassword({ password: oldPassword } , props.user.id)
         if(response.status === 200){
           await usersService.updateUserPassword({ password: password1 }, props.user.id)
-          props.handleNotification('Password updated', 5000)
+          props.handleNotification('Password updated', parameter.notificationTime)
           setOldPassword('')
           setPassword1('')
           setPassword2('')
         }
       }catch(error){
         if(error.response){
-          props.handleError(error.response.data, 5000)
+          props.handleError(error.response.data, parameter.errorTime)
         }else if (error.request){
-          props.handleError(error.request.data, 5000)
+          props.handleError(error.request.data, parameter.errorTime)
         }else{
-          props.handleError(error.message, 5000)
+          props.handleError(error.message, parameter.errorTime)
         }
       }
     }

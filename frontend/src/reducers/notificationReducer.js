@@ -5,13 +5,11 @@ const setNotification = (data) => {
   })
 }
 
-
 const removeNotification = () => {
   return ({
     type: 'REMOVENOTIFICATION'
   })
 }
-
 
 export const handleNotification = (message, time) => {
   return async dispatch => {
@@ -19,7 +17,6 @@ export const handleNotification = (message, time) => {
     setTimeout(() => {dispatch(removeNotification())}, time)
   }
 }
-
 
 const notificationReducer = (state = '', action) => {
 

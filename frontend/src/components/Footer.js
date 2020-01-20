@@ -2,8 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { removeUser } from '../reducers/userReducer'
 import { handleNotification } from '../reducers/notificationReducer'
-import { BrowserRouter as Link } from 'react-router-dom'
-
+import parameter from '../utils/parameter'
 
 
 
@@ -15,7 +14,7 @@ const Footer = (props) => {
 
   const handleLogout = () => {
     props.removeUser()
-    props.handleNotification('Logout successfull!', 5000)
+    props.handleNotification('Logout successfull!', parameter.notificationTime)
 
   }
 

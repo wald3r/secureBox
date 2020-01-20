@@ -9,6 +9,7 @@ import helperClass from '../utils/helperClass'
 import '../stylesheets/general.css'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import parameter from '../utils/parameter'
 
 const Upload = ( { ...props } ) => {
 
@@ -36,7 +37,7 @@ const Upload = ( { ...props } ) => {
   const chosenStyle = style ? priorityStyle : noPriorityStyle
 
   const checkMimeType= () => {
-    const types = ['image/png', 'image/jpeg', 'image/gif', 'application/pdf', 'application/txt']
+    const types = parameter.allowedMimeTypes
     let noErr = false
     for(var x = 0; x<files.length; x++) {
       for(let i = 0; i < types.length; i++){
@@ -45,7 +46,7 @@ const Upload = ( { ...props } ) => {
         }
       }
       if(noErr === false){
-        props.handleError(`${files[x].type} not supported format`, 5000)
+        props.handleError(`${files[x].type} not supported format`, parameter.errorTime)
         return noErr
       }
     }
@@ -58,11 +59,11 @@ const Upload = ( { ...props } ) => {
     try{
       event.preventDefault()
       if(files.length === 0){
-        props.handleError('No files!', 5000)
+        props.handleError('No files!', parameter.errorTime)
       }else if(type === ''){
-        props.handleError('Is it a document or a picture?', 5000)
+        props.handleError('Is it a document or a picture?', parameter.errorTime)
       }else if(style === false){
-        props.handleError('Save your settings!', 5000)
+        props.handleError('Save your settings!', parameter.errorTime)
       }else if(checkMimeType()){
         const data = new FormData()
         for(var x = 0; x<files.length; x++) {
@@ -71,21 +72,21 @@ const Upload = ( { ...props } ) => {
         const response = await fileService.sendFiles(data)
         if(response.status === 200){
           setStyle(false)
-          props.handleNotification(response.data, 5000)
+          props.handleNotification(response.data, parameter.notificationTime)
         }
         else{
-          props.handleError(response.data, 5000)
+          props.handleError(response.data, parameter.errorTime)
         }
         setFiles([])
         window.location.reload()
       }
     }catch(error){
       if(error.response){
-        props.handleError(error.response.data, 5000)
+        props.handleError(error.response.data, parameter.errorTime)
       }else if (error.request){
-        props.handleError(error.request.data, 5000)
+        props.handleError(error.request.data, parameter.errorTime)
       }else{
-        props.handleError(error.message, 5000)
+        props.handleError(error.message, parameter.errorTime)
       }
       console.error(error)
     }

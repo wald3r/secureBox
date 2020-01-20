@@ -79,3 +79,9 @@
 2020-01-19 21:10:35.191 INFO  RegistrationsManager: Activation link created hash: b6592f8bfcd9cf8c594b91e1346f64d1b4910f9b, user: 5e24a9a938b33417315f91dc 
 2020-01-19 21:10:38.946 INFO  RegistrationsManager: Mail for activation sent 
 2020-01-19 21:15:57.904 INFO  RegistrationsManager: User got activated undefined 
+2020-01-20 20:38:58.171 INFO  RegistrationsManager: Registered id: 5e25f3c05134687c9f0b8746 user: olala, email: walder2@gmx.at 
+2020-01-20 20:38:58.542 INFO  RegistrationsManager: Activation link created hash: 807a231e74ef2fe55909f58369c89cc4af304b61, user: 5e25f3c05134687c9f0b8746 
+2020-01-20 20:39:01.000 INFO  RegistrationsManager: Mail for activation sent 
+2020-01-20 20:54:47.986 INFO  RegistrationsManager: Registered id: 5e25f7775134687c9f0b8748 user: test0101, email: daniel.walder@gmx.at 
+2020-01-20 20:54:48.236 INFO  RegistrationsManager: Activation link created hash: 5ffc97b8356f04cc6f606b01a59d5dc853cd2091, user: 5e25f7775134687c9f0b8748 
+2020-01-20 20:54:50.689 INFO  RegistrationsManager: Mail for activation sent 

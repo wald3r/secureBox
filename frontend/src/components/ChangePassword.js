@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { Modal, Button } from 'react-bootstrap'
+import { Form, Modal, Button } from 'react-bootstrap'
 import userService from '../services/users'
 import { connect } from 'react-redux'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
-
+import parameter from '../utils/parameter'
 
 
 const ChangePassword = ( { showDialog, handleShowDialog, user, ...props } ) => {
@@ -18,12 +18,13 @@ const ChangePassword = ( { showDialog, handleShowDialog, user, ...props } ) => {
 
 
 
-  const saveChanges = async () => {
+  const saveChanges = async (event) => {
+    event.preventDefault()
     try{
       if(password !== ''){
-        const response = await userService.updateUserPassword({ password: password }, user._id)
+        const response = await userService.updateUserPassword({ password: password }, user.id)
         if(response.status === 200){
-          props.handleNotification('User password got updated!', 5000)
+          props.handleNotification('User password got updated!', parameter.notificationTime)
           handleShowDialog(false)
         }
 
@@ -32,11 +33,11 @@ const ChangePassword = ( { showDialog, handleShowDialog, user, ...props } ) => {
       }
     }catch(error){
       if(error.response){
-        props.handleError(error.response.data, 5000)
+        props.handleError(error.response.data, parameter.errorTime)
       }else if (error.request){
-        props.handleError(error.request.data, 5000)
+        props.handleError(error.request.data, parameter.errorTime)
       }else{
-        props.handleError(error.message, 5000)
+        props.handleError(error.message, parameter.errorTime)
       }
       console.log(error)
     }
@@ -47,17 +48,13 @@ const ChangePassword = ( { showDialog, handleShowDialog, user, ...props } ) => {
     handleShowDialog(false)
   }
 
-  const handlePasswordChange = (event) => {
-    event.preventDefault()
-    setPassword(event.target.value)
-  }
-
   return (
     <div>
       <Modal show={showDialog} onHide={noChanges}>
         <Modal.Header closeButton>
           <Modal.Title>Edit user details: </Modal.Title>
         </Modal.Header>
+        <Form onSubmit={saveChanges}>
         <Modal.Body>
           <table className='table .table-striped' width="10">
             <thead className='thead-dark'>
@@ -69,7 +66,7 @@ const ChangePassword = ( { showDialog, handleShowDialog, user, ...props } ) => {
                     </td>
 
                     <td>
-                      <input autoComplete='off' type='password' onChange={handlePasswordChange}/>
+                      <input autoComplete='off' type='password' onChange={({target}) => setPassword(target.value)}/>
                     </td>
                   </tr>
                 </tbody>
@@ -79,10 +76,11 @@ const ChangePassword = ( { showDialog, handleShowDialog, user, ...props } ) => {
           <Button variant="secondary" onClick={noChanges}>
             Close
           </Button>
-          <Button variant="primary" onClick={saveChanges}>
+          <Button variant="primary" type='submit'>
             Save Changes
           </Button>
         </Modal.Footer>
+        </Form>
       </Modal>
     </div>
   )
