@@ -253,7 +253,6 @@ filesRouter.post('/upload', async (request, response, next) => {
 
       for(let a = 0; a < 10; a++){
         if(fs.existsSync(`${helperFunctions.getDir(__dirname)}${path}/${fileName}`)){
-          console.log('start encrypting', fileName)
           cryptoHelper.encrypt('test', `${helperFunctions.getDir(__dirname)}${path}/${fileName}`)
           logger.uploadFile(`${helperFunctions.getDir(__dirname)}${path}/${fileName}`)
           break

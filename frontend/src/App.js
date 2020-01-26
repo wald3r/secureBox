@@ -17,7 +17,6 @@ import Profile from './components/Profile'
 import Admin from './components/Admin'
 import Footer from './components/Footer'
 import './stylesheets/general.css'
-
 const App = ( props ) => {
   //window.localStorage.removeItem('loggedappUser')
 
@@ -33,7 +32,7 @@ const App = ( props ) => {
 // eslint-disable-next-line react-hooks/exhaustive-deps,
   }, [])
 
-  const noPriorityStyle = { padding: 5 }
+
 
   
   if (props.user === null){
@@ -41,14 +40,14 @@ const App = ( props ) => {
       <div className='bg'>
       <Error />
       <Notification />
-      <div className='container'>
+      <div className='container3'>
       <div className='row'>
       <div className='col-md-15'>
         <Router>
-          <h1>SecureBox</h1>
+        <a className='header'>SecureBox</a>
           <br></br>
-          <Link style={noPriorityStyle} to='/'>Login</Link>
-          <Link style={noPriorityStyle} to='/registration'>Registration</Link>  
+          <Link className='link' to='/'>Login</Link>
+          <Link className='link' to='/registration'>Registration</Link>  
           <br></br>
           <Route exact path='/' render={() => <Login/> } />
           <Route exact path='/registration' render={() => <Registration /> } />
@@ -59,37 +58,48 @@ const App = ( props ) => {
       </div>
     )
   }else{
-    const priorityStyle = { padding: 5, display: props.user.role === 'admin' ? '' : 'none' }
+    const priorityStyle = { color: 'white', textDecoration: 'none', padding: 5, display: props.user.role === 'admin' ? '' : 'none' }
     return(
       <div className='bg'>
         <Error />
         <Notification />
-        <div className='container'>
+        <Router>
+        <div className='mainContainer'>
+        <div className='container1'>
           <div className='row'>
-            <div className='col-md-15'>
-              <Router>
+            <div className='col-md-18'>
                 <br></br>
-                <h1 className='title'>SecureBox</h1>
-                <br></br>
-                <Link style={noPriorityStyle} to='/'><Button>Home</Button></Link>
-                <Link style={noPriorityStyle} to='/upload'><Button>Upload</Button></Link>
-                <Link style={noPriorityStyle} to='/allfiles'><Button>Files</Button></Link>
-                <Link style={noPriorityStyle} to='/profile'><Button>Profile</Button></Link>
-                <Link style={priorityStyle} to='/admin'><Button>Admin</Button></Link>
-                <br></br>
-                <br></br>
+                <a className='header'>SecureBox</a>
+                <Link className='link' to='/'>Home</Link>
+                <Link className='link' to='/upload'>Upload</Link>
+                <Link className='link' to='/allfiles'>Files</Link>
+                <Link className='link' to ='/profile'>Profile</Link>
+                <Link className='link' to='/admin'>Admin</Link>
+              </div>
+            </div>
+          </div>
+          <br></br>
+          <div className='container2'>
+            <div className='row'>
+              <div className='col-md-15'>
+                
                 <Route exact path='/' render={() => <Home /> }/>
                 <Route exact path='/upload' render={(props) => <Upload {...props}/> } />
                 <Route exact path='/allfiles' render={(props) => <AllFiles {...props}/> } />
                 <Route exact path='/profile' render={(props) => <Profile {...props}/> } />
                 <Route exact path='/admin' render={(props) => <Admin {...props}/> } />
-              </Router>
               <br></br>
               <br></br>
-            <Footer />
+              </div>
             </div>
+
           </div>
-        </div>
+          <br></br>
+          <Footer />
+
+          </div>
+
+          </Router>
       </div>
     )
   }

@@ -6,7 +6,7 @@ import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
 import '../stylesheets/general.css'
 import parameter from '../utils/parameter'
-
+import exception from '../utils/exception'
 
 const Registration = (props) => {
 
@@ -37,15 +37,7 @@ const Registration = (props) => {
         props.handleError('Passwords do not match', parameter.errorTime)
       }
     }catch(error){
-      if(error.response){
-        props.handleError(error.response.data, parameter.errorTime)
-      }
-      else if(error.request){
-        props.handleError(error.request.data, v)
-      }else{
-        props.handleError(error.message, parameter.errorTime)
-      }
-      console.error(error)
+      exception.catchException(error, props)
     }
   }
 
@@ -62,7 +54,7 @@ const Registration = (props) => {
   
     return(
 
-      <div>
+      <div className='container'>
             <Form onSubmit={handleRegistration}>
               <table className='table .table-striped' width="10">
                   <thead className='thead-dark'>

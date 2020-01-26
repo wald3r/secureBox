@@ -3,7 +3,6 @@ const User = require('../models/user')
 const bcrypt = require('bcrypt')
 const authenticationHelper = require('../utils/authenticationHelper')
 const roleManagement = require('../utils/roleManagement')
-const mongoose = require('mongoose')
 
 
 usersRouter.get('/', async (request, response, next) => {

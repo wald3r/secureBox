@@ -10,6 +10,8 @@
   width: 100%;
 }
 
+
+
 table{
   border: 1px solid black;
   width: 100%;
@@ -19,12 +21,66 @@ table{
   overflow: auto;
 }
 
+.header{
+  padding:20px;
+  color: white;
+  font-weight: bold;
+  font-size: 50px;
+}
+
+.link {
+  padding: 20px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+  font-weight: bold;
+  color: white;
+}
+
+.container3 {
+  padding: 25px;
+  margin-right: 50%;
+  margin-left: 10%;
+
+}
 .container {
-  background-color: rgb(255, 255, 255);
+  padding: 25px;
+  background-color: white;
+}
+
+.container2 {
+  padding: 20px;
+  background-color: white;
   height: 100%;
   max-height: 100%;
-  opacity: 0.85;
-  margin-right: 30%;
+  opacity: 0.9;
+  margin-right: 10%;
+  margin-left: 10%;
+  display: flex;
+  justify-content: center;
+}
+
+.footer {
+  padding: 10px;
+  text-align:right;
+  background-color: white;
+  margin-right: 10%;
+  margin-left: 10%;
+  opacity: 0.9;
+}
+
+.container1 {
+  padding: 20px;
+  color: white;
+  height: 100%;
+  max-height: 100%;
+  opacity: 0.9;
+  margin-left:35%;
   display: flex;
   justify-content: center;
 }
@@ -33,7 +89,7 @@ body, html {
   height: 100%;
   }
   .bg {
-  background-image: url('../pictures/wolf2.jpg');
+  background-image: url('../pictures/paragliderbackground.jpg');
   height: 100vh;
   background-position: center;
   background-repeat: no-repeat;

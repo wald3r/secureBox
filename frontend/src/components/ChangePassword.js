@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
 import parameter from '../utils/parameter'
+import exception from '../utils/exception'
 
 
 const ChangePassword = ( { showDialog, handleShowDialog, user, ...props } ) => {
@@ -32,14 +33,7 @@ const ChangePassword = ( { showDialog, handleShowDialog, user, ...props } ) => {
         handleShowDialog(false)
       }
     }catch(error){
-      if(error.response){
-        props.handleError(error.response.data, parameter.errorTime)
-      }else if (error.request){
-        props.handleError(error.request.data, parameter.errorTime)
-      }else{
-        props.handleError(error.message, parameter.errorTime)
-      }
-      console.log(error)
+      exception.catchException(error, props)
     }
   }
 

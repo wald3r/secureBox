@@ -3,14 +3,11 @@ import { connect } from 'react-redux'
 import { removeUser } from '../reducers/userReducer'
 import { handleNotification } from '../reducers/notificationReducer'
 import parameter from '../utils/parameter'
+import '../stylesheets/general.css'
 
 
 
 const Footer = (props) => {
-
-  const inlineStyle = {
-    textAlign: 'right'
-  }
 
   const handleLogout = () => {
     props.removeUser()
@@ -20,7 +17,7 @@ const Footer = (props) => {
 
 
   return (
-    <div style={inlineStyle}>
+    <div className='footer'>
       {props.user.username} is logged in! <a href='/' onClick={handleLogout}>Logout</a>
     </div>
 

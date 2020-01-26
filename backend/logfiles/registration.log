@@ -85,3 +85,22 @@
 2020-01-20 20:54:47.986 INFO  RegistrationsManager: Registered id: 5e25f7775134687c9f0b8748 user: test0101, email: daniel.walder@gmx.at 
 2020-01-20 20:54:48.236 INFO  RegistrationsManager: Activation link created hash: 5ffc97b8356f04cc6f606b01a59d5dc853cd2091, user: 5e25f7775134687c9f0b8748 
 2020-01-20 20:54:50.689 INFO  RegistrationsManager: Mail for activation sent 
+2020-01-21 22:09:21.287 INFO  RegistrationsManager: Registered id: 5e275a70c429384353cd0c79 user: daniel, email: testmail 
+2020-01-21 22:09:22.003 INFO  RegistrationsManager: Activation link created hash: 226e5c508ebf7484f5445769ed274a819de20e6a, user: 5e275a70c429384353cd0c79 
+2020-01-21 22:09:33.145 INFO  RegistrationsManager: User got activated undefined 
+2020-01-21 22:09:36.043 ERROR RegistrationsManager: Verification failed for undefined 
+2020-01-21 22:11:50.040 INFO  RegistrationsManager: Registered id: 5e275b05b33f19450b04bde0 user: daniel, email: testmail@mail.com 
+2020-01-21 22:11:50.345 INFO  RegistrationsManager: Activation link created hash: 5b5d3f0c73b704a449f2f88b4a973cdbf2752021, user: 5e275b05b33f19450b04bde0 
+2020-01-21 22:11:54.406 INFO  RegistrationsManager: Mail for activation sent 
+2020-01-21 22:12:00.528 INFO  RegistrationsManager: User got activated undefined 
+2020-01-21 22:12:01.581 ERROR RegistrationsManager: Verification failed for undefined 
+2020-01-21 22:16:57.709 INFO  RegistrationsManager: Registered id: 5e275c39275a914613a6a9ba user: daniel, email: testmail@mail.com 
+2020-01-21 22:16:58.123 INFO  RegistrationsManager: Activation link created hash: cbb5655795ab34ca10bc9a9e520eb604884aa6b6, user: 5e275c39275a914613a6a9ba 
+2020-01-21 22:17:00.911 INFO  RegistrationsManager: Mail for activation sent 
+2020-01-21 22:17:08.272 INFO  RegistrationsManager: User got activated undefined 
+2020-01-21 22:17:08.938 ERROR RegistrationsManager: Verification failed for undefined 
+2020-01-21 22:18:47.035 INFO  RegistrationsManager: Registered id: 5e275ca6780d2346689badd0 user: daniel, email: testmail@mail.com 
+2020-01-21 22:18:47.286 INFO  RegistrationsManager: Activation link created hash: 5fe65371d4b410a80c60e92d4fe88ef7eff7278f, user: 5e275ca6780d2346689badd0 
+2020-01-21 22:18:49.355 INFO  RegistrationsManager: Mail for activation sent 
+2020-01-21 22:18:54.961 INFO  RegistrationsManager: User got activated undefined 
+2020-01-21 22:18:55.636 ERROR RegistrationsManager: Verification failed for undefined 

@@ -8,6 +8,7 @@ import { updateUser } from '../reducers/userReducer'
 import { changeUser } from '../reducers/usersReducer'
 import usersService from '../services/users'
 import parameter from '../utils/parameter'
+import exception from '../utils/exception'
 
 const Profile = ( props ) => {
 
@@ -52,14 +53,7 @@ const Profile = ( props ) => {
       setName('')
       setEmail('')
     }catch(error){
-      if(error.response){
-        props.handleError(error.response.data, parameter.errorTime)
-      }else if (error.request){
-        props.handleError(error.request.data, parameter.errorTime)
-      }else{
-        props.handleError(error.message, parameter.errorTime)
-      }
-      console.error(error)
+      exception.catchException(error, props)
     }
   }
 
@@ -81,13 +75,7 @@ const Profile = ( props ) => {
           setPassword2('')
         }
       }catch(error){
-        if(error.response){
-          props.handleError(error.response.data, parameter.errorTime)
-        }else if (error.request){
-          props.handleError(error.request.data, parameter.errorTime)
-        }else{
-          props.handleError(error.message, parameter.errorTime)
-        }
+        exception.catchException(error, props)
       }
     }
 

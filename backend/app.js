@@ -15,6 +15,7 @@ const logging = require('./middleware/logging')
 const errorHandler = require('./middleware/errorHandler')
 const helmet = require('helmet')
 const scheduler = require ('./utils/scheduler.js')
+const mimetypesRouter = require('./controllers/mimetypes')
 
 mongoose.connect(config.DB_URI, { useNewUrlParser: true})
 
@@ -33,6 +34,7 @@ app.use('/api/users', usersRouter)
 app.use('/api/registration', limiter.accountLimiter)
 app.use('/api/registration', registrationRouter)
 app.use('/api/files/', filesRouter)
+app.use('/api/mimes/', mimetypesRouter)
 app.use(errorHandler)
 
 

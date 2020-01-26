@@ -104,7 +104,7 @@ describe('test add user api', () => {
       username: 'daniel',
       name: 'Daniel Walder',
       password: 'walder',
-      email:'testmail',
+      email:'testmail@mail.com',
     }
 
     await api

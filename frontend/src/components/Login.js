@@ -10,6 +10,7 @@ import { connect } from 'react-redux'
 import { Button, Form } from 'react-bootstrap'
 import '../stylesheets/general.css'
 import parameter from '../utils/parameter'
+import exception from '../utils/exception'
 
 const Login = ( props ) => {
   const [ username, setUsername ] = useState('')
@@ -26,20 +27,13 @@ const Login = ( props ) => {
       }
       props.handleNotification('Login successfull!', parameter.notificationTime)
     }catch(error){
-      if(error.response){
-        props.handleError(error.response.data, parameter.errorTime)
-      }else if (error.request){
-        props.handleError(error.request.data, parameter.errorTime)
-      }else{
-        props.handleError(error.message, parameter.errorTime)
-      }
-      console.log(error)
+      exception.catchException(error, props)
     }
   }
 
   return (
 
-    <div>
+    <div className='container'>
           <Form onSubmit={handleLogin}>
             <table className='table .table-striped' width="10">
                 <thead className='thead-dark'>

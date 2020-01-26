@@ -12,6 +12,7 @@ import PublicLink from './PublicLink'
 import SendPublicLink from './SendPublicLink'
 import helperClass from '../utils/helperClass'
 import parameter from '../utils/parameter'
+import exception from '../utils/exception'
 
 const AllMyFiles = ({ filteredFiles, ...props }) => {
 
@@ -45,14 +46,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
       await fileService.removeUnencryptedFile(file.id)
       removeSelection()
     }catch(error){
-      if(error.response){
-        props.handleError(error.response.data, parameter.errorTime)
-      }else if (error.request){
-        props.handleError(error.request.data, parameter.errorTime)
-      }else{
-        props.handleError(error.message, parameter.errorTime)
-      }
-      console.error(error)
+      exception.catchException(error, props)
     }
   }
 
@@ -66,14 +60,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
         removeSelection()
       }
     }catch(error){
-      if(error.response){
-        props.handleError(error.response.data, parameter.errorTime)
-      }else if (error.request){
-        props.handleError(error.request.data, parameter.errorTime)
-      }else{
-        props.handleError(error.message, parameter.errorTime)
-      }
-      console.error(error)
+      exception.catchException(error, props)
     }
   }
 
@@ -97,14 +84,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
       })
     
     }catch(error){
-      if(error.response){
-        props.handleError(error.response.data, parameter.errorTime)
-      }else if (error.request){
-        props.handleError(error.request.data, parameter.errorTime000)
-      }else{
-        props.handleError(error.message, parameter.errorTime)
-     }
-      console.error(error)
+      exception.catchException(error, props)
     }
   }
 
@@ -119,14 +99,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
         removeSelection()
       })
     }catch(error){
-      if(error.response){
-        props.handleError(error.response.data, parameter.errorTime)
-      }else if (error.request){
-        props.handleError(error.request.data, parameter.errorTime)
-      }else{
-        props.handleError(error.message, parameter.errorTime)
-      }
-      console.error(error)
+      exception.catchException(error, props)
     }
   }
 
@@ -159,14 +132,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
       setShowLinkDialog(true)
       setPublicLink(`${parameter.downloadLink}${response.data.hash}`)
     }catch(error){
-      if(error.response){
-        props.handleError(error.response.data, parameter.errorTime)
-      }else if (error.request){
-        props.handleError(error.request.data, parameter.errorTime)
-      }else{
-        props.handleError(error.message, parameter.errorTime)
-      }
-      console.error(error)
+      exception.catchException(error, props)
     }
   }
 

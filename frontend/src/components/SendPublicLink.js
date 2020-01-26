@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
 import parameter from '../utils/parameter'
+import exception from '../utils/exception'
 
 const SendPublicLink = ( { showDialog, handleShowDialog, file, ...props } ) => {
 
@@ -21,14 +22,7 @@ const SendPublicLink = ( { showDialog, handleShowDialog, file, ...props } ) => {
       const response = await fileService.sendPublicMail(file.id, email)
       setLink(`${parameter.downloadLink}${response.data.hash}`)
     }catch(error){
-      if(error.response){
-        props.handleError(error.response.data, parameter.errorTime)
-      }else if (error.request){
-        props.handleError(error.request.data, parameter.errorTime)
-      }else{
-        props.handleError(error.message, parameter.errorTime)
-      }
-      console.error(error)
+      exception.catchException(error, props)
     }
   }
 

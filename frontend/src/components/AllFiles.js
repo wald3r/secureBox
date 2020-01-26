@@ -19,6 +19,7 @@ const AllFiles = (props) => {
 
 
   const filterStyle = {
+    backgroundColor: 'white',
     padding: 5,
     borderStyle: 'solid',
     borderColor: 'black',
