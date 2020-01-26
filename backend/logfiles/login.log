@@ -722,3 +722,11 @@
 2020-01-21 22:19:35.696 WARN  LoginManager: Failed to login testusername1 
 2020-01-21 22:19:36.856 INFO  LoginManager: Trying to login testusername1 
 2020-01-21 22:19:37.139 WARN  LoginManager: Failed to login testusername1 
+2020-01-26 19:58:23.327 INFO  LoginManager: Trying to login walder 
+2020-01-26 19:58:23.483 WARN  LoginManager: Failed to login walder 
+2020-01-26 19:58:27.888 INFO  LoginManager: Trying to login daniel 
+2020-01-26 19:58:28.398 INFO  LoginManager: Logged in daniel 
+2020-01-26 20:00:30.633 INFO  LoginManager: Trying to login daniel 
+2020-01-26 20:00:31.167 INFO  LoginManager: Logged in daniel 
+2020-01-26 20:36:43.295 INFO  LoginManager: Trying to login daniel 
+2020-01-26 20:36:44.522 INFO  LoginManager: Logged in daniel 

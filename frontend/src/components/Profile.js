@@ -82,7 +82,8 @@ const Profile = ( props ) => {
   }
 
   return (
-    <div >
+    <div>
+    <div className='container'>
    
         <Form onSubmit={handleUserDetails}>
           <Table className='table'>
@@ -108,6 +109,9 @@ const Profile = ( props ) => {
           </Table>
           <Button type='Submit'>Save changes</Button>
           </Form>
+    </div>
+    <br></br>
+    <div className='container'>
           <Form onSubmit={handlePassword}>
           <Table className='table'>
             <thead className='thead-dark'>
@@ -132,6 +136,7 @@ const Profile = ( props ) => {
           </Table>
           <Button type='Submit'>Save changes</Button>
         </Form>
+    </div>
     </div>
   )
 }

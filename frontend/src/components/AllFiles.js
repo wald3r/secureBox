@@ -17,15 +17,6 @@ const AllFiles = (props) => {
   const nameFilter = searchName === '' ? props.files : props.files.filter(file => helperClass.formatName(file.name).includes(searchName))
   const dateFilter = searchDate === '' ? nameFilter : nameFilter.filter(file => file.date.includes(searchDate))
 
-
-  const filterStyle = {
-    backgroundColor: 'white',
-    padding: 5,
-    borderStyle: 'solid',
-    borderColor: 'black',
-    borderWidth: 'thin',
-  }
-
   const handleNameSearch = (e) => {
     e.preventDefault()
     setSearchName(e.target.value)
@@ -50,14 +41,16 @@ const AllFiles = (props) => {
   }
 
   return (
-    <div >
-          <div style={filterStyle}>
+    <div>
+    <div className='container'>
+          <div className='filter'>
             <b>Filter</b><br></br>
               Name: <input type='search' onChange={handleNameSearch}/>
               Date: <input type='search' onChange={handleDateSearch}/>
           </div>
-          <br></br>
-          <br></br>
+    </div>
+    <br></br>
+    <div className='container'>
           <div style={{ textAlign: 'center' }}>
             <Tabs id="controlled-tab-example" activeKey={chosenType} onSelect={handleTypeChange}>
              <Tab eventKey="Favourite" title="Favourites">
@@ -77,6 +70,7 @@ const AllFiles = (props) => {
               </Tab>
             </Tabs>
           </div>
+    </div>
     </div>
   )
 }

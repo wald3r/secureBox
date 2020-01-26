@@ -110,6 +110,7 @@ const Upload = ( { ...props } ) => {
 
   return (
     <div>
+    <div className='container'>
       <div style={chosenStyle} >
         Settings:
         <Form onSubmit={handleSettings}>
@@ -122,12 +123,16 @@ const Upload = ( { ...props } ) => {
           <Button type="submit">{!style ? 'Save' : 'Remove'}</Button>
         </Form>
       </div>
+    </div>
+    <br></br>
+    <div className='container'>
       <div className='form-group files' >
         <Form method='POST' encType='multipart/form-data' onSubmit={uploadHandler} >
           <input type='file' autoComplete='off' name='files' multiple onChange={onChangeHandler}/>
           <Button className='button' type="submit">Upload</Button>
         </Form>
       </div>
+    </div>
     </div>
   )
 }

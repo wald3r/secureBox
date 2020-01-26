@@ -14,7 +14,7 @@ const Home = (props) => {
   const randInt = randGen === 0 ? 1 : randGen
 
   return (
-    <div>
+    <div className='container'>
       <br></br>
       <img src={pictures[randInt]} alt='background'/>
     </div>

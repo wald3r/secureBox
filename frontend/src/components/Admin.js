@@ -33,7 +33,7 @@ const Admin = (props) => {
 
   return (
 
-    <div>
+    <div className='container'>
               <ChangeUser showDialog={showUserDialog}
                           handleShowDialog={setShowUserDialog}
                           user={user}/>
@@ -43,7 +43,6 @@ const Admin = (props) => {
               <Table className='table table-hover'>
                 <thead className='thead-dark'>
                   <tr>
-                    <th>Id</th>
                     <th>Username</th>
                     <th>Fullname</th>
                     <th>Mail</th>
@@ -54,7 +53,6 @@ const Admin = (props) => {
                 <tbody>
                   {props.users.map(user =>
                     <tr key={user.id}>
-                      <td>{user.id}</td>
                       <td>{user.username}</td>
                       <td>{user.name}</td>
                       <td>{user.email}</td>

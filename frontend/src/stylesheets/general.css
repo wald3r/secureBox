@@ -10,8 +10,6 @@
   width: 100%;
 }
 
-
-
 table{
   border: 1px solid black;
   width: 100%;
@@ -51,38 +49,27 @@ table{
 .container {
   padding: 25px;
   background-color: white;
+  opacity: 0.9;
 }
 
-.container2 {
-  padding: 20px;
-  background-color: white;
-  height: 100%;
-  max-height: 100%;
-  opacity: 0.9;
-  margin-right: 10%;
-  margin-left: 10%;
-  display: flex;
-  justify-content: center;
-}
 
 .footer {
   padding: 10px;
+  position: fixed;
   text-align:right;
   background-color: white;
-  margin-right: 10%;
-  margin-left: 10%;
+  width: 100%;
   opacity: 0.9;
+  bottom: 0;
+  left:0;
 }
 
-.container1 {
-  padding: 20px;
-  color: white;
-  height: 100%;
-  max-height: 100%;
-  opacity: 0.9;
-  margin-left:35%;
-  display: flex;
-  justify-content: center;
+.filter {
+  background-color: white;
+  padding: 5px;
+  border-style: solid;
+  border-color: black;
+  border-width: thin;
 }
 
 body, html {

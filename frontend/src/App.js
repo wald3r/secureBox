@@ -45,7 +45,6 @@ const App = ( props ) => {
       <div className='col-md-15'>
         <Router>
         <a className='header'>SecureBox</a>
-          <br></br>
           <Link className='link' to='/'>Login</Link>
           <Link className='link' to='/registration'>Registration</Link>  
           <br></br>
@@ -64,8 +63,7 @@ const App = ( props ) => {
         <Error />
         <Notification />
         <Router>
-        <div className='mainContainer'>
-        <div className='container1'>
+        <div className='container3'>
           <div className='row'>
             <div className='col-md-18'>
                 <br></br>
@@ -75,13 +73,7 @@ const App = ( props ) => {
                 <Link className='link' to='/allfiles'>Files</Link>
                 <Link className='link' to ='/profile'>Profile</Link>
                 <Link className='link' to='/admin'>Admin</Link>
-              </div>
-            </div>
-          </div>
-          <br></br>
-          <div className='container2'>
-            <div className='row'>
-              <div className='col-md-15'>
+        
                 
                 <Route exact path='/' render={() => <Home /> }/>
                 <Route exact path='/upload' render={(props) => <Upload {...props}/> } />
@@ -96,8 +88,6 @@ const App = ( props ) => {
           </div>
           <br></br>
           <Footer />
-
-          </div>
 
           </Router>
       </div>
