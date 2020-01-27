@@ -13,7 +13,6 @@ const AllFiles = (props) => {
   const [searchName, setSearchName] = useState('')
   const [searchDate, setSearchDate] = useState('')
 
-  //const categoryFilter = (chosenType === 'All' ? props.files : props.files.filter(file => file.category === chosenType))
   const nameFilter = searchName === '' ? props.files : props.files.filter(file => helperClass.formatName(file.name).includes(searchName))
   const dateFilter = searchDate === '' ? nameFilter : nameFilter.filter(file => file.date.includes(searchDate))
 

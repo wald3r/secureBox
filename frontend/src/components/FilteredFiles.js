@@ -149,7 +149,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
     )
   }else{
     return (
-        <div className='tablehelper'> 
+        <div className='tablecontainer'> 
           <PublicLink showDialog={showLinkDialog}
                     handleShowDialog={setShowLinkDialog}
                     link={publicLink}/>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import loginService from '../services/login'
-import fileService from '../services/files'
 import { setUser } from '../reducers/userReducer'
 import { handleNotification } from '../reducers/notificationReducer'
 import { getFiles } from '../reducers/filesReducer'
@@ -20,7 +19,7 @@ const Login = ( props ) => {
     try{
       const newUser = await loginService.login({ username, password })
       props.setUser(newUser)
-      fileService.setToken(newUser.token)
+      //fileService.setToken(newUser.token)
       props.handleNotification('Login successfull!', parameter.notificationTime)
     }catch(error){
       exception.catchException(error, props)

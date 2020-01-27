@@ -29,7 +29,7 @@ const Mimetypes = (props) => {
       <AddMime
         showAddMime={showAddMime} 
         handleShowAddMime={setShowAddMime}/>
-      <Table className='table table-hover'>
+      <Table responsive className='table table-hover'>
         <thead className='thead-dark'>
           <tr>
             <th>Name</th>

@@ -1,28 +1,28 @@
 import React, {useState} from 'react'
 import { Modal, Form, Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { addType } from '../reducers/mimetypesReducer'
+import { addNote } from '../reducers/notesReducer'
 import parameter from '../utils/parameter'
 import exception from '../utils/exception'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
+import { getNotes } from '../reducers/notesReducer'
 
-const AddMime = ( { showAddMime, handleShowAddMime, ...props } ) => {
+const AddNote = ( { showAddNote, handleShowAddNote, ...props } ) => {
 
-  const [name, setName] = useState('')
-  const [ending, setEnding] = useState('')
+  const [title, setTitle] = useState('')
+  const [body, setBody] = useState('')
  
 
-
-
-  const noChanges = () => handleShowAddMime(false)
+  const noChanges = () => handleShowAddNote(false)
 
   const saveChanges = async (e) => {
     e.preventDefault()
     try{
-      await props.addType({name: name, ending: ending})
-      props.handleNotification('MIME-Type successfully added', parameter.notificationTime)
-      handleShowAddMime(false)
+      await props.addNote({title: title, body: body})
+      await props.getNotes()
+      props.handleNotification('Note successfully added', parameter.notificationTime)
+      handleShowAddNote(false)
     }catch(error){
       exception.catchException(error, props)
     }
@@ -31,31 +31,31 @@ const AddMime = ( { showAddMime, handleShowAddMime, ...props } ) => {
 
   return (
     <div>
-      <Modal show={showAddMime} onHide={noChanges}>
+      <Modal show={showAddNote} onHide={noChanges}>
         <Modal.Header closeButton>
-          <Modal.Title>Add new MIME-Type: </Modal.Title>
+          <Modal.Title>Add new Note: </Modal.Title>
         </Modal.Header>
         <Form onSubmit={saveChanges}>
         <Modal.Body>
-          <table className='table .table-striped' width="10">
+          <table responsive className='table .table-striped' width="10">
             <thead className='thead-dark'>
               </thead>
                 <tbody width="10">
                   <tr>
                     <td width="10">
-                      Name:
+                      Title:
                     </td>
 
                     <td>
-                      <input type='text' required onChange={({target}) => setName(target.value)} />
+                      <input type='text' required onChange={({target}) => setTitle(target.value)} />
                     </td>
                   </tr>
                   <tr>
                     <td width="10">
-                      Ending:
+                      Body:
                     </td>
                     <td>
-                      <input type='text' required onChange={({target}) => setEnding(target.value)}/>
+                      <input type='text' required onChange={({target}) => setBody(target.value)}/>
                     </td>
                   </tr>
                 </tbody>
@@ -66,7 +66,7 @@ const AddMime = ( { showAddMime, handleShowAddMime, ...props } ) => {
             Close
           </Button>
           <Button variant="primary" type='submit'>
-            Add MIME-Type
+            Add Note
           </Button>
         </Modal.Footer>
         </Form>
@@ -78,10 +78,11 @@ const AddMime = ( { showAddMime, handleShowAddMime, ...props } ) => {
 
 
 const mapDispatchToProps = {
-  addType,
+  addNote,
   handleNotification,
   handleError,
+  getNotes,
 }
 
 
-export default connect(null, mapDispatchToProps)(AddMime)
+export default connect(null, mapDispatchToProps)(AddNote)

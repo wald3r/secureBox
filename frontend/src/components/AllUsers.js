@@ -55,7 +55,7 @@ const AllUsers = (props) => {
               <ChangePassword showDialog={showPasswordDialog}
                           handleShowDialog={setShowPasswordDialog}
                           user={user}/>
-              <Table className='table table-hover'>
+              <Table responsive className='table table-hover'>
                 <thead className='thead-dark'>
                   <tr>
                     <th>Username</th>

@@ -10,12 +10,15 @@
   width: 100%;
 }
 
-table{
-  border: 1px solid black;
-  width: 100%;
-  max-height: 800px;
+table, thead, tr, td {
+  max-width: 100%;
   border-collapse: collapse;
-  display: inline-block; 
+}
+
+.tablecontainer{
+  border: 1px solid black;
+  max-height: 60vh;
+  display: block; 
   overflow: auto;
 }
 
@@ -45,7 +48,6 @@ table{
 
 .container3 {
   padding: 25px;
-  margin-right: 50%;
   margin-left: 10%;
 
 }

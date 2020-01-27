@@ -8,6 +8,7 @@ import notificationReducer from './reducers/notificationReducer'
 import errorReducer from './reducers/errorReducer'
 import filesReducer from './reducers/filesReducer'
 import mimetypesReducer from './reducers/mimetypesReducer'
+import notesReducer from './reducers/notesReducer'
 
 const reducer = combineReducers({
   user: userReducer,
@@ -15,7 +16,8 @@ const reducer = combineReducers({
   error: errorReducer,
   notification: notificationReducer,
   files: filesReducer,
-  mimetypes: mimetypesReducer
+  mimetypes: mimetypesReducer,
+  notes: notesReducer
 })
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)))

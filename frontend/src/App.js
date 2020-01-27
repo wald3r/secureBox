@@ -15,8 +15,10 @@ import AllFiles from './components/AllFiles'
 import Profile from './components/Profile'
 import Admin from './components/Admin'
 import Footer from './components/Footer'
+import Notes from './components/Notes'
 import './stylesheets/general.css'
 import { getUsers } from './reducers/usersReducer'
+import { getNotes } from './reducers/notesReducer'
 
 const App = ( props ) => {
   //window.localStorage.removeItem('loggedappUser')
@@ -27,6 +29,7 @@ const App = ( props ) => {
       const newUser = JSON.parse(loggedUserJSON)
       props.setUser(newUser)
       props.getTypes()
+      props.getNotes()
       if(newUser.role === 'admin'){
         props.getUsers(newUser)
       }
@@ -74,6 +77,7 @@ const App = ( props ) => {
                 <Link className='link' to='/'>Home</Link>
                 <Link className='link' to='/upload'>Upload</Link>
                 <Link className='link' to='/allfiles'>Files</Link>
+                <Link className='link' to='/notes'>Notes</Link>
                 <Link className='link' to ='/profile'>Profile</Link>
                 <Link style={priorityStyle} className='link' to='/admin'>Admin</Link>
         
@@ -81,6 +85,7 @@ const App = ( props ) => {
                 <Route exact path='/' render={() => <Home /> }/>
                 <Route exact path='/upload' render={(props) => <Upload {...props}/> } />
                 <Route exact path='/allfiles' render={(props) => <AllFiles {...props}/> } />
+                <Route exact path='/notes' render={(props) => <Notes {...props}/> } />
                 <Route exact path='/profile' render={(props) => <Profile {...props}/> } />
                 <Route exact path='/admin' render={(props) => <Admin {...props}/> } />
               <br></br>
@@ -113,6 +118,7 @@ const mapDispatchToProps = {
   getFiles,
   getTypes,
   getUsers,
+  getNotes,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

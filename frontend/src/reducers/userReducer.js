@@ -2,6 +2,8 @@ import fileService from '../services/files'
 import usersService from '../services/users'
 import parameter from '../utils/parameter'
 import mimesService from '../services/mimes'
+import notesService from '../services/notes'
+
 
 export const setUser = ( user ) => {
   return async dispatch => {
@@ -9,6 +11,7 @@ export const setUser = ( user ) => {
     fileService.setToken(user.token)
     usersService.setToken(user.token)
     mimesService.setToken(user.token)
+    notesService.setToken(user.token)
     
     dispatch({
       type: 'SETUSER',
