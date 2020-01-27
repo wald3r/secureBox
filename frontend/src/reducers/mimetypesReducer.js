@@ -26,7 +26,6 @@ export const addType = (typedata) => {
 
 export const removeType = (object) => {
   return async dispatch => {
-    await mimesService.removeType(object.id)
     dispatch({
       type: 'REMOVETYPE',
       id: object.id

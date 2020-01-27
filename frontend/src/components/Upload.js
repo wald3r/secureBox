@@ -11,6 +11,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import parameter from '../utils/parameter'
 import exception from '../utils/exception'
+import { getTypes } from '../reducers/mimetypesReducer'
 
 const Upload = ( { ...props } ) => {
 
@@ -38,11 +39,11 @@ const Upload = ( { ...props } ) => {
   const chosenStyle = style ? priorityStyle : noPriorityStyle
 
   const checkMimeType= () => {
-    const types = parameter.allowedMimeTypes
+    const types = props.mimetypes
     let noErr = false
     for(var x = 0; x<files.length; x++) {
       for(let i = 0; i < types.length; i++){
-        if(types[i] === files[x].type){
+        if(types[i].name === files[x].type){
           noErr = true
         }
       }
@@ -140,13 +141,15 @@ const Upload = ( { ...props } ) => {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
+    mimetypes: state.mimetypes,
   }
 }
 
 const mapDispatchToProps = {
   handleNotification,
   handleError,
-  getFiles
+  getFiles,
+  getTypes
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Upload)

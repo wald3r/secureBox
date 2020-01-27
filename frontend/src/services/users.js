@@ -62,4 +62,14 @@ const updateUserPassword = async (password, id) => {
 }
 
 
-export default { updateUserDetails, updateUserPassword, setToken, getAllUsers, checkUserPassword, getUser }
+const deleteUser = async (id) => {
+
+  const config = {
+    headers: { Authorization: token },
+  }
+
+  const response = await axios.delete(`${baseUrl}/remove/${id}`, config)
+  return response
+}
+
+export default { deleteUser, updateUserDetails, updateUserPassword, setToken, getAllUsers, checkUserPassword, getUser }

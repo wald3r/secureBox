@@ -119,6 +119,25 @@ usersRouter.put('/password/:id', async (request, response, next) => {
     }
   })
 
+  usersRouter.delete('/remove/:id', async (request, response, next) => {
+    try{
+
+      const authenticatedUser = await authenticationHelper.isLoggedIn(request.token)
+      if(authenticatedUser == undefined){
+        return response.status(401).send('Not Authenticated')
+      }
+      if(authenticatedUser.role !== roleManagement.roles.ADMIN){
+        return response.status(401).send('Wrong user role')
+      }
+
+      await User.findByIdAndDelete(request.params.id)
+      response.status(200).send('User was successfully deleted!')
+
+    } catch(exception){
+      next(exception)
+    }
+  })
+
 
   usersRouter.put('/details/:id', async (request, response, next) => {
     try{

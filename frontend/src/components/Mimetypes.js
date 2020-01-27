@@ -8,6 +8,7 @@ import parameter from '../utils/parameter'
 import exception from '../utils/exception'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
+import mimesService from '../services/mimes'
 
 const Mimetypes = (props) => {
 
@@ -15,8 +16,9 @@ const Mimetypes = (props) => {
 
   const handleRemoval = async (type) => {
     try{
-      await props.removeType(type)
-      props.handleNotification('Type was successfully deleted!', parameter.notificationTime)
+      const response = await mimesService.removeType(type.id)
+      props.removeType(type)
+      props.handleNotification(response.data, parameter.notificationTime)
     }catch(error){
       exception.catchException(error, props)
     }  
@@ -39,12 +41,15 @@ const Mimetypes = (props) => {
           <tr key={type.id}>
             <td>{type.name}</td>
             <td>{type.ending}</td>
-            <td><Button data-toggle='tooltip' data-placement='top' title='Delete type.' onClick={() => handleRemoval(type)}><i className="fa fa-trash"></i></Button></td>
+            <td><Button data-toggle='tooltip' data-placement='top' title='Delete type' onClick={() => handleRemoval(type)}><i className="fa fa-trash"></i></Button></td>
           </tr>
           )}
         </tbody>
       </Table>
       <Button onClick={() => setShowAddMime(true)}>Add new MimeType</Button>
+      <br></br>
+      <br></br>
+      <p style={{textAlign: 'left'}}><b>Allowed MIME-Types to upload files.</b></p>
     </div>
   )
 }

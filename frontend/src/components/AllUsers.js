@@ -3,9 +3,12 @@ import { connect } from 'react-redux'
 import { Table, Button } from 'react-bootstrap'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
-import { changeUser } from '../reducers/usersReducer'
+import { removeUser } from '../reducers/usersReducer'
 import ChangeUser from './ChangeUser'
 import ChangePassword from './ChangePassword'
+import usersService from '../services/users'
+import exception from '../utils/exception'
+import parameter from '../utils/parameter'
 
 
 const AllUsers = (props) => {
@@ -31,6 +34,17 @@ const AllUsers = (props) => {
     setShowPasswordDialog(true)
   }
 
+  const handleRemoval = async (userToDelete) => {
+
+    try{
+      const response = await usersService.deleteUser(userToDelete.id)
+      //props.removeUser(userToDelete)
+      props.handleNotification(response.data, parameter.notificationTime)
+    }catch(error){
+      exception.catchException(error, props)
+    }
+  }
+
   return (
 
     <div className='container'>
@@ -51,15 +65,19 @@ const AllUsers = (props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {props.users.map(user =>
-                    <tr key={user.id}>
-                      <td>{user.username}</td>
-                      <td>{user.name}</td>
-                      <td>{user.email}</td>
-                      <td>{user.role}</td>
-                      <td>{user.active.toString()}</td>
-                      <td style={priorityStyle}><Button onClick={() => handleUserChange(user)}>Edit Profile</Button></td>
-                      <td style={priorityStyle}><Button onClick={() => handlePasswordChange(user)}>Edit Password</Button></td>
+                  {props.users.map(u =>
+                    <tr key={u.id}>
+                      <td>{u.username}</td>
+                      <td>{u.name}</td>
+                      <td>{u.email}</td>
+                      <td>{u.role}</td>
+                      <td>{u.active.toString()}</td>
+                      <td style={priorityStyle}>
+                        <Button data-toggle='tooltip' data-placement='top' title='Edit profile' onClick={() => handleUserChange(u)}><i className="fa fa-drivers-license-o	" /></Button>
+                        <Button data-toggle='tooltip' data-placement='top' title='Change password' onClick={() => handlePasswordChange(user)}><i className="fa fa-lock	"/></Button>
+                        <Button data-toggle='tooltip' data-placement='top' title='Remove user' onClick={() => handleRemoval(u)}><i className="fa fa-trash" /></Button>
+                      </td>
+
                     </tr>
                   ) }
                 </tbody>
@@ -80,7 +98,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   handleNotification,
   handleError,
-  changeUser,
+  removeUser,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllUsers)

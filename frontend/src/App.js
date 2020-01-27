@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { setUser, removeUser } from './reducers/userReducer'
 import { handleNotification } from './reducers/notificationReducer'
 import { getFiles } from './reducers/filesReducer'
+import { getTypes } from './reducers/mimetypesReducer'
 import Login from './components/Login'
 import Registration from './components/Registration'
 import Notification from './components/Notificiation'
@@ -15,7 +16,7 @@ import Profile from './components/Profile'
 import Admin from './components/Admin'
 import Footer from './components/Footer'
 import './stylesheets/general.css'
-
+import { getUsers } from './reducers/usersReducer'
 
 const App = ( props ) => {
   //window.localStorage.removeItem('loggedappUser')
@@ -25,6 +26,10 @@ const App = ( props ) => {
     if (loggedUserJSON) {
       const newUser = JSON.parse(loggedUserJSON)
       props.setUser(newUser)
+      props.getTypes()
+      if(newUser.role === 'admin'){
+        props.getUsers(newUser)
+      }
     }
 // eslint-disable-next-line react-hooks/exhaustive-deps,
   }, [])
@@ -41,7 +46,8 @@ const App = ( props ) => {
       <div className='row'>
       <div className='col-md-15'>
         <Router>
-        <p className='header'>SecureBox</p>
+        <div className='header'>SecureBox</div>
+        <br></br>
           <Link className='link' to='/'>Login</Link>
           <Link className='link' to='/registration'>Registration</Link>  
           <br></br>
@@ -63,8 +69,7 @@ const App = ( props ) => {
         <div className='container3'>
           <div className='row'>
             <div className='col-md-18'>
-                <br></br>
-                <p className='header'>SecureBox</p>
+                <div className='header'>SecureBox</div>
                 <Link className='link' to='/'>Home</Link>
                 <Link className='link' to='/upload'>Upload</Link>
                 <Link className='link' to='/allfiles'>Files</Link>
@@ -104,7 +109,9 @@ const mapDispatchToProps = {
   setUser,
   removeUser,
   handleNotification,
-  getFiles
+  getFiles,
+  getTypes,
+  getUsers,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

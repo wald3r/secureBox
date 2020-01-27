@@ -9,7 +9,7 @@ import { getTypes } from '../reducers/mimetypesReducer'
 
 const Admin = (props) => {
 
-  const [chosenType, setChosenType] = useState('')
+  const [chosenType, setChosenType] = useState('Users')
 
   const handleTypeChange = (e) => {
     setChosenType(e)
@@ -27,7 +27,7 @@ const Admin = (props) => {
               <Tab eventKey="Users" title="Users">
                 <AllUsers />
               </Tab>
-              <Tab eventKey="Mimetypes" title="MimeTypes">
+              <Tab eventKey="Mimetypes" title="MIME-Types">
                 <Mimetypes />
               </Tab>
             </Tabs>
