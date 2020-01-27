@@ -4,6 +4,7 @@ import { Table, Button } from 'react-bootstrap'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
 import { removeUser } from '../reducers/usersReducer'
+import { getUsers } from '../reducers/usersReducer'
 import ChangeUser from './ChangeUser'
 import ChangePassword from './ChangePassword'
 import usersService from '../services/users'
@@ -38,7 +39,7 @@ const AllUsers = (props) => {
 
     try{
       const response = await usersService.deleteUser(userToDelete.id)
-      //props.removeUser(userToDelete)
+      props.getUsers(props.user)
       props.handleNotification(response.data, parameter.notificationTime)
     }catch(error){
       exception.catchException(error, props)
@@ -99,6 +100,7 @@ const mapDispatchToProps = {
   handleNotification,
   handleError,
   removeUser,
+  getUsers,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllUsers)

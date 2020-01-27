@@ -44,8 +44,7 @@ const Registration = (props) => {
 
   if(registered){
     return(
-      <div>
-        <br></br>
+      <div className='container'>
         Registration email has been sent out. Please follow the link in the email to activate your account. 
       </div>
     )

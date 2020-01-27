@@ -70,6 +70,7 @@ const App = ( props ) => {
           <div className='row'>
             <div className='col-md-18'>
                 <div className='header'>SecureBox</div>
+                <br></br>
                 <Link className='link' to='/'>Home</Link>
                 <Link className='link' to='/upload'>Upload</Link>
                 <Link className='link' to='/allfiles'>Files</Link>

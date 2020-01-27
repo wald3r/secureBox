@@ -104,3 +104,12 @@
 2020-01-21 22:18:49.355 INFO  RegistrationsManager: Mail for activation sent 
 2020-01-21 22:18:54.961 INFO  RegistrationsManager: User got activated undefined 
 2020-01-21 22:18:55.636 ERROR RegistrationsManager: Verification failed for undefined 
+2020-01-27 19:20:09.894 INFO  RegistrationsManager: Registered id: 5e2f1bc9ec6e677118364b25 user: test1, email: walder2@gmx.at 
+2020-01-27 19:20:10.278 INFO  RegistrationsManager: Activation link created hash: 5c3478e70e7c88b89531f8eb99ae3fb92122d51c, user: 5e2f1bc9ec6e677118364b25 
+2020-01-27 19:20:12.946 INFO  RegistrationsManager: Mail for activation sent 
+2020-01-27 19:21:01.661 INFO  RegistrationsManager: Registered id: 5e2f1bfdec6e677118364b27 user: test2, email: walder2@gmx.at 
+2020-01-27 19:21:02.034 INFO  RegistrationsManager: Activation link created hash: a09a1ee779b6d0f9c38029dc8bf2c8bf5a8b3f9e, user: 5e2f1bfdec6e677118364b27 
+2020-01-27 19:21:04.448 INFO  RegistrationsManager: Mail for activation sent 
+2020-01-27 19:21:28.412 INFO  RegistrationsManager: Registered id: 5e2f1c18ec6e677118364b29 user: test4, email: walder2@gmx.at 
+2020-01-27 19:21:28.717 INFO  RegistrationsManager: Activation link created hash: b005a743bf266534e14afc66e4a968c8b31f6beb, user: 5e2f1c18ec6e677118364b29 
+2020-01-27 19:21:31.280 INFO  RegistrationsManager: Mail for activation sent 
