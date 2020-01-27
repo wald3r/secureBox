@@ -7,13 +7,15 @@ import usersReducer from './reducers/usersReducer'
 import notificationReducer from './reducers/notificationReducer'
 import errorReducer from './reducers/errorReducer'
 import filesReducer from './reducers/filesReducer'
+import mimetypesReducer from './reducers/mimetypesReducer'
 
 const reducer = combineReducers({
   user: userReducer,
   users: usersReducer,
   error: errorReducer,
   notification: notificationReducer,
-  files: filesReducer
+  files: filesReducer,
+  mimetypes: mimetypesReducer
 })
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)))

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { setUser, removeUser } from './reducers/userReducer'
-import { getUsers } from './reducers/usersReducer'
 import { handleNotification } from './reducers/notificationReducer'
 import { getFiles } from './reducers/filesReducer'
 import Login from './components/Login'
@@ -16,6 +15,8 @@ import Profile from './components/Profile'
 import Admin from './components/Admin'
 import Footer from './components/Footer'
 import './stylesheets/general.css'
+
+
 const App = ( props ) => {
   //window.localStorage.removeItem('loggedappUser')
 
@@ -24,9 +25,6 @@ const App = ( props ) => {
     if (loggedUserJSON) {
       const newUser = JSON.parse(loggedUserJSON)
       props.setUser(newUser)
-        if(newUser.role === 'admin'){
-          props.getUsers(newUser)
-        }
     }
 // eslint-disable-next-line react-hooks/exhaustive-deps,
   }, [])
@@ -104,7 +102,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   setUser,
-  getUsers,
   removeUser,
   handleNotification,
   getFiles

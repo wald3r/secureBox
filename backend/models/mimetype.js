@@ -3,7 +3,7 @@ const uniqueValidator = require('mongoose-unique-validator')
 var timestamps = require('mongoose-timestamp')
 
 const mimetypeSchema = mongoose.Schema({
-    mime: {
+    name: {
       type: String,
       required: true
     },
@@ -11,6 +11,14 @@ const mimetypeSchema = mongoose.Schema({
       type: String,
       required: true
     }
+})
+
+mimetypeSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
+  }
 })
 
 

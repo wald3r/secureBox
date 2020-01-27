@@ -1,12 +1,14 @@
 import fileService from '../services/files'
 import usersService from '../services/users'
 import parameter from '../utils/parameter'
+import mimesService from '../services/mimes'
 
 export const setUser = ( user ) => {
   return async dispatch => {
     window.localStorage.setItem('loggedappUser', JSON.stringify(user))
     fileService.setToken(user.token)
     usersService.setToken(user.token)
+    mimesService.setToken(user.token)
     
     dispatch({
       type: 'SETUSER',

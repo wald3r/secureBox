@@ -1,70 +1,37 @@
 import React, { useState } from 'react'
-import { connect } from 'react-redux'
-import { Table, Button } from 'react-bootstrap'
-import { handleNotification } from '../reducers/notificationReducer'
-import { handleError } from '../reducers/errorReducer'
-import { changeUser } from '../reducers/usersReducer'
-import ChangeUser from './ChangeUser'
-import ChangePassword from './ChangePassword'
-
+import '../stylesheets/general.css'
+import { Tab, Tabs } from 'react-bootstrap'
+import AllUsers from './AllUsers'
+import Mimetypes from './Mimetypes'
+import { connect } from 'react-redux' 
+import { getUsers } from '../reducers/usersReducer'
+import { getTypes } from '../reducers/mimetypesReducer'
 
 const Admin = (props) => {
 
-  const [showUserDialog, setShowUserDialog] = useState(false)
-  const [showPasswordDialog, setShowPasswordDialog] = useState(false)
-  const [user, setUser] = useState(null)
+  const [chosenType, setChosenType] = useState('')
 
-  if(props.user.role !== 'admin'){
-    return null
-  }
-
-  const priorityStyle = { display: props.user.role === 'admin' ? '' : 'none' }
-
-  const handleUserChange = (user) => {
-    setUser(user)
-    setShowUserDialog(true)
-
-  }
-
-  const handlePasswordChange = (user) => {
-    setUser(user)
-    setShowPasswordDialog(true)
+  const handleTypeChange = (e) => {
+    setChosenType(e)
+    if(e === 'Users'){
+      props.getUsers(props.user)
+    }else if (e === 'Mimetypes'){
+      props.getTypes()
+    }
   }
 
   return (
-
     <div className='container'>
-              <ChangeUser showDialog={showUserDialog}
-                          handleShowDialog={setShowUserDialog}
-                          user={user}/>
-              <ChangePassword showDialog={showPasswordDialog}
-                          handleShowDialog={setShowPasswordDialog}
-                          user={user}/>
-              <Table className='table table-hover'>
-                <thead className='thead-dark'>
-                  <tr>
-                    <th>Username</th>
-                    <th>Fullname</th>
-                    <th>Mail</th>
-                    <th>Role</th>
-                    <th>Active</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {props.users.map(user =>
-                    <tr key={user.id}>
-                      <td>{user.username}</td>
-                      <td>{user.name}</td>
-                      <td>{user.email}</td>
-                      <td>{user.role}</td>
-                      <td>{user.active.toString()}</td>
-                      <td style={priorityStyle}><Button onClick={() => handleUserChange(user)}>Edit Profile</Button></td>
-                      <td style={priorityStyle}><Button onClick={() => handlePasswordChange(user)}>Edit Password</Button></td>
-                    </tr>
-                  ) }
-                </tbody>
-              </Table>
-
+       <div style={{ textAlign: 'center' }}>
+            <Tabs id="controlled-tab-example" activeKey={chosenType} onSelect={handleTypeChange}>
+              <Tab eventKey="Users" title="Users">
+                <AllUsers />
+              </Tab>
+              <Tab eventKey="Mimetypes" title="MimeTypes">
+                <Mimetypes />
+              </Tab>
+            </Tabs>
+          </div>
     </div>
   )
 }
@@ -72,15 +39,14 @@ const Admin = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user,
     users: state.users,
+    user: state.user
   }
 }
 
 const mapDispatchToProps = {
-  handleNotification,
-  handleError,
-  changeUser,
+  getUsers,
+  getTypes,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Admin)

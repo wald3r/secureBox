@@ -3,7 +3,6 @@ import loginService from '../services/login'
 import fileService from '../services/files'
 import { setUser } from '../reducers/userReducer'
 import { handleNotification } from '../reducers/notificationReducer'
-import { getUsers } from '../reducers/usersReducer'
 import { getFiles } from '../reducers/filesReducer'
 import { handleError } from '../reducers/errorReducer'
 import { connect } from 'react-redux'
@@ -22,9 +21,6 @@ const Login = ( props ) => {
       const newUser = await loginService.login({ username, password })
       props.setUser(newUser)
       fileService.setToken(newUser.token)
-      if(newUser.role === 'admin'){
-        props.getUsers(newUser)
-      }
       props.handleNotification('Login successfull!', parameter.notificationTime)
     }catch(error){
       exception.catchException(error, props)
@@ -77,8 +73,7 @@ const mapDispatchToProps = {
   setUser,
   handleNotification,
   handleError,
-  getFiles,
-  getUsers
+  getFiles
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)
