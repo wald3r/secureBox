@@ -24,6 +24,8 @@ table{
   color: white;
   font-weight: bold;
   font-size: 50px;
+  display: inline-block;
+
 }
 
 .link {

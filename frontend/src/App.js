@@ -11,7 +11,6 @@ import Notification from './components/Notificiation'
 import Home from './components/Home'
 import Upload from './components/Upload'
 import Error from './components/Error'
-import { Button } from 'react-bootstrap'
 import AllFiles from './components/AllFiles'
 import Profile from './components/Profile'
 import Admin from './components/Admin'
@@ -44,7 +43,7 @@ const App = ( props ) => {
       <div className='row'>
       <div className='col-md-15'>
         <Router>
-        <a className='header'>SecureBox</a>
+        <p className='header'>SecureBox</p>
           <Link className='link' to='/'>Login</Link>
           <Link className='link' to='/registration'>Registration</Link>  
           <br></br>
@@ -57,7 +56,7 @@ const App = ( props ) => {
       </div>
     )
   }else{
-    const priorityStyle = { color: 'white', textDecoration: 'none', padding: 5, display: props.user.role === 'admin' ? '' : 'none' }
+    const priorityStyle = { display: props.user.role === 'admin' ? '' : 'none' }
     return(
       <div className='bg'>
         <Error />
@@ -67,12 +66,12 @@ const App = ( props ) => {
           <div className='row'>
             <div className='col-md-18'>
                 <br></br>
-                <a className='header'>SecureBox</a>
+                <p className='header'>SecureBox</p>
                 <Link className='link' to='/'>Home</Link>
                 <Link className='link' to='/upload'>Upload</Link>
                 <Link className='link' to='/allfiles'>Files</Link>
                 <Link className='link' to ='/profile'>Profile</Link>
-                <Link className='link' to='/admin'>Admin</Link>
+                <Link style={priorityStyle} className='link' to='/admin'>Admin</Link>
         
                 
                 <Route exact path='/' render={() => <Home /> }/>
