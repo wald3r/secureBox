@@ -12,7 +12,8 @@ const Notes = (props) => {
 
   return (
     <div className='container'>
-      <Button onClick={() => setShowAddNote(true)}><i className="fa fa-plus"/></Button>
+      <div style={{ textAlign: 'center' }}><Button data-toggle='tooltip' data-placement='top' title='Add new note' onClick={() => setShowAddNote(true)}><i className="fa fa-plus"/></Button></div>
+      <br></br>
       <AddNote showAddNote={showAddNote}
                handleShowAddNote={setShowAddNote} />
       {props.notes.map(n => 

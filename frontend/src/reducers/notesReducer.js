@@ -23,6 +23,15 @@ export const addNote = (object) => {
   }
 }
 
+export const removeNote = (note) => {
+  return async dispatch => {
+    dispatch({
+      type: 'REMOVENOTE',
+      note
+    })
+  }
+}
+
 
 
 const notesReducer = (state = [], action) => {
@@ -31,6 +40,8 @@ const notesReducer = (state = [], action) => {
    return action.data
   case 'ADDNOTE':
     return state.concat(action.data)
+  case 'REMOVENOTE':
+    return state.filter(n => n.id !== action.note.id)
   default:
     return state
   }

@@ -29,6 +29,20 @@ export const getDocuments = () => {
   }
 }
 
+export const getMusic = () => {
+  return async dispatch => {
+    const response = await fileService.getMusic()
+    if(response.status === 400){
+      return
+    }
+    let data = response.data
+    dispatch({
+      type: 'GETMUSIC',
+      data
+    })
+  }
+}
+
 export const getFavourites = (id) => {
   return async dispatch => {
     const response = await fileService.getFavourites(id)
@@ -78,6 +92,8 @@ const filesReducer = (state = [], action) => {
   case 'GETFAVOURITES':
     return action.data
   case 'GETPICTURES':
+    return action.data
+  case 'GETMUSIC':
     return action.data
   default:
     return state

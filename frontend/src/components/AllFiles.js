@@ -4,12 +4,12 @@ import { connect } from 'react-redux'
 import '../stylesheets/general.css'
 import FilteredFiles from './FilteredFiles'
 import helperClass from '../utils/helperClass'
-import { getPictures, getDocuments, getFiles, getFavourites } from '../reducers/filesReducer'
+import { getPictures, getDocuments, getFiles, getFavourites, getMusic } from '../reducers/filesReducer'
 
 
 const AllFiles = (props) => {
 
-  const [chosenType, setChosenType] = useState('LastUsed')
+  const [chosenType, setChosenType] = useState('Favourites')
   const [searchName, setSearchName] = useState('')
   const [searchDate, setSearchDate] = useState('')
 
@@ -34,6 +34,8 @@ const AllFiles = (props) => {
       props.getDocuments()
     }else if (e === 'Picture'){
       props.getPictures()
+    }else if (e === 'Music'){
+      props.getMusic()
     }else if (e === 'Favourite'){
       props.getFavourites(props.user.id)
     }
@@ -67,6 +69,9 @@ const AllFiles = (props) => {
               <Tab eventKey="Picture" title="Pictures">
                 <FilteredFiles filteredFiles={dateFilter}/>
               </Tab>
+              <Tab eventKey="Music" title="Music">
+                <FilteredFiles filteredFiles={dateFilter}/>
+              </Tab>
             </Tabs>
           </div>
     </div>
@@ -85,7 +90,8 @@ const mapDispatchToProps = {
   getDocuments,
   getFiles,
   getPictures,
-  getFavourites
+  getFavourites,
+  getMusic
 }
 
 

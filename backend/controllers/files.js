@@ -68,6 +68,21 @@ filesRouter.get('/pictures/', async (request, response, next) => {
   }
 })
 
+filesRouter.get('/music/', async (request, response, next) => {
+
+  try {
+
+    const user = await authenticationHelper.isLoggedIn(request.token)
+    if(user == undefined){
+      return response.status(401).send('Not Authenticated')
+    }
+    const files = await File.find({ user: user._id, category: 'Music' }).populate('user')
+    return response.status(200).json(files.map(file => file.toJSON()))
+  }catch(exception){
+    next(exception)
+  }
+})
+
 
 filesRouter.get('/download/:id', async(request, response, next) => {
   try{

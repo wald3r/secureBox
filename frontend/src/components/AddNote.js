@@ -37,12 +37,12 @@ const AddNote = ( { showAddNote, handleShowAddNote, ...props } ) => {
         </Modal.Header>
         <Form onSubmit={saveChanges}>
         <Modal.Body>
-          <table responsive className='table .table-striped' width="10">
+          <table className='table .table-striped' >
             <thead className='thead-dark'>
               </thead>
-                <tbody width="10">
+                <tbody >
                   <tr>
-                    <td width="10">
+                    <td >
                       Title:
                     </td>
 
@@ -51,11 +51,11 @@ const AddNote = ( { showAddNote, handleShowAddNote, ...props } ) => {
                     </td>
                   </tr>
                   <tr>
-                    <td width="10">
+                    <td >
                       Body:
                     </td>
                     <td>
-                      <input type='text' required onChange={({target}) => setBody(target.value)}/>
+                      <textarea rows='4' cols='40' type='text' required onChange={({target}) => setBody(target.value)}/>
                     </td>
                   </tr>
                 </tbody>

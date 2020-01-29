@@ -43,5 +43,20 @@ notesRouter.post('/', async(request, response, next) => {
 })
 
 
+notesRouter.delete('/remove/:id', async(request, response, next) => {
+  
+  try{
+    const user = await authenticationHelper.isLoggedIn(request.token)
+    if(user == undefined){
+      return response.status(401).send('Not Authenticated')
+    }
+   
+    await Note.findByIdAndDelete(request.params.id)
+    return response.status(200).send("Note successfully deleted")
+  }catch(exception){
+    next(exception)
+  }
+})
+
 
 module.exports = notesRouter

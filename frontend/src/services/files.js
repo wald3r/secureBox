@@ -72,6 +72,15 @@ const getPictures = async () => {
   return response
 }
 
+const getMusic = async () => {
+
+  const config = {
+    headers: { Authorization: token },
+  }
+  const response = await axios.get(`${baseUrl}/music/`, config)
+  return response
+}
+
 const getFile = async (id) => {
   
   const config = {
@@ -112,4 +121,4 @@ const sendFiles = async (data) => {
 
 
 
-export default { sendPublicMail, makePublic, getFavourites, downloadFile, sendFiles, setToken, getFiles, getFile, removeFile, removeUnencryptedFile, getPictures, getDocuments }
+export default { sendPublicMail, getMusic, makePublic, getFavourites, downloadFile, sendFiles, setToken, getFiles, getFile, removeFile, removeUnencryptedFile, getPictures, getDocuments }
