@@ -8,20 +8,23 @@ import { Button } from 'react-bootstrap'
 const Notes = (props) => {
 
   const [showAddNote, setShowAddNote] = useState(false)
+  const [noteFilter, setNoteFilter] = useState('')
 
+  const filteredNotes = noteFilter === '' ? props.notes : props.notes.filter(note => note.title.includes(noteFilter))
 
-  let active = 2;
-  let items = [];
- 
-
+  const handleFilter = (e) => {
+    e.preventDefault()
+    setNoteFilter(e.target.value)
+  }
 
   return (
     <div className='container'>
-      <div style={{ textAlign: 'center' }}><Button data-toggle='tooltip' data-placement='top' title='Add new note' onClick={() => setShowAddNote(true)}><i className="fa fa-plus"/></Button></div>
+      Filter: <input onChange={handleFilter}/>  <Button data-toggle='tooltip' data-placement='top' title='Add new note' onClick={() => setShowAddNote(true)}><i className="fa fa-plus"/></Button>
+      <br></br>
       <br></br>
       <AddNote showAddNote={showAddNote}
                handleShowAddNote={setShowAddNote} />
-      {props.notes.map(n => 
+      {filteredNotes.map(n => 
         <Note note={n} key={n.id}/>
       )}
     </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import fileService from '../services/files'
-import { Form, Button, ButtonGroup } from 'react-bootstrap'
+import { Form, Button, ButtonGroup, Spinner } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
@@ -21,6 +21,7 @@ const Upload = ( { ...props } ) => {
   const [style, setStyle]= useState(false)
   const [newDate, setNewDate] = useState('')
   const [disableInput, setDisableInput] = useState(false)
+  const [uploading, setUploading] = useState(false)
 
   const priorityStyle = {
     padding: 5,
@@ -41,11 +42,8 @@ const Upload = ( { ...props } ) => {
   const checkMimeType= () => {
     const types = props.mimetypes
     let noErr = false
-    console.log(files)
-    console.log(types)
     for(var x = 0; x<files.length; x++) {
       for(let i = 0; i < types.length; i++){
-        console.log(types[i].name, files[x].type)
         if(types[i].name === files[x].type){
           noErr = true
           break
@@ -62,7 +60,9 @@ const Upload = ( { ...props } ) => {
   }
 
   const uploadHandler = async (event) => {
+
     try{
+      setUploading(true)
       event.preventDefault()
       if(files.length === 0){
         props.handleError('No files!', parameter.errorTime)
@@ -86,7 +86,9 @@ const Upload = ( { ...props } ) => {
         setFiles([])
         window.location.reload()
       }
+      setUploading(false)
     }catch(error){
+      setUploading(false)
       exception.catchException(error, props)
     }
   }
@@ -116,25 +118,34 @@ const Upload = ( { ...props } ) => {
   return (
     <div>
     <div className='container'>
-      <div style={chosenStyle} >
-        Settings:
-        <Form onSubmit={handleSettings}>
-          <ButtonGroup className="mr-2" aria-label="First group">
-            <Button className='fileButton' active={type === 'Document'} disabled={disableInput} onClick={() => setType('Document')} variant="secondary">Documents</Button>
-            <Button className='fileButton' active={type === 'Picture'}  disabled={disableInput} onClick={() => setType('Picture')} variant="secondary">Pictures</Button>
-          </ButtonGroup>
-          <DatePicker onChange={handleTimeChange} selected={newDate} disabled={disableInput}/>
-          <input onChange={({ target }) => setNewName(target.value)} disabled={disableInput}/>
-          <Button type="submit">{!style ? 'Save' : 'Remove'}</Button>
+      <div className='form-group files' >
+        <Form method='POST' encType='multipart/form-data' onSubmit={uploadHandler} >
+          <input type='file' autoComplete='off' name='files' multiple onChange={onChangeHandler}/>
+          <Button style={{display: uploading === false ? '' : 'none'}} className='button' type="submit">Upload</Button>
+          <Button style={{display: uploading === true ? '' : 'none'}} className='button' type="submit"><Spinner
+                as="span"
+                animation="grow"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+                /> Uploading...
+            </Button>
         </Form>
       </div>
     </div>
     <br></br>
     <div className='container'>
-      <div className='form-group files' >
-        <Form method='POST' encType='multipart/form-data' onSubmit={uploadHandler} >
-          <input type='file' autoComplete='off' name='files' multiple onChange={onChangeHandler}/>
-          <Button className='button' type="submit">Upload</Button>
+      <div style={chosenStyle} >
+        Settings:
+        <Form onSubmit={handleSettings}>
+          <ButtonGroup className="mr-2" aria-label="First group">
+            <Button className='fileButton' active={type === 'Document'} disabled={disableInput} onClick={() => setType('Document')} variant="primary">Documents</Button>
+            <Button className='fileButton' active={type === 'Picture'}  disabled={disableInput} onClick={() => setType('Picture')} variant="primary">Pictures</Button>
+            <Button className='fileButton' active={type === 'Music'}  disabled={disableInput} onClick={() => setType('Music')} variant="primary">Music</Button>
+          </ButtonGroup>
+          <DatePicker onChange={handleTimeChange} selected={newDate} disabled={disableInput}/>
+          <input onChange={({ target }) => setNewName(target.value)} disabled={disableInput}/>
+          <Button type="submit">{!style ? 'Save' : 'Remove'}</Button>
         </Form>
       </div>
     </div>

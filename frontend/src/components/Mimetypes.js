@@ -13,6 +13,9 @@ import mimesService from '../services/mimes'
 const Mimetypes = (props) => {
 
   const [showAddMime, setShowAddMime] = useState(false)
+  const [filter, setFilter] = useState('')
+
+  const filteredMimes = filter === '' ? props.mimetypes : props.mimetypes.filter(m => m.name.includes(filter))
 
   const handleRemoval = async (type) => {
     try{
@@ -22,6 +25,11 @@ const Mimetypes = (props) => {
     }catch(error){
       exception.catchException(error, props)
     }  
+  }
+
+  const handleFilter = (e) => {
+    e.preventDefault()
+    setFilter(e.target.value)
   }
 
   return(
@@ -34,15 +42,16 @@ const Mimetypes = (props) => {
           <tr>
             <th>Name</th>
             <th>Ending</th>
+            <th><input onChange={handleFilter}/></th>
           </tr>
         </thead>
         <tbody>
-          {props.mimetypes.map(type =>
-          <tr key={type.id}>
-            <td>{type.name}</td>
-            <td>{type.ending}</td>
-            <td><Button data-toggle='tooltip' data-placement='top' title='Delete type' onClick={() => handleRemoval(type)}><i className="fa fa-trash"></i></Button></td>
-          </tr>
+          {filteredMimes.map(type =>
+            <tr key={type.id}>
+              <td>{type.name}</td>
+              <td>{type.ending}</td>
+              <td><Button data-toggle='tooltip' data-placement='top' title='Delete type' onClick={() => handleRemoval(type)}><i className="fa fa-trash"></i></Button></td>
+            </tr>
           )}
         </tbody>
       </Table>
