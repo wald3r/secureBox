@@ -9,7 +9,7 @@ import { getPictures, getDocuments, getFiles, getFavourites, getMusic } from '..
 
 const AllFiles = (props) => {
 
-  const [chosenType, setChosenType] = useState('Favourites')
+  const [chosenType, setChosenType] = useState('Favourite')
   const [searchName, setSearchName] = useState('')
   const [searchDate, setSearchDate] = useState('')
 

@@ -13,6 +13,8 @@ import SendPublicLink from './SendPublicLink'
 import helperClass from '../utils/helperClass'
 import parameter from '../utils/parameter'
 import exception from '../utils/exception'
+import Confirmation from './Confirmation'
+
 
 const AllMyFiles = ({ filteredFiles, ...props }) => {
 
@@ -22,8 +24,12 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
   const [showEmailDialog, setShowEmailDialog] = useState(false)
   const [publicLink, setPublicLink] = useState('')
   const [file, setFile] = useState(null)
+  const [showConfirmationSingle, setShowConfirmationSingle] = useState(false)
+  const [showConfirmationSelected, setShowConfirmationSelected] = useState(false)
+  const [singleFileToDelete, setSingleFileToDelete] = useState(null)
   const showSelectedButtons = { display: props.files.length === 0 ? 'none' : '' }
   const showCheckedAllName = allSelected === true ? 'Remove selection' : 'Select all'
+
 
   const removeSelection = () => {
     setAllSelected(false)
@@ -50,13 +56,18 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
     }
   }
 
-  const handleSingleRemoval = async (file) => {
+  const handleSingleRemoval = (file) => {
+    setSingleFileToDelete(file)
+    setShowConfirmationSingle(true)
+  }
+
+  const removeSingleFile = async () => {
     try{
-      const response = await fileService.removeFile(file.id)
+      const response = await fileService.removeFile(singleFileToDelete.id)
       if(response.status === 200){
-        props.handleNotification(`File ${file.name} removed`, parameter.notificationTime)
-        props.removeLastUsed(file.id, props.user)
-        props.setFiles(props.files.filter(oFile => oFile.id !== file.id))
+        props.handleNotification(`File ${singleFileToDelete.name} removed`, parameter.notificationTime)
+        props.removeLastUsed(singleFileToDelete.id, props.user)
+        props.setFiles(props.files.filter(oFile => oFile.id !== singleFileToDelete.id))
         removeSelection()
       }
     }catch(error){
@@ -150,6 +161,16 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
   }else{
     return (
         <div className='tablecontainer'> 
+          <Confirmation 
+            showConfirmation={showConfirmationSingle}
+            setConfirmation={setShowConfirmationSingle}
+            handleConfirmation={removeSingleFile}
+          />
+           <Confirmation 
+            showConfirmation={showConfirmationSelected}
+            setConfirmation={setShowConfirmationSelected}
+            handleConfirmation={handleSelectedRemoval}
+          />
           <PublicLink showDialog={showLinkDialog}
                     handleShowDialog={setShowLinkDialog}
                     link={publicLink}/>
@@ -188,7 +209,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
           </Table>
           <div style={showSelectedButtons}>
             <Button  onClick={handleSelectAll}>{showCheckedAllName}</Button>
-            <Button  onClick={handleSelectedRemoval}><i className="fa fa-trash"></i></Button>
+            <Button  onClick={() => setShowConfirmationSelected(true)}><i className="fa fa-trash"></i></Button>
             <Button  onClick={handleSelectedDownload}><i className="fa fa-folder"></i></Button>
           </div>
         </div>

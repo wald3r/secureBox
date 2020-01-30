@@ -1,8 +1,11 @@
 const usersRouter = require('express').Router()
 const User = require('../models/user')
+const Note = require('../models/note')
+const File = require('../models/file')
 const bcrypt = require('bcrypt')
 const authenticationHelper = require('../utils/authenticationHelper')
 const roleManagement = require('../utils/roleManagement')
+const fs = require('fs');
 
 
 usersRouter.get('/', async (request, response, next) => {
@@ -129,6 +132,16 @@ usersRouter.put('/password/:id', async (request, response, next) => {
       if(authenticatedUser.role !== roleManagement.roles.ADMIN){
         return response.status(401).send('Wrong user role')
       }
+
+      const files = await File.find({user: request.params.id})
+      files.map(async f => {
+        const filePath = `${f.path}/${f.name}.enc`
+        fs.unlinkSync(filePath)
+        await File.findByIdAndDelete(f._id)
+      })
+
+      const notes = await Note.find({user: request.params.id})
+      notes.map(async n => await Note.findByIdAndDelete(n._id))
 
       await User.findByIdAndDelete(request.params.id)
       response.status(200).send('User was successfully deleted!')

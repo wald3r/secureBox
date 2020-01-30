@@ -41,10 +41,14 @@ const Upload = ( { ...props } ) => {
   const checkMimeType= () => {
     const types = props.mimetypes
     let noErr = false
+    console.log(files)
+    console.log(types)
     for(var x = 0; x<files.length; x++) {
       for(let i = 0; i < types.length; i++){
+        console.log(types[i].name, files[x].type)
         if(types[i].name === files[x].type){
           noErr = true
+          break
         }
       }
       if(noErr === false){

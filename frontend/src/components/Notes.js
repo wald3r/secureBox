@@ -10,6 +10,11 @@ const Notes = (props) => {
   const [showAddNote, setShowAddNote] = useState(false)
 
 
+  let active = 2;
+  let items = [];
+ 
+
+
   return (
     <div className='container'>
       <div style={{ textAlign: 'center' }}><Button data-toggle='tooltip' data-placement='top' title='Add new note' onClick={() => setShowAddNote(true)}><i className="fa fa-plus"/></Button></div>

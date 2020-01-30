@@ -11,9 +11,6 @@ mimetypesRouter.get('/', async(request, response, next) => {
     if(user == undefined){
       return response.status(401).send('Not Authenticated')
     }
-    if(user.role !== roleManagement.roles.ADMIN){
-      return response.status(401).send('Wrong user role')
-    }
 
     const types = await Mimetype.find({})
     return response.status(200).json(types.map(t => t.toJSON()))

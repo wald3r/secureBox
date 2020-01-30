@@ -9,6 +9,8 @@ import { Button, Form } from 'react-bootstrap'
 import '../stylesheets/general.css'
 import parameter from '../utils/parameter'
 import exception from '../utils/exception'
+import { getUsers } from '../reducers/usersReducer'
+import { getTypes } from '../reducers/mimetypesReducer'
 
 const Login = ( props ) => {
   const [ username, setUsername ] = useState('')
@@ -19,7 +21,10 @@ const Login = ( props ) => {
     try{
       const newUser = await loginService.login({ username, password })
       props.setUser(newUser)
-      //fileService.setToken(newUser.token)
+      props.getTypes()
+      if(newUser.role === 'admin'){
+        props.getUsers(newUser)
+      }
       props.handleNotification('Login successfull!', parameter.notificationTime)
     }catch(error){
       exception.catchException(error, props)
@@ -72,7 +77,9 @@ const mapDispatchToProps = {
   setUser,
   handleNotification,
   handleError,
-  getFiles
+  getFiles,
+  getUsers,
+  getTypes
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

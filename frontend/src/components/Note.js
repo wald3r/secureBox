@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Accordion, Card, Button } from 'react-bootstrap'
 import notesService from '../services/notes'
 import { connect } from 'react-redux'
@@ -8,9 +8,11 @@ import { removeNote } from '../reducers/notesReducer'
 import parameter from '../utils/parameter'
 import exception from '../utils/exception'
 import helperClass from '../utils/helperClass'
+import Confirmation from './Confirmation'
 
 const Note = ({ note, ...props }) => {
 
+  const [showConfirmation, setShowConfirmation] = useState(false)
 
   const handleRemoval = async () => {
     try{
@@ -25,6 +27,9 @@ const Note = ({ note, ...props }) => {
 
   return(
     <div>
+      <Confirmation showConfirmation={showConfirmation}
+                    setConfirmation={setShowConfirmation}
+                    handleConfirmation={handleRemoval}/>
       <Accordion>
         <Card>
           <Card.Header>
@@ -41,7 +46,7 @@ const Note = ({ note, ...props }) => {
               <p>________________________________</p>
               <p>Created: {helperClass.formatTime(note.createdAt)}</p>
               <p>Updated: {helperClass.formatTime(note.updatedAt)}</p>
-              <Button data-toggle='tooltip' data-placement='top' title='Delete note' onClick={() => handleRemoval()}><i className="fa fa-trash"></i></Button>
+              <Button data-toggle='tooltip' data-placement='top' title='Delete note' onClick={() => setShowConfirmation(true)}><i className="fa fa-trash"></i></Button>
             </Card.Body>
           </Accordion.Collapse>
         </Card>

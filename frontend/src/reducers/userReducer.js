@@ -66,6 +66,7 @@ export const removeUser = () => {
 }
 
 const userReducer = (state = null, action) => {
+  console.log(action.type)
   switch (action.type){
   case 'ADDLASTUSED':
     const addedToList = { ...state, lastUsed: action.list}

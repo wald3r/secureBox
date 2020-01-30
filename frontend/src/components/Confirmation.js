@@ -1,37 +1,33 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Modal, Button } from 'react-bootstrap'
 
 
-const Confirmation = ({ handleConfirmation }) => {
-
-  const [show, setShow] = useState(true)
+const Confirmation = ({ showConfirmation, setConfirmation, handleConfirmation }) => {
 
 
-  const handleClose = () => setShow(false)
-
-  const SaveChanges = () => {
-    setShow(false)
+  const saveChanges = () => {
+    setConfirmation(false)
     handleConfirmation()
   }
 
 
-  const NoChanges = () => {
-    setShow(false)
+  const noChanges = () => {
+    setConfirmation(false)
   }
 
   return (
     <div>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={showConfirmation} onHide={noChanges}>
         <Modal.Header closeButton>
           <Modal.Title>Confirmation</Modal.Title>
         </Modal.Header>
         <Modal.Body>Do you really want to proceed with this action?</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={NoChanges}>
+          <Button variant="secondary" onClick={noChanges}>
             Close
           </Button>
-          <Button variant="primary" onClick={SaveChanges}>
-            Save Changes
+          <Button variant="primary" onClick={saveChanges}>
+            Yes
           </Button>
         </Modal.Footer>
       </Modal>
