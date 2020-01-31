@@ -14,7 +14,7 @@ import helperClass from '../utils/helperClass'
 import parameter from '../utils/parameter'
 import exception from '../utils/exception'
 import Confirmation from './Confirmation'
-
+import EnterPassword from './EnterPassword'
 
 const AllMyFiles = ({ filteredFiles, ...props }) => {
 
@@ -27,6 +27,8 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
   const [showConfirmationSingle, setShowConfirmationSingle] = useState(false)
   const [showConfirmationSelected, setShowConfirmationSelected] = useState(false)
   const [singleFileToDelete, setSingleFileToDelete] = useState(null)
+  const [showEnterPassword, setShowEnterPassword] = useState(false)
+
   const showSelectedButtons = { display: props.files.length === 0 ? 'none' : '' }
   const showCheckedAllName = allSelected === true ? 'Remove selection' : 'Select all'
 
@@ -45,6 +47,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
 
   const handleSingleDownload = async (file) => {
     try{
+      //if(file.password)
       const response = await fileService.downloadFile(file.id)
       fileDownload(response.data, file.name)
       props.addLastUsed(file, props.user)
@@ -161,6 +164,10 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
   }else{
     return (
         <div className='tablecontainer'> 
+          <EnterPassword />
+            showEnterPassword={showEnterPassword}
+            setShowEnterPassword={setShowEnterPassword}
+            
           <Confirmation 
             showConfirmation={showConfirmationSingle}
             setConfirmation={setShowConfirmationSingle}
@@ -183,7 +190,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
                 <th>Select</th>
                 <th>Category</th>
                 <th>Name</th>
-                <th>Mimetype</th>
+                <th>Encrypted</th>
                 <th>Size</th>
                 <th>Date</th>
               </tr>
@@ -194,7 +201,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
                   <td><input onClick={(event) => handleOneSelection(file, event)} type="checkbox" className='checkbox'/></td>
                   <td>{file.category}</td>
                   <td>{helperClass.formatName(file.name)}</td>
-                  <td>{file.mimetype}</td>
+                  <td>{file.password === undefined ? '' : 'x'}</td>
                   <td>{file.size}</td>
                   <td>{file.date}</td>
                   <td>

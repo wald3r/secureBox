@@ -12,6 +12,8 @@ import 'react-datepicker/dist/react-datepicker.css'
 import parameter from '../utils/parameter'
 import exception from '../utils/exception'
 import { getTypes } from '../reducers/mimetypesReducer'
+import AddEncryption from './AddEncryption'
+
 
 const Upload = ( { ...props } ) => {
 
@@ -23,6 +25,7 @@ const Upload = ( { ...props } ) => {
   const [disableInput, setDisableInput] = useState(false)
   const [uploading, setUploading] = useState(false)
   const [uploadedFiles, setUploadedFiles] = useState(null)
+  const [showAddEncryption, setShowAddEncryption] = useState(false)
 
   const priorityStyle = {
     padding: 5,
@@ -60,6 +63,12 @@ const Upload = ( { ...props } ) => {
     return noErr
   }
 
+  const encryptFiles = async (password) => {
+    const response = await fileService.encryptFiles({files: uploadedFiles, password: password})
+    props.handleNotification(response.data, parameter.notificationTime)
+
+  }
+
   const uploadHandler = async (event) => {
 
     try{
@@ -80,13 +89,14 @@ const Upload = ( { ...props } ) => {
         if(response.status === 200){
           setStyle(false)
           setUploadedFiles(response.data)
-          //props.handleNotification(response.data, parameter.notificationTime)
+          setShowAddEncryption(true)
+          props.handleNotification('All files uploaded', parameter.notificationTime)
         }
         else{
           props.handleError(response.data, parameter.errorTime)
         }
         setFiles([])
-        window.location.reload()
+        event.persist()
       }
       setUploading(false)
     }catch(error){
@@ -119,6 +129,11 @@ const Upload = ( { ...props } ) => {
 
   return (
     <div>
+    <AddEncryption 
+      showAddEncryption={showAddEncryption}
+      setShowAddEncryption={setShowAddEncryption}
+      handleEncryption={encryptFiles}
+    />
     <div className='container'>
       <div className='form-group files' >
         <Form method='POST' encType='multipart/form-data' onSubmit={uploadHandler} >

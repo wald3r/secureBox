@@ -1,26 +1,23 @@
 import React, { useState } from 'react'
-import { Button, Modal, Form } from 'react-bootstrap'
+import { Modal, Form, Button } from 'react-bootstrap'
 
 
-const AddEncryption = ({ showAddEncryption , setShowAddEncryption, handleEncryption  }) => {
-
-
+const EnterPassword = ( { showEnterPassword, setShowEnterPassword } ) => {
+ 
   const [password, setPassword] = useState('')
 
-  const noChanges = () => {
-    setShowAddEncryption(false)
-    window.location.reload()
+  const noChanges = () => setShowEnterPassword(false)
+
+  const saveChanges = async () => {
+
   }
 
-  const saveChanges = () => {
-      handleEncryption(password)
-  }
 
   return (
     <div>
-      <Modal show={showAddEncryption} onHide={noChanges}>
+      <Modal show={showEnterPassword} onHide={noChanges}>
         <Modal.Header closeButton>
-          <Modal.Title>Add Encryption: </Modal.Title>
+          <Modal.Title>Enter Password: </Modal.Title>
         </Modal.Header>
         <Form onSubmit={saveChanges}>
         <Modal.Body>
@@ -42,10 +39,10 @@ const AddEncryption = ({ showAddEncryption , setShowAddEncryption, handleEncrypt
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={noChanges}>
-            No Encryption
+            Close
           </Button>
           <Button variant="primary" type='submit'>
-            Add Encryption
+            Enter Password
           </Button>
         </Modal.Footer>
         </Form>
@@ -55,4 +52,4 @@ const AddEncryption = ({ showAddEncryption , setShowAddEncryption, handleEncrypt
 }
 
 
-export default AddEncryption
+export default EnterPassword

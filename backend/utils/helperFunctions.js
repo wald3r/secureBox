@@ -7,7 +7,6 @@ function sleep(ms) {
 
 
 function getDir(fullDir){
-  console.log('test', fullDir)
   const dir = fullDir.replace('/controllers', '/')
   return dir
 

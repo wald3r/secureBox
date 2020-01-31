@@ -239,7 +239,7 @@ filesRouter.post('/upload', async (request, response, next) => {
   try{
     const path = `files/${user.username}`
 
-    const savedFiles = []
+    var allSavedFiles = []
 
     if (!fs.existsSync(path)){
       fs.mkdirSync(path);
@@ -253,6 +253,7 @@ filesRouter.post('/upload', async (request, response, next) => {
     await files.map(async file => {  
       const splitName = file.name.split('__')
       const fileName = nameCreation.createDocumentName(user.username, splitName[4], splitName[2], splitName[3], files.length === 1 ? '' : splitName[1] ,file.mimetype, path)
+      allSavedFiles = allSavedFiles.concat(fileName)
       const newFile = new File ({
         name: fileName,
         path: path,
@@ -262,16 +263,16 @@ filesRouter.post('/upload', async (request, response, next) => {
         category: splitName[2],
         date: splitName[3]  
       })
-      const savedFile = await newFile.save()
+      await newFile.save()
       file.mv(`${path}/${fileName}`, err => {
         if (err){
           logger.failedUploadFile(err.message)
           return response.status(500).send(err)}
       })
-      savedFiles = savedFiles.concat(savedFile)
+      logger.uploadFile(`${helperFunctions.getDir(__dirname)}${path}/${fileName}`)
+
     })
-    logger.uploadFile(`${helperFunctions.getDir(__dirname)}${path}/${fileName}`)
-    response.status(200).json(savedFiles.map(f => f.toJSON()))
+    response.status(200).json(allSavedFiles)
   }catch(exception){
     next(exception)
   }
@@ -279,42 +280,42 @@ filesRouter.post('/upload', async (request, response, next) => {
 
 
 
-filesRouter.post('/encrypt/', async (req, res, next) => {
-
-  const user = await authenticationHelper.isLoggedIn(request.token)
-  if(user == undefined){
-    return response.status(401).send('Not Authenticated')
-  }
-  if (!request.files || Object.keys(request.files).length === 0) {
-    return response.status(400).send('No files were uploaded.')
-  }
-
-  const path = `files/${user.username}`
-  const files = request.body.files
-  const salt = 10
- 
-  files.map(async file => {
-
- 
-    const passwordHash = await bcrypt.hash(file.password, salt)
-    const savedFile = await File.findById(file._id)
-    savedFile.password = passwordHash
-
-    for(let a = 0; a < 10; a++){
-      if(fs.existsSync(`${helperFunctions.getDir(__dirname)}${path}/${savedFile.name}`)){
-        cryptoHelper.encrypt(passwordHash, `${helperFunctions.getDir(__dirname)}${path}/${savedFile.name}`)
-        break
-      }
-      else{
-        await helperFunctions.sleep(1000)
-      }
+filesRouter.post('/encrypt/', async (request, response, next) => {
+  try{
+    const user = await authenticationHelper.isLoggedIn(request.token)
+    if(user == undefined){
+      return response.status(401).send('Not Authenticated')
     }
-    await savedFile.save()
-    
-  })
 
+    const path = `files/${user.username}`
+    const files = request.body.files
+    const salt = 10
+    console.log(files)
+    files.map(async file => {
 
+      
+      const passwordHash = await bcrypt.hash(request.body.password, salt)
+      const savedFile = await File.find({ name: file })
+      savedFile[0].password = passwordHash
 
+      for(let a = 0; a < 10; a++){
+        if(fs.existsSync(`${helperFunctions.getDir(__dirname)}${path}/${savedFile[0].name}`)){
+          cryptoHelper.encrypt(passwordHash, `${helperFunctions.getDir(__dirname)}${path}/${savedFile[0].name}`)
+          break
+        }
+        else{
+          await helperFunctions.sleep(1000)
+        }
+      }
+      await savedFile[0].save()
+
+      
+    })
+
+    response.status(200).send('All files encrypted')
+  }catch(exception){
+    next(exception)
+  }
 
 })
 
