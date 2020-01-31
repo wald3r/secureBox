@@ -8,6 +8,7 @@ const cryptoHelper = require('../utils/cryptoHelper')
 const logger = require('../utils/logger')
 const helperFunctions = require ('../utils/helperFunctions')
 const nodemailer = require('../utils/nodemailer')
+const bcrypt = require('bcrypt')
 
 filesRouter.get('/', async (request, response, next) => {
 
@@ -238,6 +239,8 @@ filesRouter.post('/upload', async (request, response, next) => {
   try{
     const path = `files/${user.username}`
 
+    const savedFiles = []
+
     if (!fs.existsSync(path)){
       fs.mkdirSync(path);
     } 
@@ -265,23 +268,54 @@ filesRouter.post('/upload', async (request, response, next) => {
           logger.failedUploadFile(err.message)
           return response.status(500).send(err)}
       })
-
-      for(let a = 0; a < 10; a++){
-        if(fs.existsSync(`${helperFunctions.getDir(__dirname)}${path}/${fileName}`)){
-          cryptoHelper.encrypt('test', `${helperFunctions.getDir(__dirname)}${path}/${fileName}`)
-          logger.uploadFile(`${helperFunctions.getDir(__dirname)}${path}/${fileName}`)
-          break
-        }
-        else{
-          await helperFunctions.sleep(1000)
-        }
-      }
+      savedFiles = savedFiles.concat(savedFile)
     })
-
-    response.status(200).send('Files uploaded')
+    logger.uploadFile(`${helperFunctions.getDir(__dirname)}${path}/${fileName}`)
+    response.status(200).json(savedFiles.map(f => f.toJSON()))
   }catch(exception){
     next(exception)
   }
+})
+
+
+
+filesRouter.post('/encrypt/', async (req, res, next) => {
+
+  const user = await authenticationHelper.isLoggedIn(request.token)
+  if(user == undefined){
+    return response.status(401).send('Not Authenticated')
+  }
+  if (!request.files || Object.keys(request.files).length === 0) {
+    return response.status(400).send('No files were uploaded.')
+  }
+
+  const path = `files/${user.username}`
+  const files = request.body.files
+  const salt = 10
+ 
+  files.map(async file => {
+
+ 
+    const passwordHash = await bcrypt.hash(file.password, salt)
+    const savedFile = await File.findById(file._id)
+    savedFile.password = passwordHash
+
+    for(let a = 0; a < 10; a++){
+      if(fs.existsSync(`${helperFunctions.getDir(__dirname)}${path}/${savedFile.name}`)){
+        cryptoHelper.encrypt(passwordHash, `${helperFunctions.getDir(__dirname)}${path}/${savedFile.name}`)
+        break
+      }
+      else{
+        await helperFunctions.sleep(1000)
+      }
+    }
+    await savedFile.save()
+    
+  })
+
+
+
+
 })
 
 

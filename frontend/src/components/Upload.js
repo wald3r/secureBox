@@ -22,6 +22,7 @@ const Upload = ( { ...props } ) => {
   const [newDate, setNewDate] = useState('')
   const [disableInput, setDisableInput] = useState(false)
   const [uploading, setUploading] = useState(false)
+  const [uploadedFiles, setUploadedFiles] = useState(null)
 
   const priorityStyle = {
     padding: 5,
@@ -78,7 +79,8 @@ const Upload = ( { ...props } ) => {
         const response = await fileService.sendFiles(data)
         if(response.status === 200){
           setStyle(false)
-          props.handleNotification(response.data, parameter.notificationTime)
+          setUploadedFiles(response.data)
+          //props.handleNotification(response.data, parameter.notificationTime)
         }
         else{
           props.handleError(response.data, parameter.errorTime)

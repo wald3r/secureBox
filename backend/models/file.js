@@ -34,6 +34,9 @@ const fileSchema = mongoose.Schema({
     counter: {
       type: Number,
       default: 0
+    },
+    password: {
+      type: String,
     }
 })
 
