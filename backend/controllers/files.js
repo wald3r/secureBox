@@ -85,15 +85,23 @@ filesRouter.get('/music/', async (request, response, next) => {
 })
 
 
-filesRouter.get('/download/:id', async(request, response, next) => {
+filesRouter.put('/download/:id', async(request, response, next) => {
   try{
     var user = await authenticationHelper.isLoggedIn(request.token)
     if(user == undefined){
       return response.status(401).send('Not Authenticated')
     }
+    const password = request.body.password
     const fileDb = await File.findById(request.params.id)
+    const passwordCorrect = fileDb === null 
+      ? false  
+      : await bcrypt.compare(password, fileDb.password)
+    if(!passwordCorrect){
+      response.status(401).send('Wrong password')
+    }
+
     const filePath = `${fileDb.path}/${fileDb.name}`
-    const readStream = cryptoHelper.decrypt('test', `${helperFunctions.getDir(__dirname)}${filePath}.enc`)
+    const readStream = cryptoHelper.decrypt(password, `${helperFunctions.getDir(__dirname)}${filePath}.enc`)
     readStream.on('close', async () => {
       await response.sendFile(filePath , { root : helperFunctions.getDir(__dirname)})
     }) 
@@ -290,7 +298,6 @@ filesRouter.post('/encrypt/', async (request, response, next) => {
     const path = `files/${user.username}`
     const files = request.body.files
     const salt = 10
-    console.log(files)
     files.map(async file => {
 
       
@@ -300,7 +307,7 @@ filesRouter.post('/encrypt/', async (request, response, next) => {
 
       for(let a = 0; a < 10; a++){
         if(fs.existsSync(`${helperFunctions.getDir(__dirname)}${path}/${savedFile[0].name}`)){
-          cryptoHelper.encrypt(passwordHash, `${helperFunctions.getDir(__dirname)}${path}/${savedFile[0].name}`)
+          cryptoHelper.encrypt(request.body.password, `${helperFunctions.getDir(__dirname)}${path}/${savedFile[0].name}`)
           break
         }
         else{

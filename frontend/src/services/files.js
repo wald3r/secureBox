@@ -99,13 +99,13 @@ const encryptFiles = async(data) => {
   return response
 }
 
-const downloadFile = async (id) => {
+const downloadFile = async (id, password) => {
 
   const config = {
     responseType: 'blob',
     headers: { Authorization: token },
   }
-  const response = await axios.get(`${baseUrl}/download/${id}`, config)
+  const response = await axios.put(`${baseUrl}/download/${id}`, {password: password },config)
   return response
 }
 

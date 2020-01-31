@@ -45,18 +45,31 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
     }
   }
 
-  const handleSingleDownload = async (file) => {
+  const handleDownload = async (password) => {
+
     try{
-      //if(file.password)
-      const response = await fileService.downloadFile(file.id)
+      const response = await fileService.downloadFile(file.id, password)
       fileDownload(response.data, file.name)
       props.addLastUsed(file, props.user)
       props.handleNotification('Download started...', 2500)
       await fileService.removeUnencryptedFile(file.id)
       removeSelection()
+      setFile(null)
     }catch(error){
       exception.catchException(error, props)
     }
+  }
+
+  const handleSingleDownload = async (file) => {
+
+      if(file.password !== undefined){
+        setShowEnterPassword(true)
+        setFile(file)
+      }else{
+        setFile(file)
+        handleDownload(undefined)
+      }
+  
   }
 
   const handleSingleRemoval = (file) => {
@@ -164,9 +177,11 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
   }else{
     return (
         <div className='tablecontainer'> 
-          <EnterPassword />
+          <EnterPassword 
             showEnterPassword={showEnterPassword}
             setShowEnterPassword={setShowEnterPassword}
+            handlePassword={handleDownload} 
+          />
             
           <Confirmation 
             showConfirmation={showConfirmationSingle}

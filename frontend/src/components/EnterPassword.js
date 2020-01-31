@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import { Modal, Form, Button } from 'react-bootstrap'
 
 
-const EnterPassword = ( { showEnterPassword, setShowEnterPassword } ) => {
+const EnterPassword = ( { showEnterPassword, setShowEnterPassword, handleDownload} ) => {
  
   const [password, setPassword] = useState('')
 
   const noChanges = () => setShowEnterPassword(false)
 
-  const saveChanges = async () => {
-
+  const handlePassword = async () => {
+    handleDownload(password)
   }
 
 
@@ -19,7 +19,7 @@ const EnterPassword = ( { showEnterPassword, setShowEnterPassword } ) => {
         <Modal.Header closeButton>
           <Modal.Title>Enter Password: </Modal.Title>
         </Modal.Header>
-        <Form onSubmit={saveChanges}>
+        <Form onSubmit={handlePassword}>
         <Modal.Body>
           <table className='table .table-striped' >
             <thead className='thead-dark'>
