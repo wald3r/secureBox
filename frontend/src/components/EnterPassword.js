@@ -8,10 +8,10 @@ const EnterPassword = ( { showEnterPassword, setShowEnterPassword, handleDownloa
 
   const noChanges = () => setShowEnterPassword(false)
 
-  const handlePassword = async () => {
-    handleDownload(password)
+  const handleAction = (event) => {
+    handleDownload(password, event)
+    noChanges()
   }
-
 
   return (
     <div>
@@ -19,7 +19,7 @@ const EnterPassword = ( { showEnterPassword, setShowEnterPassword, handleDownloa
         <Modal.Header closeButton>
           <Modal.Title>Enter Password: </Modal.Title>
         </Modal.Header>
-        <Form onSubmit={handlePassword}>
+        <Form onSubmit={(event) => handleAction(event)}>
         <Modal.Body>
           <table className='table .table-striped' >
             <thead className='thead-dark'>

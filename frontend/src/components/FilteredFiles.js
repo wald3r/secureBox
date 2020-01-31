@@ -28,10 +28,10 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
   const [showConfirmationSelected, setShowConfirmationSelected] = useState(false)
   const [singleFileToDelete, setSingleFileToDelete] = useState(null)
   const [showEnterPassword, setShowEnterPassword] = useState(false)
+  const [fileToDownload, setFileToDownload] = useState(null)
 
   const showSelectedButtons = { display: props.files.length === 0 ? 'none' : '' }
   const showCheckedAllName = allSelected === true ? 'Remove selection' : 'Select all'
-
 
   const removeSelection = () => {
     setAllSelected(false)
@@ -45,14 +45,16 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
     }
   }
 
-  const handleDownload = async (password) => {
+  const handleDownload = async (password, event) => {
 
     try{
-      const response = await fileService.downloadFile(file.id, password)
-      fileDownload(response.data, file.name)
-      props.addLastUsed(file, props.user)
+
+      event.preventDefault()
+      const response = await fileService.downloadFile(fileToDownload.id)
+      fileDownload(response.data, fileToDownload.name)
+      props.addLastUsed(fileToDownload, props.user)
       props.handleNotification('Download started...', 2500)
-      await fileService.removeUnencryptedFile(file.id)
+      await fileService.removeUnencryptedFile(fileToDownload.id)
       removeSelection()
       setFile(null)
     }catch(error){
@@ -60,15 +62,16 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
     }
   }
 
-  const handleSingleDownload = async (file) => {
-
+  const handleSingleDownload = (file) => {
       if(file.password !== undefined){
+        setFileToDownload(file)
+        //handleDownload(file)
         setShowEnterPassword(true)
-        setFile(file)
       }else{
-        setFile(file)
-        handleDownload(undefined)
+        setFileToDownload(file)
+       handleDownload(undefined)
       }
+      
   
   }
 
@@ -152,7 +155,6 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
    
   }
 
-
   const handleConfidentiality = async (file) => {
     try{
       const response = await fileService.makePublic(file.id)
@@ -180,9 +182,8 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
           <EnterPassword 
             showEnterPassword={showEnterPassword}
             setShowEnterPassword={setShowEnterPassword}
-            handlePassword={handleDownload} 
+            handleDownload={handleDownload} 
           />
-            
           <Confirmation 
             showConfirmation={showConfirmationSingle}
             setConfirmation={setShowConfirmationSingle}
