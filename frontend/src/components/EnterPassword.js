@@ -17,13 +17,11 @@ const EnterPassword = ( { showEnterPassword, setShowEnterPassword, handleDownloa
     <div>
       <Modal show={showEnterPassword} onHide={noChanges}>
         <Modal.Header closeButton>
-          <Modal.Title>Enter Password: </Modal.Title>
+          <Modal.Title>Enter Password </Modal.Title>
         </Modal.Header>
         <Form onSubmit={(event) => handleAction(event)}>
         <Modal.Body>
           <table className='table .table-striped' >
-            <thead className='thead-dark'>
-              </thead>
                 <tbody >
                   <tr>
                     <td >

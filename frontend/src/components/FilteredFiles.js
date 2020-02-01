@@ -27,7 +27,9 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
   const [showConfirmationSingle, setShowConfirmationSingle] = useState(false)
   const [showConfirmationSelected, setShowConfirmationSelected] = useState(false)
   const [singleFileToDelete, setSingleFileToDelete] = useState(null)
-  const [showEnterPassword, setShowEnterPassword] = useState(false)
+  const [showEnterPasswordSingle, setShowEnterPasswordSingle] = useState(false)
+  const [showEnterPasswordSelected, setShowEnterPasswordSelected] = useState(false)
+
   const [fileToDownload, setFileToDownload] = useState(null)
 
   const showSelectedButtons = { display: props.files.length === 0 ? 'none' : '' }
@@ -45,7 +47,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
     }
   }
 
-  const handleDownload = async (password, event) => {
+  const singleDownload = async (password, event) => {
 
     try{
   
@@ -62,6 +64,9 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
       if(error.response.status === 401){
           props.handleError(error.response.statusText, parameter.errorTime)
       }
+      if(error.response.status === 404){
+        props.handleError(error.response.statusText, parameter.errorTime)
+    }
       else{
         exception.catchException(error, props)
       }
@@ -71,7 +76,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
   const handleSingleDownload = async (file) => {
       if(file.password !== undefined){
         setFileToDownload(file)
-        setShowEnterPassword(true)
+        setShowEnterPasswordSingle(true)
       }else{
         const response = await fileService.downloadFile(file.id)
         fileDownload(response.data, file.name)
@@ -129,14 +134,49 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
 
   const handleSelectedDownload = async () => {
 
-    try{
-      selectedFiles.map(async file => {
-        const response = await fileService.downloadFile(file.id)
-        fileDownload(response.data, file.name)
-        props.addLastUsed(file, props.user)
-        props.handleNotification('Download started...', 2500)
+    var flag = false
+    selectedFiles.map(async file => {
+      if(file.password !== undefined){
+        flag = true
+      }
+    })
+ 
+    if(flag){
+      setShowEnterPasswordSelected(true)
+    }else{
+      try{
+        selectedFiles.map(async file => {
+          const response = await fileService.downloadFile(file.id)
+          fileDownload(response.data, file.name)
+          props.addLastUsed(file, props.user)
+          props.handleNotification('Download started...', 2500)
+        })
         removeSelection()
+      }catch(error){
+        exception.catchException(error, props)
+      }
+    }
+  }
+
+
+  const selectedDownload = async (password, event) => {
+
+    try{
+      event.preventDefault()
+      selectedFiles.map(async file => {
+        if(file.password !== undefined){
+          const response = await fileService.downloadEncryptedFile(file.id, password)
+          fileDownload(response.data, file.name)
+          props.addLastUsed(file, props.user)
+          props.handleNotification('Download started...', 2500)
+        }else{
+          const response = await fileService.downloadFile(file.id)
+          fileDownload(response.data, file.name)
+          props.addLastUsed(file, props.user)
+          props.handleNotification('Download started...', 2500)
+        }
       })
+      removeSelection()
     }catch(error){
       exception.catchException(error, props)
     }
@@ -174,6 +214,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
     }
   }
 
+
   const handleSendEmail = async (file) => {
     setFile(file)
     setShowEmailDialog(true)
@@ -189,9 +230,14 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
     return (
         <div className='tablecontainer'> 
           <EnterPassword 
-            showEnterPassword={showEnterPassword}
-            setShowEnterPassword={setShowEnterPassword}
-            handleDownload={handleDownload} 
+            showEnterPassword={showEnterPasswordSingle}
+            setShowEnterPassword={setShowEnterPasswordSingle}
+            handleDownload={singleDownload} 
+          />
+          <EnterPassword 
+            showEnterPassword={showEnterPasswordSelected}
+            setShowEnterPassword={setShowEnterPasswordSelected}
+            handleDownload={selectedDownload} 
           />
           <Confirmation 
             showConfirmation={showConfirmationSingle}
