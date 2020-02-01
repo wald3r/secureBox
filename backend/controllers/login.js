@@ -3,19 +3,17 @@ const bcrypt = require('bcrypt')
 const loginRouter = require('express').Router()
 const User = require('../models/user')
 const logger = require('../utils/logger')
-
+const helperFunctions = require('../utils/helperFunctions')
 
 loginRouter.post('/', async(request, response) => {
     logger.logLogins(request.body.username, 0)
     const body = request.body
     const user = await User.findOne({ username: body.username }).populate('lastUsed')
-    const passwordCorrect = user === null 
-        ? false  
-        : await bcrypt.compare(body.password, user.password)
-    if(!(user && passwordCorrect)){
+    if(!(await helperFunctions.comparePassword(user, body.password && user ))){
         logger.logLogins(body.username, 1)
         return response.status(401).send('invalid username or password')
     }
+
     if(user.active !== true){
         logger.logLogins(body.username, 1)
         return response.status(401).send('not active')

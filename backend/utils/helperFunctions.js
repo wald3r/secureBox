@@ -1,4 +1,5 @@
 require('dotenv').config()
+const bcrypt = require('bcrypt')
 
 
 function sleep(ms) {
@@ -11,6 +12,19 @@ function getDir(fullDir){
   return dir
 
 }
+
+const comparePassword = async (object, password) => {
+
+  const passwordCorrect = object === null 
+    ? false  
+    : await bcrypt.compare(password, object.password)
+    if(!passwordCorrect){
+      return false
+    }else{
+      return true
+    }
+}
+
 
 
 function modifyLastUsed(user, object){
@@ -33,4 +47,4 @@ function removeLastUsed(user, object){
   return user
 }
 
-module.exports = { sleep, modifyLastUsed, removeLastUsed, getDir }
+module.exports = { comparePassword, sleep, modifyLastUsed, removeLastUsed, getDir }

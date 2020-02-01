@@ -93,12 +93,10 @@ filesRouter.post('/download/encrypted/:id', async(request, response, next) => {
     }
    
     const fileDb = await File.findById(request.params.id)
-    const passwordCorrect = fileDb === null 
-      ? false  
-      : await bcrypt.compare(request.body.password, fileDb.password)
-    if(!passwordCorrect){
-      return response.status(401).send('Password incorrect')
+    if(!(await helperFunctions.comparePassword(fileDb, request.body.password))){
+      return response.status(401).send('Wrong password')
     }
+
     const filePath = `${fileDb.path}/${fileDb.name}`
     const readStream = cryptoHelper.decrypt(request.body.password, `${helperFunctions.getDir(__dirname)}${filePath}.enc`)
     readStream.on('close', async () => {
@@ -320,8 +318,6 @@ filesRouter.post('/encrypt/', async (request, response, next) => {
     const files = request.body.files
     const salt = 10
     files.map(async file => {
-
-      
       const passwordHash = await bcrypt.hash(request.body.password, salt)
       const savedFile = await File.find({ name: file })
       savedFile[0].password = passwordHash

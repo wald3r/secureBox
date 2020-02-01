@@ -60,11 +60,10 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
       removeSelection()
 
     }catch(error){
-  
       if(error.response.status === 401){
           props.handleError(error.response.statusText, parameter.errorTime)
       }
-      if(error.response.status === 404){
+      else if(error.response.status === 404){
         props.handleError(error.response.statusText, parameter.errorTime)
     }
       else{
@@ -78,11 +77,23 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
         setFileToDownload(file)
         setShowEnterPasswordSingle(true)
       }else{
-        const response = await fileService.downloadFile(file.id)
-        fileDownload(response.data, file.name)
-        props.addLastUsed(file, props.user)
-        props.handleNotification('Download started...', 2500)
-        removeSelection()
+        try{
+          const response = await fileService.downloadFile(file.id)
+          fileDownload(response.data, file.name)
+          props.addLastUsed(file, props.user)
+          props.handleNotification('Download started...', 2500)
+          removeSelection()
+        }catch(error){
+          if(error.response.status === 401){
+              props.handleError(error.response.statusText, parameter.errorTime)
+          }
+          else if(error.response.status === 404){
+            props.handleError(error.response.statusText, parameter.errorTime)
+        }
+          else{
+            exception.catchException(error, props)
+          }
+        }
 
       }
       
@@ -178,7 +189,15 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
       })
       removeSelection()
     }catch(error){
-      exception.catchException(error, props)
+      if(error.response.status === 401){
+        props.handleError(error.response.statusText, parameter.errorTime)
+      }
+      else if(error.response.status === 404){
+        props.handleError(error.response.statusText, parameter.errorTime)
+      }
+      else{
+       exception.catchException(error, props)
+      }
     }
   }
 
