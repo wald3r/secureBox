@@ -48,28 +48,37 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
   const handleDownload = async (password, event) => {
 
     try{
-
+  
       event.preventDefault()
-      const response = await fileService.downloadFile(fileToDownload.id)
+      const response = await fileService.downloadEncryptedFile(fileToDownload.id, password)
       fileDownload(response.data, fileToDownload.name)
       props.addLastUsed(fileToDownload, props.user)
       props.handleNotification('Download started...', 2500)
       await fileService.removeUnencryptedFile(fileToDownload.id)
       removeSelection()
-      setFile(null)
+
     }catch(error){
-      exception.catchException(error, props)
+  
+      if(error.response.status === 401){
+          props.handleError(error.response.statusText, parameter.errorTime)
+      }
+      else{
+        exception.catchException(error, props)
+      }
     }
   }
 
-  const handleSingleDownload = (file) => {
+  const handleSingleDownload = async (file) => {
       if(file.password !== undefined){
         setFileToDownload(file)
-        //handleDownload(file)
         setShowEnterPassword(true)
       }else{
-        setFileToDownload(file)
-       handleDownload(undefined)
+        const response = await fileService.downloadFile(file.id)
+        fileDownload(response.data, file.name)
+        props.addLastUsed(file, props.user)
+        props.handleNotification('Download started...', 2500)
+        removeSelection()
+
       }
       
   
@@ -223,8 +232,8 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
                   <td>
                       <Button data-toggle='tooltip' data-placement='top' title='Download file.' onClick={() => handleSingleDownload(file)}><i className="fa fa-download"></i></Button>
                       <Button data-toggle='tooltip' data-placement='top' title='Delete file.' onClick={() => handleSingleRemoval(file)}><i className="fa fa-trash"></i></Button>
-                      <Button data-toggle='tooltip' data-placement='top' title='Create download link.' onClick={() => handleConfidentiality(file)}><i className="fa fa-reply"></i></Button>
-                      <Button data-toggle='tooltip' data-placement='top' title='Create and send download link per email.' onClick={() => handleSendEmail(file)}><i className="fa fa-envelope"></i></Button>
+                      <Button style={{ display: file.password !== undefined ? 'none' : '' }} data-toggle='tooltip' data-placement='top' title='Create download link.' onClick={() => handleConfidentiality(file)}><i className="fa fa-reply"></i></Button>
+                      <Button style={{ display: file.password !== undefined ? 'none' : '' }} data-toggle='tooltip' data-placement='top' title='Create and send download link per email.' onClick={() => handleSendEmail(file)}><i className="fa fa-envelope"></i></Button>
                   </td>
                 </tr>
               )}

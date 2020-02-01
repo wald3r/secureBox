@@ -99,13 +99,23 @@ const encryptFiles = async(data) => {
   return response
 }
 
+const downloadEncryptedFile = async (id, password) => {
+
+  const config = {
+    responseType: 'blob',
+    headers: { Authorization: token },
+  }
+  const response = await axios.post(`${baseUrl}/download/encrypted/${id}`, {password: password}, config)
+  return response
+}
+
 const downloadFile = async (id) => {
 
   const config = {
     responseType: 'blob',
     headers: { Authorization: token },
   }
-  const response = await axios.get(`${baseUrl}/download/${id}`,config)
+  const response = await axios.get(`${baseUrl}/download/${id}`, config)
   return response
 }
 
@@ -130,4 +140,4 @@ const sendFiles = async (data) => {
 
 
 
-export default { sendPublicMail, encryptFiles, getMusic, makePublic, getFavourites, downloadFile, sendFiles, setToken, getFiles, getFile, removeFile, removeUnencryptedFile, getPictures, getDocuments }
+export default { downloadEncryptedFile, sendPublicMail, encryptFiles, getMusic, makePublic, getFavourites, downloadFile, sendFiles, setToken, getFiles, getFile, removeFile, removeUnencryptedFile, getPictures, getDocuments }

@@ -85,18 +85,48 @@ filesRouter.get('/music/', async (request, response, next) => {
 })
 
 
+filesRouter.post('/download/encrypted/:id', async(request, response, next) => {
+  try{
+    var user = await authenticationHelper.isLoggedIn(request.token)
+    if(user == undefined){
+      return response.status(401).send('Not Authenticated')
+    }
+   
+    const fileDb = await File.findById(request.params.id)
+    const passwordCorrect = fileDb === null 
+      ? false  
+      : await bcrypt.compare(request.body.password, fileDb.password)
+    if(!passwordCorrect){
+      return response.status(401).send('Password incorrect')
+    }
+    const filePath = `${fileDb.path}/${fileDb.name}`
+    const readStream = cryptoHelper.decrypt(request.body.password, `${helperFunctions.getDir(__dirname)}${filePath}.enc`)
+    readStream.on('close', async () => {
+      await response.sendFile(filePath , { root : helperFunctions.getDir(__dirname)})
+    }) 
+    logger.downloadFile(filePath)
+
+    const modifiedUser = helperFunctions.modifyLastUsed(user, fileDb)
+    await modifiedUser.save()
+    fileDb.counter += 1
+    await fileDb.save()
+  }
+  catch(exception){
+    next(exception)
+  }
+})
+
 filesRouter.get('/download/:id', async(request, response, next) => {
   try{
     var user = await authenticationHelper.isLoggedIn(request.token)
     if(user == undefined){
       return response.status(401).send('Not Authenticated')
     }
+   
     const fileDb = await File.findById(request.params.id)
     const filePath = `${fileDb.path}/${fileDb.name}`
-    const readStream = cryptoHelper.decrypt('test', `${helperFunctions.getDir(__dirname)}${filePath}.enc`)
-    readStream.on('close', async () => {
-      await response.sendFile(filePath , { root : helperFunctions.getDir(__dirname)})
-    }) 
+    await response.sendFile(filePath , { root : helperFunctions.getDir(__dirname)})
+    
     logger.downloadFile(filePath)
 
     const modifiedUser = helperFunctions.modifyLastUsed(user, fileDb)
@@ -118,10 +148,8 @@ filesRouter.get('/download/public/:id', async(request, response, next) => {
     }
     const fileDb = await File.findById(publicLink[0].file)
     const filePath = `${fileDb.path}/${fileDb.name}`
-    const readStream = cryptoHelper.decrypt('test', `${helperFunctions.getDir(__dirname)}${filePath}.enc`)
-    readStream.on('close', async () => {
-      await response.sendFile(filePath , { root : helperFunctions.getDir(__dirname)})
-    }) 
+ 
+    await response.sendFile(filePath , { root : helperFunctions.getDir(__dirname)})
     logger.downloadFile(filePath)
     await Public.findByIdAndDelete(publicLink[0]._id)
   }
