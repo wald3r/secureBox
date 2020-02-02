@@ -17,9 +17,36 @@ const helmet = require('helmet')
 const scheduler = require ('./utils/scheduler.js')
 const mimetypesRouter = require('./controllers/mimetypes')
 const notesRouter = require('./controllers/notes')
+const User = require('./models/user')
+const bcrypt = require('bcrypt')
+
+
+const addAdmin = async () => {
+  
+  const savedUser = await User.find({username: 'admin', name: 'admin', email: 'admin@admin.com'})
+  if(savedUser.length === 0){
+
+    const salt = 10
+    const passwordHash = await bcrypt.hash('admin', salt)
+
+    const user = new User({
+      username: 'admin', 
+      name: 'admin',
+      password: passwordHash,
+      email: 'admin@admin.com',
+      role: 'admin',
+      active: true
+    })
+    await user.save()
+    console.log('Admin added!')
+  } else{
+    console.log('No need to add admin')
+  }
+}
 
 mongoose.connect(config.DB_URI, { useNewUrlParser: true})
 
+addAdmin()
 scheduler.clearPublicLinks
 
 app.use(express.static('build'))

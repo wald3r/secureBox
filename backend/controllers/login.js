@@ -9,7 +9,7 @@ loginRouter.post('/', async(request, response) => {
     logger.logLogins(request.body.username, 0)
     const body = request.body
     const user = await User.findOne({ username: body.username }).populate('lastUsed')
-    if(!(await helperFunctions.comparePassword(user, body.password && user ))){
+    if(!(await helperFunctions.comparePassword(user, body.password) && user )){
         logger.logLogins(body.username, 1)
         return response.status(401).send('invalid username or password')
     }

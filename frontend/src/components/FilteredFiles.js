@@ -6,7 +6,7 @@ import '../stylesheets/general.css'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
 import fileDownload from 'js-file-download'
-import { setFiles } from '../reducers/filesReducer'
+import { setFiles, changeFile } from '../reducers/filesReducer'
 import { addLastUsed, removeLastUsed } from '../reducers/userReducer'
 import PublicLink from './PublicLink'
 import SendPublicLink from './SendPublicLink'
@@ -29,6 +29,9 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
   const [singleFileToDelete, setSingleFileToDelete] = useState(null)
   const [showEnterPasswordSingle, setShowEnterPasswordSingle] = useState(false)
   const [showEnterPasswordSelected, setShowEnterPasswordSelected] = useState(false)
+  const [showEnterPasswordEncrypt, setShowEnterPasswordEncrypt] = useState(false)
+  const [showEnterPasswordDecrypt, setShowEnterPasswordDecrypt] = useState(false)
+
 
   const [fileToDownload, setFileToDownload] = useState(null)
 
@@ -223,6 +226,43 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
    
   }
 
+  const encryptFile = async (password, event) => {
+    event.preventDefault()
+    try{
+      const response = await fileService.encryptFile({password: password, file: file.name})
+      props.changeFile(response.data)
+      props.handleNotification('File encrypted', parameter.notificationTime)
+      setFile(null)
+
+    }catch(error){
+      exception.catchException(error, props)
+
+    }
+  }
+
+  const decryptFile = async (password, event) => {
+    event.preventDefault()
+    try{
+      const response = await fileService.decryptFile({password: password, file: file.name})
+      props.changeFile(response.data)
+      props.handleNotification('File decrypted', parameter.notificationTime)
+      setFile(null)
+    }catch(error){
+      exception.catchException(error, props)
+
+    }
+  }
+
+  const handleEncryption = (file) => {
+    setShowEnterPasswordEncrypt(true)
+    setFile(file)
+  }
+
+  const handleDecryption = (file) => {
+    setShowEnterPasswordDecrypt(true)
+    setFile(file)
+  }
+
   const handleConfidentiality = async (file) => {
     try{
       const response = await fileService.makePublic(file.id)
@@ -248,6 +288,16 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
   }else{
     return (
         <div className='tablecontainer'> 
+            <EnterPassword 
+            showEnterPassword={showEnterPasswordEncrypt}
+            setShowEnterPassword={setShowEnterPasswordEncrypt}
+            handleDownload={encryptFile} 
+          />
+           <EnterPassword 
+            showEnterPassword={showEnterPasswordDecrypt}
+            setShowEnterPassword={setShowEnterPasswordDecrypt}
+            handleDownload={decryptFile} 
+          />
           <EnterPassword 
             showEnterPassword={showEnterPasswordSingle}
             setShowEnterPassword={setShowEnterPasswordSingle}
@@ -299,6 +349,8 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
                       <Button data-toggle='tooltip' data-placement='top' title='Delete file.' onClick={() => handleSingleRemoval(file)}><i className="fa fa-trash"></i></Button>
                       <Button style={{ display: file.password !== undefined ? 'none' : '' }} data-toggle='tooltip' data-placement='top' title='Create download link.' onClick={() => handleConfidentiality(file)}><i className="fa fa-reply"></i></Button>
                       <Button style={{ display: file.password !== undefined ? 'none' : '' }} data-toggle='tooltip' data-placement='top' title='Create and send download link per email.' onClick={() => handleSendEmail(file)}><i className="fa fa-envelope"></i></Button>
+                      <Button style={{ display: file.password !== undefined ? '' : 'none' }} data-toggle='tooltip' data-placement='top' title='Decrypt' onClick={() => handleDecryption(file)}><i className="fa fa-key	"></i></Button>
+                      <Button style={{ display: file.password !== undefined ? 'none' : '' }}data-toggle='tooltip' data-placement='top' title='Encrypt' onClick={() => handleEncryption(file)}><i className="fa fa-key	"></i></Button>
                   </td>
                 </tr>
               )}
@@ -326,7 +378,8 @@ const mapDispatchToProps = {
   handleNotification,
   addLastUsed,
   removeLastUsed,
-  handleError
+  handleError,
+  changeFile
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllMyFiles)

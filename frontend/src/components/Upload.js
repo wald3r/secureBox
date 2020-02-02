@@ -64,8 +64,10 @@ const Upload = ( { ...props } ) => {
   }
 
   const encryptFiles = async (password) => {
-    const response = await fileService.encryptFiles({files: uploadedFiles, password: password})
-    props.handleNotification(response.data, parameter.notificationTime)
+    await uploadedFiles.map(async f => {
+      await fileService.encryptFile({file: f, password: password})
+    })
+    props.handleNotification('Files encrypted', parameter.notificationTime)
 
   }
 

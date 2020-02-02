@@ -90,7 +90,9 @@ const getFile = async (id) => {
   return response
 }
 
-const encryptFiles = async(data) => {
+
+
+const encryptFile = async(data) => {
   const config = {
     headers: { Authorization: token },
   }
@@ -98,6 +100,16 @@ const encryptFiles = async(data) => {
   const response = await axios.post(`${baseUrl}/encrypt/`, data, config)
   return response
 }
+
+const decryptFile = async(data) => {
+  const config = {
+    headers: { Authorization: token },
+  }
+
+  const response = await axios.post(`${baseUrl}/decrypt/`, data, config)
+  return response
+}
+
 
 const downloadEncryptedFile = async (id, password) => {
 
@@ -140,4 +152,4 @@ const sendFiles = async (data) => {
 
 
 
-export default { downloadEncryptedFile, sendPublicMail, encryptFiles, getMusic, makePublic, getFavourites, downloadFile, sendFiles, setToken, getFiles, getFile, removeFile, removeUnencryptedFile, getPictures, getDocuments }
+export default { decryptFile, downloadEncryptedFile, sendPublicMail, encryptFile, getMusic, makePublic, getFavourites, downloadFile, sendFiles, setToken, getFiles, getFile, removeFile, removeUnencryptedFile, getPictures, getDocuments }

@@ -60,7 +60,7 @@ const Login = ( props ) => {
                     </tr>
                 </tbody>
             </table>
-            <Button className='button' type="submit">login</Button>
+            <Button className='button' type="submit">Login</Button>
           </Form>
     </div>
   )

@@ -80,6 +80,15 @@ export const setFiles = (data) => {
   }
 }
 
+export const changeFile = (data) => {
+  return async dispatch => {
+    dispatch({
+      type: 'CHANGEFILE',
+      data
+    })
+  }
+}
+
 const filesReducer = (state = [], action) => {
 
   switch (action.type){
@@ -95,6 +104,9 @@ const filesReducer = (state = [], action) => {
     return action.data
   case 'GETMUSIC':
     return action.data
+  case 'CHANGEFILE':
+      let list = state.filter(f => f.id !== action.data.id)
+    return list.concat(action.data)
   default:
     return state
   }
