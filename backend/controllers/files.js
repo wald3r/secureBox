@@ -212,9 +212,27 @@ filesRouter.delete('/dremove/:id', async(request, response, next) => {
   const fileDb = await File.findById(request.params.id)
   const filePath = `${fileDb.path}/${fileDb.name}`
   try{
-      fs.unlink(`${helperFunctions.getDir(__dirname)}${filePath}`, (err) => {
-        if(err) throw logger.failedDeleteFile(err.message)
-     })
+      fs.unlinkSync(`${helperFunctions.getDir(__dirname)}${filePath}`)
+      await File.findByIdAndDelete(request.params.id)
+      response.status(200).send('File removed')
+
+  } catch(exception) {
+      logger.failedDeleteFile(exception.message)
+      next(exception)
+  }
+
+})
+
+filesRouter.delete('/remove/:id', async(request, response, next) => {
+  
+  const user = await authenticationHelper.isLoggedIn(request.token)
+  if(user == undefined){
+    return response.status(401).send('Not Authenticated')
+  }
+  const fileDb = await File.findById(request.params.id)
+  const filePath = `${fileDb.path}/${fileDb.name}`
+  try{
+      fs.unlinkSync(`${helperFunctions.getDir(__dirname)}${filePath}`)
   } catch(exception) {
       logger.failedDeleteFile(exception.message)
       next(exception)
@@ -225,32 +243,36 @@ filesRouter.delete('/dremove/:id', async(request, response, next) => {
 
 
 filesRouter.delete('/eremove/:id', async(request, response, next) => {
+  try{
+    var user = await authenticationHelper.isLoggedIn(request.token)
+    if(user == undefined){
+      return response.status(401).send('Not Authenticated')
+    }
 
-  var user = await authenticationHelper.isLoggedIn(request.token)
-  if(user == undefined){
-    return response.status(401).send('Not Authenticated')
-  }
+    const fileDb = await File.findById(request.params.id)
+    const filePath = `${fileDb.path}/${fileDb.name}.enc`
 
-  const fileDb = await File.findById(request.params.id)
-  const filePath = `${fileDb.path}/${fileDb.name}.enc`
+    await File.findByIdAndDelete(request.params.id)
+    const modifiedUser = helperFunctions.removeLastUsed(user, fileDb)
+    await modifiedUser.save()
 
-  fs.exists(filePath, async (exists) => {
-    if (exists) {
-      try{
-        fs.unlinkSync(filePath)
-        await File.findByIdAndDelete(request.params.id)
-        const modifiedUser = helperFunctions.removeLastUsed(user, fileDb)
-        await modifiedUser.save()
-        response.status(200).send('File removed')
-        logger.deleteFile(filePath)
-      } catch(exception) {
-        logger.failedDeleteFile(exception.message)
+    fs.exists(filePath, async (exists) => {
+      try{      
+        if (exists) {
+          fs.unlinkSync(filePath)
+          response.status(200).send('File removed')
+          logger.deleteFile(filePath)
+        } else {
+          response.status(404).send('File does not exist')
+        }
+      }catch(exception){
         next(exception)
       }
-    } else {
-      response.status(404).send('File does not exist')
-    }
-  })
+    })
+  } catch(exception) {
+    logger.failedDeleteFile(exception.message)
+    next(exception)
+  }
 })
 
 filesRouter.post('/upload', async (request, response, next) => {
@@ -279,7 +301,7 @@ filesRouter.post('/upload', async (request, response, next) => {
     }
     await files.map(async file => {  
       const splitName = file.name.split('__')
-      const fileName = nameCreation.createDocumentName(user.username, splitName[4], splitName[2], splitName[3], files.length === 1 ? '' : splitName[1] ,file.mimetype, path)
+      const fileName = await nameCreation.createDocumentName(user.username, splitName[4], splitName[2], splitName[3], files.length === 1 ? '' : splitName[1] ,file.mimetype, path)
       allSavedFiles = allSavedFiles.concat(fileName)
       const newFile = new File ({
         name: fileName,

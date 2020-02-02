@@ -18,8 +18,13 @@ table, thead, tr, td {
 
 table{
   display: block;
-  overflow: hidden;
-  max-height: 650px;
+
+}
+
+tbody{
+  display: block;
+  overflow: auto;
+  max-height: 750px;
 }
 
 .tablecontainer{
@@ -61,6 +66,7 @@ table{
   padding: 20px;
   background-color: white;
   opacity: 0.9;
+ 
 }
 
 

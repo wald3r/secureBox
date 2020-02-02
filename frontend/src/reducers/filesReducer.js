@@ -89,6 +89,16 @@ export const changeFile = (data) => {
   }
 }
 
+
+export const removeFile = (data) => {
+  return async dispatch => {
+    dispatch({
+      type: 'REMOVEFILE',
+      data
+    })
+  }
+}
+
 const filesReducer = (state = [], action) => {
 
   switch (action.type){
@@ -107,6 +117,9 @@ const filesReducer = (state = [], action) => {
   case 'CHANGEFILE':
       let list = state.filter(f => f.id !== action.data.id)
     return list.concat(action.data)
+  case 'REMOVEFILE':
+      let files = state.filter(f => f.id !== action.data.id)
+    return files
   default:
     return state
   }

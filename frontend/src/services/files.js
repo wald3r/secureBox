@@ -131,13 +131,21 @@ const downloadFile = async (id) => {
   return response
 }
 
-
 const removeUnencryptedFile = async (id) => {
   const config = {
     headers: { Authorization: token },
   }
 
   await axios.delete(`${baseUrl}/dremove/${id}`, config)
+}
+
+
+const removeLeftovers = async (id) => {
+  const config = {
+    headers: { Authorization: token },
+  }
+
+  await axios.delete(`${baseUrl}/remove/${id}`, config)
 }
 
 const sendFiles = async (data) => {
@@ -152,4 +160,4 @@ const sendFiles = async (data) => {
 
 
 
-export default { decryptFile, downloadEncryptedFile, sendPublicMail, encryptFile, getMusic, makePublic, getFavourites, downloadFile, sendFiles, setToken, getFiles, getFile, removeFile, removeUnencryptedFile, getPictures, getDocuments }
+export default { removeLeftovers, decryptFile, downloadEncryptedFile, sendPublicMail, encryptFile, getMusic, makePublic, getFavourites, downloadFile, sendFiles, setToken, getFiles, getFile, removeFile, removeUnencryptedFile, getPictures, getDocuments }

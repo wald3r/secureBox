@@ -1,7 +1,7 @@
 
 const fs = require('fs');
 const config = require('../utils/config')
-
+const Mimetype = require('../models/mimetype')
 const padding = (digits) => {
   if(digits.toString().length < 2){
     return `0${digits}`
@@ -10,7 +10,7 @@ const padding = (digits) => {
   }
 }
 
-const createDocumentName = (username, name, category, date, number, type, path) => {
+const createDocumentName = async (username, name, category, date, number, type, path) => {
 
   const types = type.split('/')
   var newName = name.replace(`.${types[1]}`, '')
@@ -19,7 +19,9 @@ const createDocumentName = (username, name, category, date, number, type, path) 
     newName = newName.replace(`.JPG`, '')
   }
 
-  let docName = `${config.FILE_DIR}${path}/${username}__${category}__${date}__${newName}__${number}.${types[1]}`
+  const ending = await Mimetype.find({name: type})
+
+  let docName = `${config.FILE_DIR}${path}/${username}__${category}__${date}__${newName}__${number}${ending[0].ending}`
 
   let counter = 0
   let dup = ''
@@ -30,11 +32,11 @@ const createDocumentName = (username, name, category, date, number, type, path) 
       counter += 1
       str='(1)'
       dup = str.repeat(counter)
-      docName = `${config.FILE_DIR}${path}/${username}__${category}__${date}__${newName}__${number}${dup}.${types[1]}`
+      docName = `${config.FILE_DIR}${path}/${username}__${category}__${date}__${newName}__${number}${dup}.${ending[0].ending}`
     }
   }
   
-  return `${username}__${category}__${date}__${newName}__${number}${dup}.${types[1]}`
+  return `${username}__${category}__${date}__${newName}__${number}${dup}${ending[0].ending}`
 
 }
 

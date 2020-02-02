@@ -6,7 +6,7 @@ import '../stylesheets/general.css'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
 import fileDownload from 'js-file-download'
-import { setFiles, changeFile } from '../reducers/filesReducer'
+import { setFiles, changeFile, removeFile } from '../reducers/filesReducer'
 import { addLastUsed, removeLastUsed } from '../reducers/userReducer'
 import PublicLink from './PublicLink'
 import SendPublicLink from './SendPublicLink'
@@ -59,7 +59,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
       fileDownload(response.data, fileToDownload.name)
       props.addLastUsed(fileToDownload, props.user)
       props.handleNotification('Download started...', 2500)
-      await fileService.removeUnencryptedFile(fileToDownload.id)
+      await fileService.removeLeftovers(fileToDownload.id)
       removeSelection()
 
     }catch(error){
@@ -110,13 +110,18 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
 
   const removeSingleFile = async () => {
     try{
-      const response = await fileService.removeFile(singleFileToDelete.id)
-      if(response.status === 200){
-        props.handleNotification(`File ${singleFileToDelete.name} removed`, parameter.notificationTime)
-        props.removeLastUsed(singleFileToDelete.id, props.user)
-        props.setFiles(props.files.filter(oFile => oFile.id !== singleFileToDelete.id))
-        removeSelection()
+      if(singleFileToDelete.password !== undefined) {
+        await fileService.removeFile(singleFileToDelete.id)
       }
+      else{
+        await fileService.removeUnencryptedFile(singleFileToDelete.id)
+      }
+      props.removeFile(singleFileToDelete)
+      props.handleNotification(`File ${singleFileToDelete.name} removed`, parameter.notificationTime)
+      props.removeLastUsed(singleFileToDelete.id, props.user)
+      props.setFiles(props.files.filter(oFile => oFile.id !== singleFileToDelete.id))
+      removeSelection()
+      
     }catch(error){
       exception.catchException(error, props)
     }
@@ -134,7 +139,13 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
   const handleSelectedRemoval = async () => {
     try{
       selectedFiles.map(async file => {
-        await fileService.removeFile(file.id)
+        if(file.password !== undefined) {
+          await fileService.removeFile(file.id)
+        }
+        else{
+          await fileService.removeUnencryptedFile(file.id)
+        }
+        props.removeFile(file)
         props.setFiles(props.files.filter(oFile => oFile.id !== file.id))
         props.removeLastUsed(file.id, props.user)
         props.handleNotification(`File ${file.name} removed`, parameter.notificationTime)
@@ -183,6 +194,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
           fileDownload(response.data, file.name)
           props.addLastUsed(file, props.user)
           props.handleNotification('Download started...', 2500)
+          await fileService.removeLeftovers(file.id)
         }else{
           const response = await fileService.downloadFile(file.id)
           fileDownload(response.data, file.name)
@@ -379,7 +391,8 @@ const mapDispatchToProps = {
   addLastUsed,
   removeLastUsed,
   handleError,
-  changeFile
+  changeFile,
+  removeFile,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllMyFiles)

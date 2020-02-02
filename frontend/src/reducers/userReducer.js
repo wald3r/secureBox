@@ -60,7 +60,7 @@ export const removeUser = () => {
   return async dispatch => {
     window.localStorage.removeItem('loggedappUser')
     dispatch({
-      type: 'REMOVEUSER',
+      type: 'LOGOUT',
     })
   }
 }
@@ -76,7 +76,7 @@ const userReducer = (state = null, action) => {
     return removedFromList
   case 'SETUSER':
     return action.user
-  case 'REMOVEUSER':
+  case 'LOGOUT':
     return null
   case 'UPDATEDETAILS':
     const updatedUser = {  ...state,
