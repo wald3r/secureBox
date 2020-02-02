@@ -1,5 +1,5 @@
 @import './upload.css';
-
+@import './event.css';
 
 .title{
   text-align: center;
@@ -68,7 +68,6 @@ tbody{
   opacity: 0.9;
  
 }
-
 
 .footer {
   padding: 10px;

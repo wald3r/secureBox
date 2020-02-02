@@ -1,23 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Alert } from 'react-bootstrap'
+import '../stylesheets/general.css'
 
 const Error = ( props ) => {
 
+  
 
-
-  if(props.error === ''){
+  if(props.error === ''){    
     return null
   }
   else{
     return(
-      <div>
-        {(props.error &&
-        <Alert variant='danger'>
-          {props.error}
-        </Alert>
-      )}
-    </div>
+      <div className='error'>
+        {props.error}  
+      </div>
     )
   }
 }
@@ -28,4 +24,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(Error)
+export default connect(mapStateToProps, null)(Error)

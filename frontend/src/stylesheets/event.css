@@ -1,0 +1,24 @@
+
+.notification {
+  padding: 10px;
+  position: fixed;
+  text-align:left;
+  background-color: #cdf2db;
+  width: 100%;
+  opacity: 0.9;
+  top: 0;
+  right:0;
+  color: #245336;
+}
+
+.error {
+  padding: 10px;
+  position: fixed;
+  text-align:left;
+  background-color: #ffd3d8;
+  width: 100%;
+  opacity: 0.9;
+  top: 0;
+  right:0;
+  color: #83313b;
+}

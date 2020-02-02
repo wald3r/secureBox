@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Alert } from 'react-bootstrap'
+import '../stylesheets/general.css'
 
 const Notification = ( props ) => {
 
@@ -11,12 +11,8 @@ const Notification = ( props ) => {
   }
   else{
     return(
-      <div>
-        {(props.notification &&
-          <Alert variant='success'>
+      <div className='notification'>
             {props.notification}
-          </Alert>
-        )}
       </div>
     )
   }
