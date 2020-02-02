@@ -18,7 +18,7 @@ const Footer = (props) => {
 
   return (
     <div className='footer'>
-      {props.user.username} is logged in! <a href='/' onClick={handleLogout}>Logout</a>
+      {props.user.username} is logged in! <a className='logout' href='/' onClick={handleLogout}>Logout</a>
     </div>
 
   )

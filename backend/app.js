@@ -44,9 +44,20 @@ const addAdmin = async () => {
   }
 }
 
+  const clearDatabase = async () => {
+  
+    if(process.env.NODE_ENV === 'test'){
+      const users = await User.find({})
+      console.log('Start clearing database:', users)
+      await users.map(async u => await User.findByIdAndDelete(u._id))
+    }
+   await addAdmin()
+  }
+
+
 mongoose.connect(config.DB_URI, { useNewUrlParser: true})
 
-addAdmin()
+clearDatabase()
 scheduler.clearPublicLinks
 
 app.use(express.static('build'))
@@ -56,7 +67,9 @@ app.use(bodyParser.json())
 app.use(fileUpload())
 app.use(auth.getTokenFrom)
 app.use(logging.logRequests)
-app.use('/api/login', limiter.loginLimiter)
+if(process.env.NODE_ENV !== 'test'){
+  app.use('/api/login', limiter.loginLimiter)
+}
 app.use('/api/login', loginRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/registration', limiter.accountLimiter)

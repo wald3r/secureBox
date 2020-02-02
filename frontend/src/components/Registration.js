@@ -66,7 +66,7 @@ const Registration = (props) => {
                           </td>
 
                           <td>
-                            <input autoComplete='off' type='text' onChange={({ target }) => setName(target.value)}/>
+                            <input id='name' autoComplete='off' type='text' onChange={({ target }) => setName(target.value)}/>
                           </td>
                       </tr>
                       <tr>
@@ -75,7 +75,7 @@ const Registration = (props) => {
                           </td>
 
                           <td>
-                            <input autoComplete='off' required type='text' onChange={({ target }) => setNewname(target.value)}/>
+                            <input id='username' autoComplete='off' required type='text' onChange={({ target }) => setNewname(target.value)}/>
                           </td>
                       </tr>
                       <tr>
@@ -84,7 +84,7 @@ const Registration = (props) => {
                           </td>
 
                           <td>
-                            <input autoComplete='off' required type='email' onChange={({ target }) => setEmail(target.value)}/>
+                            <input id='email' autoComplete='off' required type='email' onChange={({ target }) => setEmail(target.value)}/>
                           </td>
                       </tr>
                       <tr>
@@ -93,7 +93,7 @@ const Registration = (props) => {
                           </td>
 
                           <td>
-                            <input autoComplete='off' type='password' required onChange={({ target }) => setNewpwd1(target.value)} />
+                            <input id='password1' autoComplete='off' type='password' required onChange={({ target }) => setNewpwd1(target.value)} />
                           </td>
                       </tr>
                       <tr>
@@ -102,13 +102,13 @@ const Registration = (props) => {
                           </td>
 
                           <td>
-                            <input autoComplete='off' type='password' required onChange={({ target }) => setNewpwd2(target.value)} />
+                            <input id='password2' autoComplete='off' type='password' required onChange={({ target }) => setNewpwd2(target.value)} />
                           </td>
                       </tr>
                   </tbody>
               </table>
-              <div style={{display: registering === false ? '' : 'none'}}><Button className='button' type="submit">Register</Button></div>
-              <div style={{display: registering === true ? '' : 'none'}}><Button className='button' type="submit">  <Spinner
+              <div style={{display: registering === false ? '' : 'none'}}><Button className='button' id='register' type="submit">Register</Button></div>
+              <div style={{display: registering === true ? '' : 'none'}}><Button className='button' id='registering' type="submit">  <Spinner
                 as="span"
                 animation="grow"
                 size="sm"

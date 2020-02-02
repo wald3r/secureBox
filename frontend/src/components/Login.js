@@ -46,7 +46,7 @@ const Login = ( props ) => {
                         </td>
 
                         <td>
-                          <input autoComplete='off' required onChange={({ target }) => setUsername(target.value)}/>
+                          <input id='username' autoComplete='off' required onChange={({ target }) => setUsername(target.value)}/>
                         </td>
                     </tr>
                     <tr>
@@ -55,12 +55,12 @@ const Login = ( props ) => {
                         </td>
 
                         <td>
-                          <input autoComplete='off' type='password' required onChange={({ target }) => setPassword(target.value)}/>
+                          <input id='password' autoComplete='off' type='password' required onChange={({ target }) => setPassword(target.value)}/>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <Button className='button' type="submit">Login</Button>
+            <Button className='button' id='login' type="submit">Login</Button>
           </Form>
     </div>
   )
