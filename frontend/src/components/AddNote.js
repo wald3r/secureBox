@@ -33,13 +33,11 @@ const AddNote = ( { showAddNote, handleShowAddNote, ...props } ) => {
     <div>
       <Modal show={showAddNote} onHide={noChanges}>
         <Modal.Header closeButton>
-          <Modal.Title>Add new Note: </Modal.Title>
+          <Modal.Title>Add new Note </Modal.Title>
         </Modal.Header>
         <Form onSubmit={saveChanges}>
         <Modal.Body>
           <table className='table .table-striped' >
-            <thead className='thead-dark'>
-              </thead>
                 <tbody >
                   <tr>
                     <td >
@@ -47,7 +45,7 @@ const AddNote = ( { showAddNote, handleShowAddNote, ...props } ) => {
                     </td>
 
                     <td>
-                      <input type='text' required onChange={({target}) => setTitle(target.value)} />
+                      <input id='title' type='text' required onChange={({target}) => setTitle(target.value)} />
                     </td>
                   </tr>
                   <tr>
@@ -55,17 +53,17 @@ const AddNote = ( { showAddNote, handleShowAddNote, ...props } ) => {
                       Body:
                     </td>
                     <td>
-                      <textarea rows='4' cols='40' type='text' required onChange={({target}) => setBody(target.value)}/>
+                      <textarea id='body' rows='4' cols='40' type='text' required onChange={({target}) => setBody(target.value)}/>
                     </td>
                   </tr>
                 </tbody>
             </table>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={noChanges}>
+          <Button id='cancel' variant="secondary" onClick={noChanges}>
             Close
           </Button>
-          <Button variant="primary" type='submit'>
+          <Button id='save' variant="primary" type='submit'>
             Add Note
           </Button>
         </Modal.Footer>

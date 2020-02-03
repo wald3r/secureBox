@@ -46,7 +46,7 @@ const Note = ({ note, ...props }) => {
               <p>________________________________</p>
               <p>Created: {helperClass.formatTime(note.createdAt)}</p>
               <p>Updated: {helperClass.formatTime(note.updatedAt)}</p>
-              <Button data-toggle='tooltip' data-placement='top' title='Delete note' onClick={() => setShowConfirmation(true)}><i className="fa fa-trash"></i></Button>
+              <Button id='deleteNote' data-toggle='tooltip' data-placement='top' title='Delete note' onClick={() => setShowConfirmation(true)}><i className="fa fa-trash"></i></Button>
             </Card.Body>
           </Accordion.Collapse>
         </Card>

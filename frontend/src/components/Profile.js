@@ -62,6 +62,8 @@ const Profile = ( props ) => {
     event.preventDefault()
     if(password1 !== password2){
       props.handleError('Passwords have to be the same', parameter.errorTime)
+    }else if(password1 === '' || password2 === '' || (password1 === '' && password2 === '')){
+      props.handleError('Password field can not be empty', parameter.errorTime)
     }else if(password1 === oldPassword){
       props.handleError('Old and new passwords are the same', parameter.errorTime)
     }else{
@@ -95,19 +97,19 @@ const Profile = ( props ) => {
           <tbody>
           <tr>
               <td>Username</td>
-              <td><input autoComplete='off' defaultValue={props.user.username} type='text' onChange={({ target }) => setUsername(target.value)}></input></td>
+              <td><input id='idUsername' required autoComplete='off' defaultValue={props.user.username} type='text' onChange={({ target }) => setUsername(target.value)}></input></td>
            </tr>
            <tr>
               <td>Name</td>
-              <td><input autoComplete='off' defaultValue={props.user.name} type='text' onChange={({ target }) => setName(target.value)}></input></td>
+              <td><input id='idName' required autoComplete='off' defaultValue={props.user.name} type='text' onChange={({ target }) => setName(target.value)}></input></td>
            </tr>
            <tr>
               <td>E-Mail</td>
-              <td><input autoComplete='off' defaultValue={props.user.email} type='email' onChange={({ target }) => setEmail(target.value)}></input></td>
+              <td><input id='idEmail' required autoComplete='off' defaultValue={props.user.email} type='email' onChange={({ target }) => setEmail(target.value)}></input></td>
            </tr>
            </tbody>
           </Table>
-          <Button type='Submit'>Save changes</Button>
+          <Button id='idSaveProfile' type='Submit'>Save changes</Button>
           </Form>
     </div>
     <br></br>
@@ -122,19 +124,19 @@ const Profile = ( props ) => {
           <tbody>
            <tr>
               <td>Old password</td>
-              <td><input autoComplete='off' type='password' onChange={({ target }) => setOldPassword(target.value)}></input></td>
+              <td><input autoComplete='off' required id='idOldPassword' type='password' onChange={({ target }) => setOldPassword(target.value)}></input></td>
            </tr>
            <tr>
               <td>New password</td>
-              <td><input autoComplete='off' type='password' onChange={({ target }) => setPassword1(target.value)}></input></td>
+              <td><input autoComplete='off' required id='idNewPassword1' type='password' onChange={({ target }) => setPassword1(target.value)}></input></td>
            </tr>
            <tr>
               <td>Repeat new password</td>
-              <td><input autoComplete='off' type='password' onChange={({ target }) => setPassword2(target.value)}></input></td>
+              <td><input autoComplete='off' required id='idNewPassword2' type='password' onChange={({ target }) => setPassword2(target.value)}></input></td>
            </tr>
            </tbody>
           </Table>
-          <Button type='Submit'>Save changes</Button>
+          <Button id='idSavePassword' type='Submit'>Save changes</Button>
         </Form>
     </div>
     </div>

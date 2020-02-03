@@ -23,10 +23,10 @@ const Confirmation = ({ showConfirmation, setConfirmation, handleConfirmation })
         </Modal.Header>
         <Modal.Body>Do you really want to proceed with this action?</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={noChanges}>
+          <Button id='cancel' variant="secondary" onClick={noChanges}>
             Close
           </Button>
-          <Button variant="primary" onClick={saveChanges}>
+          <Button id='save' variant="primary" onClick={saveChanges}>
             Yes
           </Button>
         </Modal.Footer>
