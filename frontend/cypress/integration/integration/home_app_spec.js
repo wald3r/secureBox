@@ -4,7 +4,7 @@ describe('Home ', function () {
   beforeEach(function(){
     cy.resetDb()
     cy.addAdmin()
-    cy.login()
+    cy.loginAdmin()
   })
 
   it('switch to login', function(){

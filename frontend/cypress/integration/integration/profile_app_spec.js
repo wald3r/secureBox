@@ -6,7 +6,7 @@ describe('Profile', function(){
     cy.visit('http://localhost:3000')
     cy.resetDb()
     cy.addAdmin()
-    cy.login()
+    cy.loginAdmin()
   })
 
 

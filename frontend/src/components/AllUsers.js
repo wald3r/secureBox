@@ -79,16 +79,16 @@ const AllUsers = (props) => {
                 </thead>
                 <tbody>
                   {props.users.map(u =>
-                    <tr key={u.id}>
-                      <td>{u.username}</td>
-                      <td>{u.name}</td>
-                      <td>{u.email}</td>
-                      <td>{u.role}</td>
+                    <tr id='idUserRow' key={u.id}>
+                      <td id='idUsername'>{u.username}</td>
+                      <td id='idName'>{u.name}</td>
+                      <td id='idEmail'>{u.email}</td>
+                      <td id='idRole'>{u.role}</td>
                       <td>{u.active.toString()}</td>
                       <td style={priorityStyle}>
-                        <Button data-toggle='tooltip' data-placement='top' title='Edit profile' onClick={() => handleUserChange(u)}><i className="fa fa-drivers-license-o	" /></Button>
-                        <Button data-toggle='tooltip' data-placement='top' title='Change password' onClick={() => handlePasswordChange(user)}><i className="fa fa-lock	"/></Button>
-                        <Button data-toggle='tooltip' data-placement='top' title='Remove user' onClick={() => handleRemoval(u)}><i className="fa fa-trash" /></Button>
+                        <Button id='idChangeUser' data-toggle='tooltip' data-placement='top' title='Edit profile' onClick={() => handleUserChange(u)}><i className="fa fa-drivers-license-o	" /></Button>
+                        <Button id='idChangePassword' data-toggle='tooltip' data-placement='top' title='Change password' onClick={() => handlePasswordChange(user)}><i className="fa fa-lock	"/></Button>
+                        <Button id='idDelete' data-toggle='tooltip' data-placement='top' title='Remove user' onClick={() => handleRemoval(u)}><i className="fa fa-trash" /></Button>
                       </td>
 
                     </tr>

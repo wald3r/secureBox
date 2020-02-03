@@ -74,7 +74,7 @@ const ChangeUser = ( { showDialog, handleShowDialog, user, ...props } ) => {
                     </td>
 
                     <td>
-                      <input autoComplete='off' required defaultValue={user.username} type='text' onChange={({target}) => setUsername(target.value)}/>
+                      <input id='idUsername' autoComplete='off' required defaultValue={user.username} type='text' onChange={({target}) => setUsername(target.value)}/>
                     </td>
                   </tr>
                   <tr>
@@ -83,7 +83,7 @@ const ChangeUser = ( { showDialog, handleShowDialog, user, ...props } ) => {
                     </td>
 
                     <td>
-                      <input autoComplete='off' defaultValue={user.name} type='text' onChange={({target}) => setName(target.value)}/>
+                      <input autoComplete='off' id='idName' defaultValue={user.name} type='text' onChange={({target}) => setName(target.value)}/>
                     </td>
                   </tr>
                   <tr>
@@ -92,7 +92,7 @@ const ChangeUser = ( { showDialog, handleShowDialog, user, ...props } ) => {
                     </td>
 
                     <td>
-                      <input autoComplete='off' required defaultValue={user.email} type='email' onChange={({target}) => SetEmail(target.value)}/>
+                      <input autoComplete='off' id='idEmail' required defaultValue={user.email} type='email' onChange={({target}) => SetEmail(target.value)}/>
                     </td>
                   </tr>
                   <tr>
@@ -101,8 +101,8 @@ const ChangeUser = ( { showDialog, handleShowDialog, user, ...props } ) => {
                     </td>
 
                     <td>
-                      <input autoComplete='off' type='radio' name='role' value='admin' defaultChecked={user.role === 'admin'} onChange={handleRoleChange}/>admin
-                      <input autoComplete='off' type='radio' name='role' value='user' defaultChecked={user.role === 'user'} onChange={handleRoleChange}/>user
+                      <input id='idAdmin' autoComplete='off' type='radio' name='role' value='admin' defaultChecked={user.role === 'admin'} onChange={handleRoleChange}/>admin
+                      <input id='idUser' autoComplete='off' type='radio' name='role' value='user' defaultChecked={user.role === 'user'} onChange={handleRoleChange}/>user
                     </td>
                   </tr>
                   <tr>
@@ -111,17 +111,17 @@ const ChangeUser = ( { showDialog, handleShowDialog, user, ...props } ) => {
                     </td>
 
                     <td>
-                      <input autoComplete='off' type='checkbox' name='active' defaultChecked={user.active} onChange={handleActivation}/>
+                      <input id='idActive' autoComplete='off' type='checkbox' name='active' defaultChecked={user.active} onChange={handleActivation}/>
                     </td>
                   </tr>
                 </tbody>
             </table>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={noChanges}>
+          <Button variant="secondary" id='idClose' onClick={noChanges}>
             Close
           </Button>
-          <Button variant="primary" type='submit'>
+          <Button variant="primary" id='idSave' type='submit'>
             Save Changes
           </Button>
         </Modal.Footer>

@@ -28,10 +28,10 @@ const Admin = (props) => {
     <div className='container'>
        <div style={{ textAlign: 'center' }}>
             <Tabs id="controlled-tab-example" activeKey={chosenType} onSelect={handleTypeChange}>
-              <Tab eventKey="Users" title="Users">
+              <Tab eventKey="Users" id='idUsers' title="Users">
                 <AllUsers />
               </Tab>
-              <Tab eventKey="Mimetypes" title="MIME-Types">
+              <Tab eventKey="Mimetypes" id='idMimes' title="MIME-Types">
                 <Mimetypes />
               </Tab>
             </Tabs>
