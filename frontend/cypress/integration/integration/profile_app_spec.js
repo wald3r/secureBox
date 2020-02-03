@@ -4,14 +4,9 @@ describe('Profile', function(){
 
   beforeEach(function(){
     cy.visit('http://localhost:3000')
-    cy.get('#username')
-    .type('admin')
-    cy.get('#password')
-      .type('admin')
-    cy.get('#login')
-      .click()
-    
-    cy.contains('admin is logged in')
+    cy.resetDb()
+    cy.addAdmin()
+    cy.login()
   })
 
 
@@ -50,21 +45,6 @@ describe('Profile', function(){
       .should('have.value', 'admin1')
     cy.get('#idEmail')
       .should('have.value', 'admin1@admin1.com')
-
-
-    //Change Back
-    cy.get('#idUsername')
-      .clear()
-      .type('admin')
-    cy.get('#idName')
-      .clear()
-      .type('admin')
-    cy.get('#idEmail')
-      .clear()
-      .type('admin@admin.com')
-    cy.get('#idSaveProfile')
-      .click()
-    cy.wait(2000)
   })
 
 

@@ -17,47 +17,11 @@ const helmet = require('helmet')
 const scheduler = require ('./utils/scheduler.js')
 const mimetypesRouter = require('./controllers/mimetypes')
 const notesRouter = require('./controllers/notes')
-const User = require('./models/user')
-const bcrypt = require('bcrypt')
+const cypressRouter = require('./controllers/cypress')
 
-
-const addAdmin = async () => {
-  
-  const savedUser = await User.find({username: 'admin', name: 'admin', email: 'admin@admin.com'})
-  if(savedUser.length === 0){
-
-    const salt = 10
-    const passwordHash = await bcrypt.hash('admin', salt)
-
-    const user = new User({
-      username: 'admin', 
-      name: 'admin',
-      password: passwordHash,
-      email: 'admin@admin.com',
-      role: 'admin',
-      active: true
-    })
-    await user.save()
-    console.log('Admin added!')
-  } else{
-    console.log('No need to add admin')
-  }
-}
-
-  const clearDatabase = async () => {
-  
-    if(process.env.NODE_ENV === 'test'){
-      const users = await User.find({})
-      console.log('Start clearing database:', users)
-      await users.map(async u => await User.findByIdAndDelete(u._id))
-    }
-   await addAdmin()
-  }
-
-
+ 
 mongoose.connect(config.DB_URI, { useNewUrlParser: true})
 
-clearDatabase()
 scheduler.clearPublicLinks
 
 app.use(express.static('build'))
@@ -69,6 +33,9 @@ app.use(auth.getTokenFrom)
 app.use(logging.logRequests)
 if(process.env.NODE_ENV !== 'test'){
   app.use('/api/login', limiter.loginLimiter)
+}else{
+  console.log('router')
+  app.use('/api/cypress', cypressRouter)
 }
 app.use('/api/login', loginRouter)
 app.use('/api/users', usersRouter)

@@ -23,3 +23,33 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+
+Cypress.Commands.add("resetDb", function(){
+  cy.request('GET', 'http://localhost:3003/api/cypress/clear')
+})
+
+Cypress.Commands.add("addAdmin", function(){
+  cy.request('GET', 'http://localhost:3003/api/cypress/add')
+})
+
+Cypress.Commands.add('logout', function() {
+  cy.visit('http://localhost:3000')
+  cy.get('.logout')
+    .click()
+  cy.contains('Login')
+
+})
+
+
+Cypress.Commands.add('login', function(){
+  cy.visit('http://localhost:3000')
+  cy.get('#username')
+      .type('admin')
+  cy.get('#password')
+      .type('admin')
+  cy.get('#login')
+      .click()
+  cy.contains('admin is logged in')
+
+})

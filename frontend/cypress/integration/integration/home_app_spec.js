@@ -2,15 +2,9 @@
 describe('Home ', function () {
 
   beforeEach(function(){
-    cy.visit('http://localhost:3000/')
-    cy.get('#username')
-      .type('admin')
-    cy.get('#password')
-      .type('admin')
-    cy.get('#login')
-      .click()
-
-    cy.contains('admin is logged in')
+    cy.resetDb()
+    cy.addAdmin()
+    cy.login()
   })
 
   it('switch to login', function(){
@@ -54,6 +48,9 @@ describe('Home ', function () {
   
   })
 
+  afterEach(function(){
+    cy.logout()
+  })
  
 
 })

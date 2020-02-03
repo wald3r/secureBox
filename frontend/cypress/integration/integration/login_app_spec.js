@@ -4,6 +4,8 @@ describe('Login ', function () {
 
   beforeEach(function() {
     cy.visit('http://localhost:3000')
+    cy.resetDb()
+    cy.addAdmin()
   })
 
   it('login page can be opened', function(){
