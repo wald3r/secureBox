@@ -23,7 +23,7 @@ cypressRouter.get('/clear', async (request, response, next) => {
 })
 
 
-cypressRouter.get('/add', async (request, response, next) => {
+cypressRouter.get('/addAdmin', async (request, response, next) => {
 
   try {
     const salt = 10
@@ -35,7 +35,7 @@ cypressRouter.get('/add', async (request, response, next) => {
       email: 'admin@admin.com',
       name: 'admin',
       active: true,
-
+      role: 'admin'
     })
 
     await admin.save()
@@ -46,6 +46,30 @@ cypressRouter.get('/add', async (request, response, next) => {
     next(exception)
   }
 })
+
+cypressRouter.get('/addUser', async (request, response, next) => {
+
+  try {
+    const salt = 10
+    const passwordHash = await bcrypt.hash('user', salt)
+
+    const user = new User({
+      username: 'user',
+      password: passwordHash,
+      email: 'user@user.com',
+      name: 'user',
+      active: true
+    })
+
+    await user.save()
+
+    response.status(200).json(user)
+   
+  }catch(exception){
+    next(exception)
+  }
+})
+
 
 
 

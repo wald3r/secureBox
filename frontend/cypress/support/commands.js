@@ -30,7 +30,11 @@ Cypress.Commands.add("resetDb", function(){
 })
 
 Cypress.Commands.add("addAdmin", function(){
-  cy.request('GET', 'http://localhost:3003/api/cypress/add')
+  cy.request('GET', 'http://localhost:3003/api/cypress/addAdmin')
+})
+
+Cypress.Commands.add("addUser", function(){
+  cy.request('GET', 'http://localhost:3003/api/cypress/addUser')
 })
 
 Cypress.Commands.add('logout', function() {
@@ -41,8 +45,19 @@ Cypress.Commands.add('logout', function() {
 
 })
 
+Cypress.Commands.add('loginUser', function(){
+  cy.visit('http://localhost:3000')
+  cy.get('#username')
+      .type('user')
+  cy.get('#password')
+      .type('user')
+  cy.get('#login')
+      .click()
+  cy.contains('user is logged in')
 
-Cypress.Commands.add('login', function(){
+})
+
+Cypress.Commands.add('loginAdmin', function(){
   cy.visit('http://localhost:3000')
   cy.get('#username')
       .type('admin')

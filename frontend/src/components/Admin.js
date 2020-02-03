@@ -11,6 +11,10 @@ const Admin = (props) => {
 
   const [chosenType, setChosenType] = useState('Users')
 
+  if(props.user.role !== 'admin'){
+    return null
+  }
+
   const handleTypeChange = (e) => {
     setChosenType(e)
     if(e === 'Users'){
