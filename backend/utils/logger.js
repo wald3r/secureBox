@@ -1,10 +1,16 @@
 const SimpleNodeLogger = require('simple-node-logger')
 
-const logLogins = (username, status) => {
+/**
+ * Logger methods 
+ */
+
+
+
+ const logLogins = (username, status) => {
 
 
   const opts = {
-    logFilePath:'logfiles/login.log',
+    logFilePath: process.env.NODE_ENV === 'pro' ? 'logfiles/production/login.log' : 'logfiles/development/login.log',
      timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
   }
   
@@ -31,7 +37,7 @@ const logLogins = (username, status) => {
 const logRegistrations = (user, hash, status) => {
   
   const opts = {
-    logFilePath:'logfiles/registration.log',
+    logFilePath: process.env.NODE_ENV === 'pro' ? 'logfiles/production/registration.log' : 'logfiles/development/registration.log',
      timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
   }
   
@@ -55,7 +61,7 @@ const logRegistrations = (user, hash, status) => {
 const validationError = (exception) => {
   
   const opts = {
-    logFilePath:'logfiles/validation.log',
+    logFilePath: process.env.NODE_ENV === 'pro' ? 'logfiles/production/validation.log' : 'logfiles/development/validation.log',
      timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
   }
   
@@ -70,7 +76,7 @@ const validationError = (exception) => {
 const verification = (userid) => {
   
   const opts = {
-    logFilePath:'logfiles/registration.log',
+    logFilePath: process.env.NODE_ENV === 'pro' ? 'logfiles/production/registration.log' : 'logfiles/development/registration.log',
      timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
   }
   
@@ -85,7 +91,7 @@ const verification = (userid) => {
 const verificationFailed = (exception) => {
   
   const opts = {
-    logFilePath:'logfiles/registration.log',
+    logFilePath: process.env.NODE_ENV === 'pro' ? 'logfiles/production/registration.log' : 'logfiles/development/registration.log',
      timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
   }
   
@@ -100,8 +106,8 @@ const verificationFailed = (exception) => {
 const downloadFile = (filePath) => {
   
   const opts = {
-    logFilePath:'logfiles/download.log',
-    timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
+    logFilePath: process.env.NODE_ENV === 'pro' ? 'logfiles/production/download.log' : 'logfiles/development/download.log',
+     timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
   }
   
   const log = SimpleNodeLogger.createSimpleLogger(opts)
@@ -116,8 +122,8 @@ const downloadFile = (filePath) => {
 const deleteFile = (filePath) => {
   
   const opts = {
-    logFilePath:'logfiles/delete.log',
-    timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
+    logFilePath: process.env.NODE_ENV === 'pro' ? 'logfiles/production/delete.log' : 'logfiles/development/delete.log',
+     timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
   }
   
   const log = SimpleNodeLogger.createSimpleLogger(opts)
@@ -131,8 +137,8 @@ const deleteFile = (filePath) => {
 const failedDeleteFile = (exception) => {
   
   const opts = {
-    logFilePath:'logfiles/delete.log',
-    timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
+    logFilePath: process.env.NODE_ENV === 'pro' ? 'logfiles/production/delete.log' : 'logfiles/development/delete.log',
+     timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
   }
   
   const log = SimpleNodeLogger.createSimpleLogger(opts)
@@ -147,8 +153,8 @@ const failedDeleteFile = (exception) => {
 const uploadFile = (filePath) => {
   
   const opts = {
-    logFilePath:'logfiles/upload.log',
-    timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
+    logFilePath: process.env.NODE_ENV === 'pro' ? 'logfiles/production/upload.log' : 'logfiles/development/upload.log',
+     timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
   }
   
   const log = SimpleNodeLogger.createSimpleLogger(opts)
@@ -163,8 +169,8 @@ const uploadFile = (filePath) => {
 const failedUploadFile = (message) => {
   
   const opts = {
-    logFilePath:'logfiles/upload.log',
-    timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
+    logFilePath: process.env.NODE_ENV === 'pro' ? 'logfiles/production/upload.log' : 'logfiles/development/upload.log',
+     timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
   }
   
   const log = SimpleNodeLogger.createSimpleLogger(opts)
@@ -177,8 +183,8 @@ const failedUploadFile = (message) => {
 
 const cryptoError = (message) => {
   const opts = {
-    logFilePath:'logfiles/crypto.log',
-    timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
+    logFilePath: process.env.NODE_ENV === 'pro' ? 'logfiles/production/crypto.log' : 'logfiles/development/crypto.log',
+     timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
   }
   
   const log = SimpleNodeLogger.createSimpleLogger(opts)
@@ -192,8 +198,8 @@ const cryptoError = (message) => {
 const errorHandler = (message) => {
   
   const opts = {
-    logFilePath:'logfiles/handler.log',
-    timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
+    logFilePath: process.env.NODE_ENV === 'pro' ? 'logfiles/production/handler.log' : 'logfiles/development/handler.log',
+     timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
   }
   
   const log = SimpleNodeLogger.createSimpleLogger(opts)
@@ -208,8 +214,8 @@ const errorHandler = (message) => {
 const cleanUpHandler = (message) => {
   
   const opts = {
-    logFilePath:'logfiles/cleanup.log',
-    timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
+    logFilePath: process.env.NODE_ENV === 'pro' ? 'logfiles/production/cleanup.log' : 'logfiles/development/cleanup.log',
+     timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
   }
   
   const log = SimpleNodeLogger.createSimpleLogger(opts)

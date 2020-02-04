@@ -13,7 +13,7 @@ import Confirmation from './Confirmation'
 
 
 const Mimetypes = (props) => {
-
+ 
   const [showAddMime, setShowAddMime] = useState(false)
   const [filter, setFilter] = useState('')
   const [type, setType] = useState(null)

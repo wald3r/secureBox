@@ -2,6 +2,10 @@ const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
 var timestamps = require('mongoose-timestamp')
 
+
+/**
+ * Schema to store links to make files public
+ */
 const publicSchema = mongoose.Schema({
     
     file: {

@@ -4,6 +4,10 @@ const Mimetype = require('../models/mimetype')
 const roleManagement = require('../utils/roleManagement')
 const authenticationHelper = require('../utils/authenticationHelper')
 
+
+/**
+ * Get all mime types  
+ */
 mimetypesRouter.get('/', async(request, response, next) => {
   
   try{
@@ -19,7 +23,9 @@ mimetypesRouter.get('/', async(request, response, next) => {
   }
 })
 
-
+/**
+ * Add a new mime type
+ */
 mimetypesRouter.post('/', async(request, response, next) => {
   
   try{
@@ -44,6 +50,9 @@ mimetypesRouter.post('/', async(request, response, next) => {
   }
 })
 
+/**
+ * Remove a mime type
+ */
 mimetypesRouter.delete('/remove/:id', async(request, response, next) => {
   
   try{

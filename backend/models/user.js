@@ -3,7 +3,9 @@ const uniqueValidator = require('mongoose-unique-validator')
 const roleManagement = require('../utils/roleManagement')
 var timestamps = require('mongoose-timestamp');
 
-
+/**
+ * Schema to store users
+ */
 const userSchema = mongoose.Schema({
     username: {
             type: String,

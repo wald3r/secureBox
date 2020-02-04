@@ -8,6 +8,7 @@ import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
 import { getNotes } from '../reducers/notesReducer'
 
+
 const AddNote = ( { showAddNote, handleShowAddNote, ...props } ) => {
 
   const [title, setTitle] = useState('')

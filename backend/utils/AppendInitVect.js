@@ -1,6 +1,9 @@
 
 const { Transform } = require('stream');
 
+/**
+ * Initial vector for encryption
+ */
 class AppendInitVect extends Transform {
   constructor(initVect, opts) {
     super(opts);

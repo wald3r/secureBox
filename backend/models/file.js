@@ -1,6 +1,9 @@
 const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
 
+/**
+ * Schema to files in the database
+ */
 const fileSchema = mongoose.Schema({
     name: {
             type: String,

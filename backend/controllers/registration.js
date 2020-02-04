@@ -6,6 +6,9 @@ const cryptoHelper = require('../utils/cryptoHelper.js')
 const nodemailer = require('../utils/nodemailer')
 const logger = require('../utils/logger')
 
+/**
+ * Activate a user 
+ */
 registrationRouter.get('/verify/:id', async (request, response, next) => {
   try{
     const waitingActivation = await Registration.find({hash: request.params.id})
@@ -28,7 +31,9 @@ registrationRouter.get('/verify/:id', async (request, response, next) => {
 })
 
 
-
+/**
+ * Add new user
+ */
 registrationRouter.post('/', async (request, response, next) => {
     try{
         const body = request.body

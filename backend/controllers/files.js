@@ -10,6 +10,10 @@ const helperFunctions = require ('../utils/helperFunctions')
 const nodemailer = require('../utils/nodemailer')
 const bcrypt = require('bcrypt')
 
+
+/**
+ * Get all files from a certain user
+ */
 filesRouter.get('/', async (request, response, next) => {
 
   try {
@@ -24,6 +28,9 @@ filesRouter.get('/', async (request, response, next) => {
   }
 })
 
+/**
+ * Get top 5 favourite files from a certain user
+ */
 filesRouter.get('/favourites/:id', async (request, response, next) => {
 
   try {
@@ -39,6 +46,10 @@ filesRouter.get('/favourites/:id', async (request, response, next) => {
   }
 })
 
+
+/**
+ * Get all uploaded documents from a certain user
+ */
 filesRouter.get('/documents/', async (request, response, next) => {
 
   try {
@@ -54,6 +65,9 @@ filesRouter.get('/documents/', async (request, response, next) => {
 })
 
 
+/**
+ * Get all uploaded pictures from a certain user
+ */
 filesRouter.get('/pictures/', async (request, response, next) => {
 
   try {
@@ -69,6 +83,9 @@ filesRouter.get('/pictures/', async (request, response, next) => {
   }
 })
 
+/**
+ * Get all uploaded music from a certain user
+ */
 filesRouter.get('/music/', async (request, response, next) => {
 
   try {
@@ -84,7 +101,9 @@ filesRouter.get('/music/', async (request, response, next) => {
   }
 })
 
-
+/**
+ * Download an encrypted file
+ */
 filesRouter.post('/download/encrypted/:id', async(request, response, next) => {
   try{
     var user = await authenticationHelper.isLoggedIn(request.token)
@@ -114,6 +133,9 @@ filesRouter.post('/download/encrypted/:id', async(request, response, next) => {
   }
 })
 
+/**
+ * Download a file
+ */
 filesRouter.get('/download/:id', async(request, response, next) => {
   try{
     var user = await authenticationHelper.isLoggedIn(request.token)
@@ -138,6 +160,9 @@ filesRouter.get('/download/:id', async(request, response, next) => {
 })
 
 
+/**
+ * Download a file, which was made available for the public
+ */
 filesRouter.get('/download/public/:id', async(request, response, next) => {
   try{
     const publicLink = await Public.find({hash: request.params.id})
@@ -156,7 +181,9 @@ filesRouter.get('/download/public/:id', async(request, response, next) => {
   }
 })
 
-
+/**
+ * Make a file available for the public
+ */
 filesRouter.get('/public/:id', async(request, response, next) => {
   try{
     var user = await authenticationHelper.isLoggedIn(request.token)
@@ -179,6 +206,9 @@ filesRouter.get('/public/:id', async(request, response, next) => {
   }
 })
 
+/**
+ * Make a file public and send an email out to a given recipient
+ */
 filesRouter.post('/public/mail/:id', async(request, response, next) => {
   try{
     var user = await authenticationHelper.isLoggedIn(request.token)
@@ -203,6 +233,9 @@ filesRouter.post('/public/mail/:id', async(request, response, next) => {
   }
 })
 
+/**
+ * Remove a decrypted file
+ */
 filesRouter.delete('/dremove/:id', async(request, response, next) => {
   
   const user = await authenticationHelper.isLoggedIn(request.token)
@@ -222,7 +255,9 @@ filesRouter.delete('/dremove/:id', async(request, response, next) => {
   }
 
 })
-
+/**
+ * Delete the file after it got decrypted for download
+ */
 filesRouter.delete('/remove/:id', async(request, response, next) => {
   
   const user = await authenticationHelper.isLoggedIn(request.token)
@@ -241,7 +276,9 @@ filesRouter.delete('/remove/:id', async(request, response, next) => {
 
 })
 
-
+/**
+ * Remove an encrypted File
+ */
 filesRouter.delete('/eremove/:id', async(request, response, next) => {
   try{
     var user = await authenticationHelper.isLoggedIn(request.token)
@@ -275,6 +312,10 @@ filesRouter.delete('/eremove/:id', async(request, response, next) => {
   }
 })
 
+
+/**
+ * Upload Files and save them
+ */
 filesRouter.post('/upload', async (request, response, next) => {
 
   const user = await authenticationHelper.isLoggedIn(request.token)
@@ -328,7 +369,9 @@ filesRouter.post('/upload', async (request, response, next) => {
 })
 
 
-
+/**
+ * Encrypt a file
+ */
 filesRouter.post('/encrypt/', async (request, response, next) => {
   try{
     const user = await authenticationHelper.isLoggedIn(request.token)
@@ -362,6 +405,9 @@ filesRouter.post('/encrypt/', async (request, response, next) => {
 
 })
 
+/**
+ * Decrypt a file
+ */
 filesRouter.post('/decrypt/', async (request, response, next) => {
   try{
     const user = await authenticationHelper.isLoggedIn(request.token)

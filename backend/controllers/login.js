@@ -5,6 +5,10 @@ const User = require('../models/user')
 const logger = require('../utils/logger')
 const helperFunctions = require('../utils/helperFunctions')
 
+
+/**
+ * Login a user
+ */
 loginRouter.post('/', async(request, response) => {
     logger.logLogins(request.body.username, 0)
     const body = request.body

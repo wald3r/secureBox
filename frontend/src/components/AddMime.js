@@ -7,6 +7,7 @@ import exception from '../utils/exception'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
 
+
 const AddMime = ( { showAddMime, handleShowAddMime, ...props } ) => {
 
   const [name, setName] = useState('')

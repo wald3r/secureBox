@@ -3,6 +3,9 @@ const notesRouter = require('express').Router()
 const Note = require('../models/note')
 const authenticationHelper = require('../utils/authenticationHelper')
 
+/**
+ * Get all notes from a certain user
+ */
 notesRouter.get('/', async(request, response, next) => {
   
   try{
@@ -19,7 +22,9 @@ notesRouter.get('/', async(request, response, next) => {
   }
 })
 
-
+/**
+ * Add a new note
+ */
 notesRouter.post('/', async(request, response, next) => {
   
   try{
@@ -42,7 +47,9 @@ notesRouter.post('/', async(request, response, next) => {
   }
 })
 
-
+/**
+ * Delete a note
+ */
 notesRouter.delete('/remove/:id', async(request, response, next) => {
   
   try{

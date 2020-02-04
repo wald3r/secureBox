@@ -6,7 +6,12 @@ const opts = {
 
 const log = SimpleNodeLogger.createSimpleLogger(opts)
 
-
+/**
+ * Middleware to log all http requests 
+ * @param {*} request 
+ * @param {*} response 
+ * @param {*} next 
+ */
 const logRequests = (request, response, next) => {
 
   log.setLevel('info')

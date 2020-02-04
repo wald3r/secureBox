@@ -2,6 +2,9 @@ const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
 var timestamps = require('mongoose-timestamp')
 
+/**
+ * Schema to store activation links
+ */
 const registrationSchema = mongoose.Schema({
     userid: {
             type: Object,

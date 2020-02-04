@@ -7,6 +7,14 @@ const Registration = require ('../models/registration')
 const User = require ('../models/user')
 const bcrypt = require('bcrypt')
 
+
+/**
+ * Cypress router for E2E testing. 
+ */
+
+ /**
+  * Clear test database
+  */
 cypressRouter.get('/clear', async (request, response, next) => {
 
   try {
@@ -22,7 +30,9 @@ cypressRouter.get('/clear', async (request, response, next) => {
   }
 })
 
-
+/**
+ * Add admin for testing
+ */
 cypressRouter.get('/addAdmin', async (request, response, next) => {
 
   try {
@@ -47,6 +57,9 @@ cypressRouter.get('/addAdmin', async (request, response, next) => {
   }
 })
 
+/**
+ * Add user for testing
+ */
 cypressRouter.get('/addUser', async (request, response, next) => {
 
   try {

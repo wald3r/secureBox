@@ -2,6 +2,11 @@
 const fs = require('fs');
 const config = require('../utils/config')
 const Mimetype = require('../models/mimetype')
+
+/**
+ * Padding
+ * @param {*} digits 
+ */
 const padding = (digits) => {
   if(digits.toString().length < 2){
     return `0${digits}`
@@ -10,6 +15,17 @@ const padding = (digits) => {
   }
 }
 
+/**
+ * Create a file name
+ * 
+ * @param {*} username 
+ * @param {*} name 
+ * @param {*} category 
+ * @param {*} date 
+ * @param {*} number 
+ * @param {*} type 
+ * @param {*} path 
+ */
 const createDocumentName = async (username, name, category, date, number, type, path) => {
 
   const types = type.split('/')
@@ -40,7 +56,10 @@ const createDocumentName = async (username, name, category, date, number, type, 
 
 }
 
-
+/**
+ * Check if file already exists
+ * @param {*} path 
+ */
 const alreadyExists = (path) => {
   if(fs.existsSync(path+'.enc') || fs.existsSync(path)){
     return true

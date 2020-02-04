@@ -1,6 +1,10 @@
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 
+/**
+ * Verify if user is logged in  
+ * @param {*} token 
+ */
 const isLoggedIn = async (token) => {
   
   var user = undefined

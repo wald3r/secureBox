@@ -2,6 +2,9 @@ const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
 var timestamps = require('mongoose-timestamp')
 
+/**
+ * Schema to save mime types 
+ */
 const mimetypeSchema = mongoose.Schema({
     name: {
       type: String,

@@ -1,8 +1,9 @@
 const nodemailer = require('nodemailer')
 require('dotenv').config()
 
-var user = 'securebox20@gmail.com'
-
+/**
+ * Setup nodemailer account
+ */
 const transporter = nodemailer.createTransport({
   host: "smtp.mailtrap.io",
   port: 2525,
@@ -12,6 +13,9 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+/**
+ * 
+ */
 transporter.set('oauth2_provision_cb', (user, renew, callback)=>{
   let accessToken = userTokens[user];
   if(!accessToken){
@@ -21,7 +25,11 @@ transporter.set('oauth2_provision_cb', (user, renew, callback)=>{
   }
 });
 
-
+/**
+ * Send a registration email 
+ * @param {*} userObject 
+ * @param {*} hash 
+ */
 const sendRegistrationMail =  async (userObject, hash) => {
 
   let info = await transporter.sendMail({
@@ -34,6 +42,11 @@ const sendRegistrationMail =  async (userObject, hash) => {
   )
 }
 
+/**
+ * Send an email with a download link
+ * @param {*} email 
+ * @param {*} hash 
+ */
 const sendDownloadLink =  async (email, hash) => {
 
   let info = await transporter.sendMail({

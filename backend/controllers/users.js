@@ -8,6 +8,9 @@ const roleManagement = require('../utils/roleManagement')
 const fs = require('fs');
 
 
+/**
+ * Get all Users
+ */
 usersRouter.get('/', async (request, response, next) => {
     try{
 
@@ -26,7 +29,9 @@ usersRouter.get('/', async (request, response, next) => {
     }
   })
 
-
+/**
+ * Check if entered password is correct
+ */
 usersRouter.put('/check/:id', async (request, response, next) => {
     try{
 
@@ -61,6 +66,9 @@ usersRouter.put('/check/:id', async (request, response, next) => {
     }
 })
 
+/**
+ * Update password of a certain user
+ */
 usersRouter.put('/password/:id', async (request, response, next) => {
     try{
 
@@ -95,7 +103,10 @@ usersRouter.put('/password/:id', async (request, response, next) => {
     }
   })
 
-  usersRouter.get('/user/:id', async (request, response, next) => {
+/** 
+*  Get a single user
+*/
+usersRouter.get('/user/:id', async (request, response, next) => {
     try{
 
       const authenticatedUser = await authenticationHelper.isLoggedIn(request.token)
@@ -120,9 +131,12 @@ usersRouter.put('/password/:id', async (request, response, next) => {
     } catch(exception){
       next(exception)
     }
-  })
+})
 
-  usersRouter.delete('/remove/:id', async (request, response, next) => {
+/**
+ * Remove a user
+ */
+usersRouter.delete('/remove/:id', async (request, response, next) => {
     try{
 
       const authenticatedUser = await authenticationHelper.isLoggedIn(request.token)
@@ -149,10 +163,12 @@ usersRouter.put('/password/:id', async (request, response, next) => {
     } catch(exception){
       next(exception)
     }
-  })
+})
 
-
-  usersRouter.put('/details/:id', async (request, response, next) => {
+/**
+ * Update user details
+ */
+usersRouter.put('/details/:id', async (request, response, next) => {
     try{
       const authenticatedUser = await authenticationHelper.isLoggedIn(request.token)
       if(authenticatedUser == undefined){
@@ -181,6 +197,6 @@ usersRouter.put('/password/:id', async (request, response, next) => {
     } catch(exception){
       next(exception)
     }
-  })
+})
 
 module.exports = usersRouter

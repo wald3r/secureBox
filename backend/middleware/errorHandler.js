@@ -1,5 +1,12 @@
 const logger = require('../utils/logger')
 
+/**
+ * Middleware to deal with errors
+ * 
+ * @param {*} error 
+ * @param {*} request 
+ * @param {*} response 
+ */
 const errorHandler = (error, request, response) => {
 
   if(error.name === 'ValidationError'){
