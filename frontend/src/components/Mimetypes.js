@@ -9,15 +9,19 @@ import exception from '../utils/exception'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
 import mimesService from '../services/mimes'
+import Confirmation from './Confirmation'
+
 
 const Mimetypes = (props) => {
 
   const [showAddMime, setShowAddMime] = useState(false)
   const [filter, setFilter] = useState('')
+  const [type, setType] = useState(null)
+  const [showConfirmation, setShowConfirmation] = useState(false)
 
   const filteredMimes = filter === '' ? props.mimetypes : props.mimetypes.filter(m => m.name.includes(filter))
 
-  const handleRemoval = async (type) => {
+  const removeMime = async () => {
     try{
       const response = await mimesService.removeType(type.id)
       props.removeType(type)
@@ -27,6 +31,11 @@ const Mimetypes = (props) => {
     }  
   }
 
+  const handleRemoval = (mime) => {
+    setType(mime)
+    setShowConfirmation(true)
+  }
+
   const handleFilter = (e) => {
     e.preventDefault()
     setFilter(e.target.value)
@@ -34,6 +43,11 @@ const Mimetypes = (props) => {
 
   return(
     <div className='container'> 
+      <Confirmation 
+        showConfirmation={showConfirmation}
+        setConfirmation={setShowConfirmation}
+        handleConfirmation={removeMime}
+      />
       <AddMime
         showAddMime={showAddMime} 
         handleShowAddMime={setShowAddMime}/>
@@ -50,12 +64,12 @@ const Mimetypes = (props) => {
             <tr key={type.id}>
               <td>{type.name}</td>
               <td>{type.ending}</td>
-              <td><Button data-toggle='tooltip' data-placement='top' title='Delete type' onClick={() => handleRemoval(type)}><i className="fa fa-trash"></i></Button></td>
+              <td><Button id='idDeleteMime' data-toggle='tooltip' data-placement='top' title='Delete type' onClick={() => handleRemoval(type)}><i className="fa fa-trash"></i></Button></td>
             </tr>
           )}
         </tbody>
       </Table>
-      <Button onClick={() => setShowAddMime(true)}>Add new MimeType</Button>
+      <Button id='idAddMime' onClick={() => setShowAddMime(true)}>Add new MimeType</Button>
       <br></br>
       <br></br>
       <p style={{textAlign: 'left'}}><b>Allowed MIME-Types to upload files.</b></p>

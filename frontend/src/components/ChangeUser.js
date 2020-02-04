@@ -74,7 +74,7 @@ const ChangeUser = ( { showDialog, handleShowDialog, user, ...props } ) => {
                     </td>
 
                     <td>
-                      <input id='idUsername' autoComplete='off' required defaultValue={user.username} type='text' onChange={({target}) => setUsername(target.value)}/>
+                      <input id='idChangeUsername' autoComplete='off' required defaultValue={user.username} type='text' onChange={({target}) => setUsername(target.value)}/>
                     </td>
                   </tr>
                   <tr>
@@ -83,7 +83,7 @@ const ChangeUser = ( { showDialog, handleShowDialog, user, ...props } ) => {
                     </td>
 
                     <td>
-                      <input autoComplete='off' id='idName' defaultValue={user.name} type='text' onChange={({target}) => setName(target.value)}/>
+                      <input autoComplete='off' id='idChangeName' defaultValue={user.name} type='text' onChange={({target}) => setName(target.value)}/>
                     </td>
                   </tr>
                   <tr>
@@ -92,7 +92,7 @@ const ChangeUser = ( { showDialog, handleShowDialog, user, ...props } ) => {
                     </td>
 
                     <td>
-                      <input autoComplete='off' id='idEmail' required defaultValue={user.email} type='email' onChange={({target}) => SetEmail(target.value)}/>
+                      <input autoComplete='off' id='idChangeEmail' required defaultValue={user.email} type='email' onChange={({target}) => SetEmail(target.value)}/>
                     </td>
                   </tr>
                   <tr>

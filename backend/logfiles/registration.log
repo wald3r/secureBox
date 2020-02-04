@@ -143,3 +143,6 @@
 2020-02-03 18:21:10.726 INFO  RegistrationsManager: Registered id: 5e38487659ecab1d70316a4e user: test, email: test@test.com 
 2020-02-03 18:21:11.136 INFO  RegistrationsManager: Activation link created hash: 86abbb427ab2633f96c90948b5d0e58d0bfd16eb, user: 5e38487659ecab1d70316a4e 
 2020-02-03 18:21:13.388 INFO  RegistrationsManager: Mail for activation sent 
+2020-02-04 15:05:52.602 INFO  RegistrationsManager: Registered id: 5e396c2f12c34d22bebde386 user: daniel, email: daniel@daniel.com 
+2020-02-04 15:05:52.983 INFO  RegistrationsManager: Activation link created hash: 1a23de40d394e2be6f85d1967edf86c7a7b8125c, user: 5e396c2f12c34d22bebde386 
+2020-02-04 15:05:55.444 INFO  RegistrationsManager: Mail for activation sent 
