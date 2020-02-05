@@ -98,9 +98,9 @@ const Upload = ( { ...props } ) => {
           props.handleError(response.data, parameter.errorTime)
         }
         setFiles([])
-        event.persist()
       }
       setUploading(false)
+      event.persist()
     }catch(error){
       setUploading(false)
       exception.catchException(error, props)

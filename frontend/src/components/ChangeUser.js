@@ -60,7 +60,7 @@ const ChangeUser = ( { showDialog, handleShowDialog, user, ...props } ) => {
     <div>
       <Modal show={showDialog} onHide={noChanges}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit user details: </Modal.Title>
+          <Modal.Title>Edit user details </Modal.Title>
         </Modal.Header>
         <Form onSubmit={saveChanges}>
         <Modal.Body>

@@ -20,7 +20,7 @@ const PublicLink = ( { showDialog, handleShowDialog, link, ...props } ) => {
     <div>
       <Modal size='lg' show={showDialog} onHide={noChanges}>
         <Modal.Header closeButton>
-          <Modal.Title>Public Link: </Modal.Title>
+          <Modal.Title>Public Link </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <input type='text' style={{width: '90%'}} id='copyText' defaultValue={link}/><Button data-toggle='tooltip' data-placement='top' title='Copy to clipboard' onClick={handleCopyToClipboard}><i className="fa fa-clipboard"></i></Button>

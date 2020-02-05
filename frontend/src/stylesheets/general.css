@@ -1,5 +1,6 @@
 @import './upload.css';
 @import './event.css';
+@import './table.css';
 
 .title{
   text-align: center;
@@ -8,28 +9,6 @@
 .button {
   display: table-cell;
   width: 100%;
-}
-
-table, thead, tr, td {
-  max-width: 100%;
-  border-collapse: collapse;
-
-}
-
-table{
-  display: block;
-
-}
-
-tbody{
-  display: block;
-  overflow: auto;
-  max-height: 500px;
-}
-
-.tablecontainer{
-  border: 1px solid black;
-
 }
 
 .header{
@@ -57,6 +36,8 @@ tbody{
 }
 
 .container2 {
+  top: 50%;
+  position: absolute;
   padding: 20px;
   margin-left: 10%;
   font-size: 16px;
@@ -126,7 +107,7 @@ body, html {
 
 .bg1 {
   background-image: url('../pictures/ballon.jpg');
-  height: 60vh;
+  height: 50vh;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

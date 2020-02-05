@@ -1,0 +1,23 @@
+
+table, thead, tr, td {
+  max-width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+
+}
+
+table{
+  display: block;
+
+}
+
+tbody{
+  display: block;
+  overflow: auto;
+  max-height: 500px;
+}
+
+.tablecontainer{
+  border: 1px solid black;
+
+}

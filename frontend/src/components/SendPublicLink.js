@@ -21,6 +21,7 @@ const SendPublicLink = ( { showDialog, handleShowDialog, file, ...props } ) => {
       e.preventDefault()
       const response = await fileService.sendPublicMail(file.id, email)
       setLink(`${parameter.downloadLink}${response.data.hash}`)
+      handleShowDialog(false)
     }catch(error){
       exception.catchException(error, props)
     }
@@ -30,13 +31,13 @@ const SendPublicLink = ( { showDialog, handleShowDialog, file, ...props } ) => {
     <div>
       <Modal size='lg' show={showDialog} onHide={noChanges}>
         <Modal.Header closeButton>
-          <Modal.Title>Send public link per email: </Modal.Title>
+          <Modal.Title>Send public link per email </Modal.Title>
         </Modal.Header>
         <Form onSubmit={handleSubmit}>
         <Modal.Body>
             Email: <input type='email' required onChange={({target}) => setEmail(target.value)}/>
             <br></br>
-            {link}
+
             <br></br>
             <br></br>
             <div style={{ color: 'red'}}><Badge variant="secondary">Attention</Badge> This will send a one-time-only link to the entered address. If not used, it will get invalid after midnight.</div>

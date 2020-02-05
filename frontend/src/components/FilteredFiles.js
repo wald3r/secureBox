@@ -357,10 +357,10 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
                   <td>{file.size}</td>
                   <td>{file.date}</td>
                   <td>
-                      <Button data-toggle='tooltip' data-placement='top' title='Download file.' onClick={() => handleSingleDownload(file)}><i className="fa fa-download"></i></Button>
-                      <Button data-toggle='tooltip' data-placement='top' title='Delete file.' onClick={() => handleSingleRemoval(file)}><i className="fa fa-trash"></i></Button>
-                      <Button style={{ display: file.password !== undefined ? 'none' : '' }} data-toggle='tooltip' data-placement='top' title='Create download link.' onClick={() => handleConfidentiality(file)}><i className="fa fa-reply"></i></Button>
-                      <Button style={{ display: file.password !== undefined ? 'none' : '' }} data-toggle='tooltip' data-placement='top' title='Create and send download link per email.' onClick={() => handleSendEmail(file)}><i className="fa fa-envelope"></i></Button>
+                      <Button data-toggle='tooltip' data-placement='top' title='Download file' onClick={() => handleSingleDownload(file)}><i className="fa fa-download"></i></Button>
+                      <Button data-toggle='tooltip' data-placement='top' title='Delete file' onClick={() => handleSingleRemoval(file)}><i className="fa fa-trash"></i></Button>
+                      <Button style={{ display: file.password !== undefined ? 'none' : '' }} data-toggle='tooltip' data-placement='top' title='Create download link' onClick={() => handleConfidentiality(file)}><i className="fa fa-reply"></i></Button>
+                      <Button style={{ display: file.password !== undefined ? 'none' : '' }} data-toggle='tooltip' data-placement='top' title='Create and send download link per email' onClick={() => handleSendEmail(file)}><i className="fa fa-envelope"></i></Button>
                       <Button style={{ display: file.password !== undefined ? '' : 'none' }} data-toggle='tooltip' data-placement='top' title='Decrypt' onClick={() => handleDecryption(file)}><i className="fa fa-key	"></i></Button>
                       <Button style={{ display: file.password !== undefined ? 'none' : '' }}data-toggle='tooltip' data-placement='top' title='Encrypt' onClick={() => handleEncryption(file)}><i className="fa fa-key	"></i></Button>
                   </td>

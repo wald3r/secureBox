@@ -21,7 +21,7 @@ const AddEncryption = ({ showAddEncryption , setShowAddEncryption, handleEncrypt
     <div>
       <Modal show={showAddEncryption} onHide={noChanges}>
         <Modal.Header closeButton>
-          <Modal.Title>Add Encryption: </Modal.Title>
+          <Modal.Title>Add Encryption </Modal.Title>
         </Modal.Header>
         <Form onSubmit={saveChanges}>
         <Modal.Body>

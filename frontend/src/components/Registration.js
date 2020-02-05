@@ -37,6 +37,7 @@ const Registration = (props) => {
         props.handleError('Passwords do not match', parameter.errorTime)
       }
     }catch(error){
+      setRegistering(false)
       exception.catchException(error, props)
     }
   }
