@@ -13,8 +13,9 @@ const AddEncryption = ({ showAddEncryption , setShowAddEncryption, handleEncrypt
     window.location.reload()
   }
 
-  const saveChanges = () => {
-      handleEncryption(password)
+  const saveChanges = (event) => {
+      setShowAddEncryption(false)
+      handleEncryption(password, event)
   }
 
   return (

@@ -38,7 +38,6 @@ if(process.env.NODE_ENV !== 'test'){
 }
 
 if(process.env.NODE_ENV === 'pro'){
-  console.log('test')
   app.use('/', appRouter)
 }
 app.use('/api/login', loginRouter)

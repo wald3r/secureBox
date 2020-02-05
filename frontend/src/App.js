@@ -74,7 +74,7 @@ const App = ( props ) => {
             <div className='col-md-18'>
                 <div className='header'>SecureBox</div>
                 <br></br>
-                <Link className='link' to='/app/'>Home</Link>
+                <Link className='link' to='/'>Home</Link>
                 <Link className='link' to='/app/upload'>Upload</Link>
                 <Link className='link' to='/app/allfiles'>Files</Link>
                 <Link className='link' to='/app/notes'>Notes</Link>
@@ -82,7 +82,7 @@ const App = ( props ) => {
                 <Link style={priorityStyle} className='link' to='/admin'>Admin</Link>
         
                 
-                <Route exact path='/app/' render={() => <Home /> }/>
+                <Route exact path='/' render={() => <Home /> }/>
                 <Route exact path='/app/upload' render={(props) => <Upload {...props}/> } />
                 <Route exact path='/app/allfiles' render={(props) => <AllFiles {...props}/> } />
                 <Route exact path='/app/notes' render={(props) => <Notes {...props}/> } />

@@ -63,7 +63,8 @@ const Upload = ( { ...props } ) => {
     return noErr
   }
 
-  const encryptFiles = async (password) => {
+  const encryptFiles = async (password, e) => {
+    e.preventDefault()
     await uploadedFiles.map(async f => {
       await fileService.encryptFile({file: f, password: password})
     })
@@ -101,7 +102,6 @@ const Upload = ( { ...props } ) => {
         setFiles([])
       }
       setUploading(false)
-      event.persist()
     }catch(error){
       setUploading(false)
       exception.catchException(error, props)
