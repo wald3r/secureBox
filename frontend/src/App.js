@@ -45,7 +45,7 @@ const App = ( props ) => {
       <div className='bg'>
       <Error />
       <Notification />
-      <div className='container3'>
+      <div className='container2'>
       <div className='row'>
       <div className='col-md-15'>
         <Router>
@@ -65,7 +65,7 @@ const App = ( props ) => {
   }else{
     const priorityStyle = { display: props.user.role === 'admin' ? '' : 'none' }
     return(
-      <div className='bg'>
+      <div className='bg1'>
         <Error />
         <Notification />
         <Router>

@@ -18,7 +18,7 @@ const Notes = (props) => {
   }
 
   return (
-    <div className='container'>
+    <div className='notes'>
       Filter: <input id='idNoteFilter' onChange={handleFilter}/>  <Button id='addNote' data-toggle='tooltip' data-placement='top' title='Add new note' onClick={() => setShowAddNote(true)}><i className="fa fa-plus"/></Button>
       <br></br>
       <br></br>

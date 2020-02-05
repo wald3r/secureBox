@@ -24,7 +24,7 @@ table{
 tbody{
   display: block;
   overflow: auto;
-  max-height: 750px;
+  max-height: 500px;
 }
 
 .tablecontainer{
@@ -56,17 +56,39 @@ tbody{
   color: white;
 }
 
-.container3 {
+.container2 {
   padding: 20px;
   margin-left: 10%;
   font-size: 16px;
   
 }
+
+.container3 {
+  padding: 30px;
+  font-size: 16px;
+  background-color: rgba(0,0,0, 0.4);
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}
+
+.notes {
+  padding: 20px;
+  background-color: white;
+  opacity: 0.9;
+  display: block;
+  overflow: auto;
+  max-height: 650px;
+}
+
+
 .container {
   padding: 20px;
   background-color: white;
   opacity: 0.9;
- 
 }
 
 .footer {
@@ -90,15 +112,26 @@ tbody{
 
 body, html {
   height: 100%;
+ 
+  font-family: "Arial";
+ 
   }
 .bg {
-    background-image: url('../pictures/ballon.jpg');
-    height: 100vh;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+  background-image: url('../pictures/ballon.jpg');
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
-  }
+.bg1 {
+  background-image: url('../pictures/ballon.jpg');
+  height: 60vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 
   
 
