@@ -34,7 +34,6 @@ app.use(logging.logRequests)
 if(process.env.NODE_ENV !== 'test'){
   app.use('/api/login', limiter.loginLimiter)
 }else{
-  console.log('router')
   app.use('/api/cypress', cypressRouter)
 }
 app.use('/api/login', loginRouter)

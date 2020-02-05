@@ -2,8 +2,10 @@
 table, thead, tr, td {
   max-width: 100%;
   border-collapse: collapse;
-  text-align: center;
+}
 
+td {
+  text-align: center;
 }
 
 table{

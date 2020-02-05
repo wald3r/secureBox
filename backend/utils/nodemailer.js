@@ -1,6 +1,14 @@
 const nodemailer = require('nodemailer')
 require('dotenv').config()
 
+const downloadLink = process.env.NODE_ENV === 'pro' 
+  ? 'https://fast-peak-66768.herokuapp.com/api/files/download/public/'
+  : 'localhost:3003/api/files/download/public/'
+  
+const verificationLink = process.env.NODE_ENV === 'pro' 
+? 'https://fast-peak-66768.herokuapp.com/api/registration/verify/'
+: 'localhost:3003/api/registration/verify/'
+
 /**
  * Setup nodemailer account
  */
@@ -14,7 +22,7 @@ const transporter = nodemailer.createTransport({
 });
 
 /**
- * 
+ * Mail setup
  */
 transporter.set('oauth2_provision_cb', (user, renew, callback)=>{
   let accessToken = userTokens[user];
@@ -36,7 +44,7 @@ const sendRegistrationMail =  async (userObject, hash) => {
     from: 'securebox',
     to: userObject.email,
     subject: 'Confirmation Email',
-    text: `Follow this link to confirm your registration: http://localhost:3003/api/registration/verify/${hash}`,
+    text: `Follow this link to confirm your registration: ${verificationLink}${hash}`,
   })
   console.log(`Message sent: ${info.messageId}`
   )
@@ -53,7 +61,7 @@ const sendDownloadLink =  async (email, hash) => {
     from: 'securebox',
     to: email,
     subject: 'Download Email',
-    text: `Follow this link to download the file: http://localhost:3003/api/files/download/public/${hash}`,
+    text: `Follow this link to download the file: ${downloadLink}${hash}`,
   })
   console.log(`Message sent: ${info.messageId}`
   )

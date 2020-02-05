@@ -245,8 +245,8 @@ filesRouter.delete('/dremove/:id', async(request, response, next) => {
   const fileDb = await File.findById(request.params.id)
   const filePath = `${fileDb.path}/${fileDb.name}`
   try{
-      fs.unlinkSync(`${helperFunctions.getDir(__dirname)}${filePath}`)
       await File.findByIdAndDelete(request.params.id)
+      fs.unlinkSync(`${helperFunctions.getDir(__dirname)}${filePath}`)
       response.status(200).send('File removed')
 
   } catch(exception) {
