@@ -18,8 +18,8 @@ const scheduler = require ('./utils/scheduler.js')
 const mimetypesRouter = require('./controllers/mimetypes')
 const notesRouter = require('./controllers/notes')
 const cypressRouter = require('./controllers/cypress')
+const appRouter = require('./controllers/app')
 
- 
 mongoose.connect(config.DB_URI, { useNewUrlParser: true})
 
 scheduler.clearPublicLinks
@@ -35,6 +35,11 @@ if(process.env.NODE_ENV !== 'test'){
   app.use('/api/login', limiter.loginLimiter)
 }else{
   app.use('/api/cypress', cypressRouter)
+}
+
+if(process.env.NODE_ENV === 'pro'){
+  console.log('test')
+  app.use('/', appRouter)
 }
 app.use('/api/login', loginRouter)
 app.use('/api/users', usersRouter)

@@ -74,20 +74,20 @@ const App = ( props ) => {
             <div className='col-md-18'>
                 <div className='header'>SecureBox</div>
                 <br></br>
-                <Link className='link' to='/'>Home</Link>
-                <Link className='link' to='/upload'>Upload</Link>
-                <Link className='link' to='/allfiles'>Files</Link>
-                <Link className='link' to='/notes'>Notes</Link>
-                <Link className='link' to ='/profile'>Profile</Link>
+                <Link className='link' to='/app/'>Home</Link>
+                <Link className='link' to='/app/upload'>Upload</Link>
+                <Link className='link' to='/app/allfiles'>Files</Link>
+                <Link className='link' to='/app/notes'>Notes</Link>
+                <Link className='link' to ='/app/profile'>Profile</Link>
                 <Link style={priorityStyle} className='link' to='/admin'>Admin</Link>
         
                 
-                <Route exact path='/' render={() => <Home /> }/>
-                <Route exact path='/upload' render={(props) => <Upload {...props}/> } />
-                <Route exact path='/allfiles' render={(props) => <AllFiles {...props}/> } />
-                <Route exact path='/notes' render={(props) => <Notes {...props}/> } />
-                <Route exact path='/profile' render={(props) => <Profile {...props}/> } />
-                <Route exact path='/admin' render={(props) => <Admin {...props}/> } />
+                <Route exact path='/app/' render={() => <Home /> }/>
+                <Route exact path='/app/upload' render={(props) => <Upload {...props}/> } />
+                <Route exact path='/app/allfiles' render={(props) => <AllFiles {...props}/> } />
+                <Route exact path='/app/notes' render={(props) => <Notes {...props}/> } />
+                <Route exact path='/app/profile' render={(props) => <Profile {...props}/> } />
+                <Route exact path='/app/admin' render={(props) => <Admin {...props}/> } />
               <br></br>
               <br></br>
               </div>

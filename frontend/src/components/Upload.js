@@ -74,6 +74,7 @@ const Upload = ( { ...props } ) => {
   const uploadHandler = async (event) => {
 
     try{
+      debugger
       setUploading(true)
       event.preventDefault()
       if(files.length === 0){
