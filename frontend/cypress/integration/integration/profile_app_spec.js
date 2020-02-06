@@ -7,18 +7,17 @@ describe('Profile', function(){
     cy.resetDb()
     cy.addAdmin()
     cy.loginAdmin()
+    cy.visit('http://localhost:3000/app/profile')
   })
 
 
   it('Open profile', function(){
-    cy.visit('http://localhost:3000/profile')
     cy.contains('Change user details')
   })
 
 
   it('Change user details', function(){
     //Prepare
-    cy.visit('http://localhost:3000/profile')
     cy.get('#idUsername')
       .clear()
       .type('admin1')
@@ -34,9 +33,9 @@ describe('Profile', function(){
       .click()
 
     cy.wait(2000)
-    cy.visit('http://localhost:3000/notes')
+    cy.visit('http://localhost:3000/app/notes')
     cy.contains('Filter:')
-    cy.visit('http://localhost:3000/profile')
+    cy.visit('http://localhost:3000/app/profile')
 
     //Test
     cy.get('#idUsername')
@@ -51,7 +50,6 @@ describe('Profile', function(){
 
   it('Change password details', function(){
     //Prepare
-    cy.visit('http://localhost:3000/profile')
     cy.get('#idOldPassword')
       .clear()
       .type('admin')
@@ -85,7 +83,6 @@ describe('Profile', function(){
 
   it('Change password details wrong with equal passwords', function(){
     //Prepare
-    cy.visit('http://localhost:3000/profile')
     cy.get('#idOldPassword')
       .clear()
       .type('admin')
@@ -107,7 +104,6 @@ describe('Profile', function(){
 
   it('Change password details wrong with old password', function(){
     //Prepare
-    cy.visit('http://localhost:3000/profile')
     cy.get('#idOldPassword')
       .clear()
       .type('admin1')
@@ -129,7 +125,6 @@ describe('Profile', function(){
 
   it('Change password details wrong with new passwords do not match', function(){
     //Prepare
-    cy.visit('http://localhost:3000/profile')
     cy.get('#idOldPassword')
       .clear()
       .type('admin')

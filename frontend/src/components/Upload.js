@@ -65,6 +65,7 @@ const Upload = ( { ...props } ) => {
 
   const encryptFiles = async (password, e) => {
     e.preventDefault()
+    console.log('test', uploadedFiles)
     await uploadedFiles.map(async f => {
       await fileService.encryptFile({file: f, password: password})
     })
@@ -75,7 +76,6 @@ const Upload = ( { ...props } ) => {
   const uploadHandler = async (event) => {
 
     try{
-      debugger
       setUploading(true)
       event.preventDefault()
       if(files.length === 0){
@@ -93,6 +93,7 @@ const Upload = ( { ...props } ) => {
         if(response.status === 200){
           setStyle(false)
           setUploadedFiles(response.data)
+          console.log(response.data)
           setShowAddEncryption(true)
           props.handleNotification('All files uploaded', parameter.notificationTime)
         }

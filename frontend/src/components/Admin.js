@@ -11,6 +11,7 @@ const Admin = (props) => {
 
   const [chosenType, setChosenType] = useState('Users')
 
+  console.log(props.user.role)
   if(props.user.role !== 'admin'){
     return null
   }

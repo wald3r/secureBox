@@ -26,15 +26,15 @@
 
 
 Cypress.Commands.add("resetDb", function(){
-  cy.request('GET', 'http://localhost:3003/api/cypress/clear')
+  cy.request('GET', 'http://localhost:3001/api/cypress/clear')
 })
 
 Cypress.Commands.add("addAdmin", function(){
-  cy.request('GET', 'http://localhost:3003/api/cypress/addAdmin')
+  cy.request('GET', 'http://localhost:3001/api/cypress/addAdmin')
 })
 
 Cypress.Commands.add("addUser", function(){
-  cy.request('GET', 'http://localhost:3003/api/cypress/addUser')
+  cy.request('GET', 'http://localhost:3001/api/cypress/addUser')
 })
 
 Cypress.Commands.add('logout', function() {

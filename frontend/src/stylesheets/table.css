@@ -4,20 +4,15 @@ table, thead, tr, td {
   border-collapse: collapse;
 }
 
-td {
-  text-align: center;
-}
 
 table{
-  display: block;
-
-}
-
-tbody{
-  display: block;
   overflow: auto;
   max-height: 500px;
+  display: block;
+
 }
+
+
 
 .tablecontainer{
   border: 1px solid black;

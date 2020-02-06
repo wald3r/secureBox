@@ -14,7 +14,7 @@ describe('Notes', function(){
 
   it('Open add note view', function(){
 
-    cy.visit('http://localhost:3000/notes')
+    cy.visit('http://localhost:3000/app/notes')
     cy.contains('Filter:')
     cy.get('#addNote')
       .click()
@@ -25,7 +25,7 @@ describe('Notes', function(){
   it('Close view', function(){
 
     //Execute
-    cy.visit('http://localhost:3000/notes')
+    cy.visit('http://localhost:3000/app/notes')
     cy.contains('Filter:')
     cy.get('#addNote')
       .click()
@@ -41,7 +41,7 @@ describe('Notes', function(){
   it('Add note', function(){
 
     //Execute
-    cy.visit('http://localhost:3000/notes')
+    cy.visit('http://localhost:3000/app/notes')
     cy.contains('Filter:')
     cy.get('#addNote')
       .click()
@@ -60,7 +60,7 @@ describe('Notes', function(){
   it('Filter note', function(){
 
     //Add Note to filter
-    cy.visit('http://localhost:3000/notes')
+    cy.visit('http://localhost:3000/app/notes')
     cy.contains('Filter:')
     cy.get('#addNote')
       .click()
@@ -87,7 +87,7 @@ describe('Notes', function(){
   it('Delete note', function(){
 
     //Prepare
-    cy.visit('http://localhost:3000/notes')
+    cy.visit('http://localhost:3000/app/notes')
     cy.contains('Filter:')
     cy.get('#addNote')
       .click()

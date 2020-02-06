@@ -8,13 +8,13 @@ describe('Admin', function(){
     cy.addAdmin()
     cy.addUser()
     cy.loginAdmin()
+    cy.visit('http://localhost:3000/app/admin')
+
 
   })
 
   
   it('List all users', function(){
-    cy.visit('http://localhost:3000/admin')
-
     cy.contains('user')
     cy.contains('user@user.com')
     cy.contains('true')
@@ -22,7 +22,6 @@ describe('Admin', function(){
 
   it('Delete user', function(){
     //Execute
-    cy.visit('http://localhost:3000/admin')
     cy.get('#idDelete')
       .click()
 
@@ -36,7 +35,6 @@ describe('Admin', function(){
 
   it('Change user', function(){
     //Execute
-    cy.visit('http://localhost:3000/admin')
     cy.get('#idChangeUser')
       .click()
 
@@ -71,7 +69,6 @@ describe('Admin', function(){
 
 
   it('Open Mimes', function(){
-    cy.visit('http://localhost:3000/admin')
     cy.contains('MIME-Types')
       .click()
 
@@ -80,7 +77,6 @@ describe('Admin', function(){
   })
 
   it('Open AddMimes', function(){
-    cy.visit('http://localhost:3000/admin')
     cy.contains('MIME-Types')
       .click()
 
@@ -90,7 +86,6 @@ describe('Admin', function(){
   })
 
   it('Close AddMimes', function(){
-    cy.visit('http://localhost:3000/admin')
     cy.contains('MIME-Types')
       .click()
 
@@ -105,7 +100,6 @@ describe('Admin', function(){
   })
 
   it('Add Mimes', function(){
-    cy.visit('http://localhost:3000/admin')
     cy.contains('MIME-Types')
       .click()
 
@@ -126,7 +120,6 @@ describe('Admin', function(){
   })
 
   it('Delete Mimes', function(){
-    cy.visit('http://localhost:3000/admin')
     cy.contains('MIME-Types')
       .click()
 
@@ -158,7 +151,6 @@ describe('Admin', function(){
   })
 
   it('Not delete mimes', function(){
-    cy.visit('http://localhost:3000/admin')
     cy.contains('MIME-Types')
       .click()
 

@@ -52,10 +52,10 @@ const App = ( props ) => {
         <div className='header'>SecureBox</div>
         <br></br>
           <Link className='link' to='/'>Login</Link>
-          <Link className='link' to='/registration'>Registration</Link>  
+          <Link className='link' to='/app/registration'>Registration</Link>  
           <br></br>
           <Route exact path='/' render={() => <Login/> } />
-          <Route exact path='/registration' render={() => <Registration /> } />
+          <Route exact path='/app/registration' render={() => <Registration /> } />
         </Router>
       </div>
       </div>
@@ -79,7 +79,7 @@ const App = ( props ) => {
                 <Link className='link' to='/app/allfiles'>Files</Link>
                 <Link className='link' to='/app/notes'>Notes</Link>
                 <Link className='link' to ='/app/profile'>Profile</Link>
-                <Link style={priorityStyle} className='link' to='/admin'>Admin</Link>
+                <Link style={priorityStyle} className='link' to='/app/admin'>Admin</Link>
         
                 
                 <Route exact path='/' render={() => <Home /> }/>
