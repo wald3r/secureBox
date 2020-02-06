@@ -11,6 +11,7 @@ import parameter from '../utils/parameter'
 import exception from '../utils/exception'
 import { getUsers } from '../reducers/usersReducer'
 import { getTypes } from '../reducers/mimetypesReducer'
+import { getNotes } from '../reducers/notesReducer'
 
 const Login = ( props ) => {
   const [ username, setUsername ] = useState('')
@@ -22,6 +23,7 @@ const Login = ( props ) => {
       const newUser = await loginService.login({ username, password })
       props.setUser(newUser)
       props.getTypes()
+      props.getNotes()
       if(newUser.role === 'admin'){
         props.getUsers(newUser)
       }
@@ -79,7 +81,8 @@ const mapDispatchToProps = {
   handleError,
   getFiles,
   getUsers,
-  getTypes
+  getTypes,
+  getNotes,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

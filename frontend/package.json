@@ -38,7 +38,7 @@
     "server": "json-server -p3001 db.json",
     "cypress:open": "cypress open"
   },
-  "proxy": "http://localhost:3001",
+  "proxy": "http://localhost:3003",
   "browserslist": {
     "production": [
       ">0.2%",

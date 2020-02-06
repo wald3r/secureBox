@@ -64,7 +64,6 @@ const Upload = ( { ...props } ) => {
   }
 
   const encryptFiles = async (password, e) => {
-    e.preventDefault()
     console.log('test', uploadedFiles)
     await uploadedFiles.map(async f => {
       await fileService.encryptFile({file: f, password: password})
@@ -157,7 +156,7 @@ const Upload = ( { ...props } ) => {
     <br></br>
     <div className='container'>
       <div style={chosenStyle} >
-        Settings:
+        <b>Settings</b>
         <Form onSubmit={handleSettings}>
           <ButtonGroup className="mr-2" aria-label="First group">
             <Button className='fileButton' active={type === 'Document'} disabled={disableInput} onClick={() => setType('Document')} variant="primary">Documents</Button>

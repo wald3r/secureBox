@@ -45,7 +45,6 @@ const AllFiles = (props) => {
     <div>
     <div className='container'>
           <div className='filter'>
-            <b>Filter</b><br></br>
               Name: <input type='search' onChange={handleNameSearch}/>
               Date: <input type='search' onChange={handleDateSearch}/>
           </div>

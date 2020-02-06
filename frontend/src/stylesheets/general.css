@@ -41,6 +41,7 @@
   padding: 20px;
   margin-left: 20%;
   font-size: 16px;
+  font-weight: bold;
   
 }
 
@@ -65,6 +66,12 @@
   max-height: 650px;
 }
 
+.notesFilter {
+  padding: 20px;
+  background-color: white;
+  opacity: 0.9;
+}
+
 
 .container {
   padding: 20px;
@@ -76,7 +83,7 @@
   padding: 10px;
   position: fixed;
   text-align:right;
-  background-color: white;
+  background-color: rgba(0,0,0, 0.0);
   width: 100%;
   opacity: 0.9;
   bottom: 0;
@@ -85,15 +92,12 @@
 
 .filter {
   background-color: white;
-  padding: 5px;
-  border-style: solid;
-  border-color: black;
-  border-width: thin;
+  padding: 10px;
+
 }
 
 body, html {
   height: 100%;
- 
   font-family: "Arial";
  
   }

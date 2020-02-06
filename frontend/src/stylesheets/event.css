@@ -1,14 +1,16 @@
 
 .notification {
-  padding: 10px;
+  font-size: 20px;
+  padding: 20px;
+  font-weight: bold;
   position: fixed;
   text-align:left;
-  background-color: #cdf2db;
+  background-color: #393e5a;
   width: 100%;
-  opacity: 0.9;
+  opacity: 0.8;
   top: 0;
   right:0;
-  color: #245336;
+  color: #ffffff;
 }
 
 .error {
