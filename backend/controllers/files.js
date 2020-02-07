@@ -1,8 +1,9 @@
+/* eslint-disable no-undef */
 const filesRouter = require('express').Router()
 const authenticationHelper = require('../utils/authenticationHelper')
 const File = require ('../models/file')
 const Public = require ('../models/public')
-const fs = require('fs');
+const fs = require('fs')
 const nameCreation = require('../utils/nameCreation')
 const cryptoHelper = require('../utils/cryptoHelper')
 const logger = require('../utils/logger')
@@ -245,13 +246,13 @@ filesRouter.delete('/dremove/:id', async(request, response, next) => {
   const fileDb = await File.findById(request.params.id)
   const filePath = `${fileDb.path}/${fileDb.name}`
   try{
-      await File.findByIdAndDelete(request.params.id)
-      fs.unlinkSync(`${helperFunctions.getDir(__dirname)}${filePath}`)
-      response.status(200).send('File removed')
+    await File.findByIdAndDelete(request.params.id)
+    fs.unlinkSync(`${helperFunctions.getDir(__dirname)}${filePath}`)
+    response.status(200).send('File removed')
 
   } catch(exception) {
-      logger.failedDeleteFile(exception.message)
-      next(exception)
+    logger.failedDeleteFile(exception.message)
+    next(exception)
   }
 
 })
@@ -267,10 +268,10 @@ filesRouter.delete('/remove/:id', async(request, response, next) => {
   const fileDb = await File.findById(request.params.id)
   const filePath = `${fileDb.path}/${fileDb.name}`
   try{
-      fs.unlinkSync(`${helperFunctions.getDir(__dirname)}${filePath}`)
+    fs.unlinkSync(`${helperFunctions.getDir(__dirname)}${filePath}`)
   } catch(exception) {
-      logger.failedDeleteFile(exception.message)
-      next(exception)
+    logger.failedDeleteFile(exception.message)
+    next(exception)
   }
 
 
@@ -332,7 +333,7 @@ filesRouter.post('/upload', async (request, response, next) => {
     var allSavedFiles = []
 
     if (!fs.existsSync(path)){
-      fs.mkdirSync(path);
+      fs.mkdirSync(path)
     } 
     let files = []
     if(request.files.file.length === undefined){
@@ -378,7 +379,6 @@ filesRouter.post('/encrypt/', async (request, response, next) => {
     if(user == undefined){
       return response.status(401).send('Not Authenticated')
     }
-    console.log('test')
     const path = `files/${user.username}`
     const file = request.body.file
     const salt = 10

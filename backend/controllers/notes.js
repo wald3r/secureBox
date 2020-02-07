@@ -59,7 +59,7 @@ notesRouter.delete('/remove/:id', async(request, response, next) => {
     }
    
     await Note.findByIdAndDelete(request.params.id)
-    return response.status(200).send("Note successfully deleted")
+    return response.status(200).send('Note successfully deleted')
   }catch(exception){
     next(exception)
   }

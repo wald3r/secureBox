@@ -1,7 +1,7 @@
 const SimpleNodeLogger = require('simple-node-logger')
 const opts = {
   logFilePath:'logfiles/request.log',
-   timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
+  timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
 }
 
 const log = SimpleNodeLogger.createSimpleLogger(opts)

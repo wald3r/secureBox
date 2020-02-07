@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const config = require('./utils/config')
 const express = require('express')
 const fileUpload = require('express-fileupload')

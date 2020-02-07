@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const User = require('../models/user')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
@@ -12,21 +13,21 @@ describe('test get user api', () => {
 
 
   beforeEach(async () => {
-      await User.deleteMany({})
-      const passwordHash1 = await bcrypt.hash('testpassword1', 10)
-      const passwordHash2 = await bcrypt.hash('testpassword2', 10)
-      const passwordHash3 = await bcrypt.hash('testpassword3', 10)
-      const passwordHash4 = await bcrypt.hash('testpassword4', 10)
+    await User.deleteMany({})
+    const passwordHash1 = await bcrypt.hash('testpassword1', 10)
+    const passwordHash2 = await bcrypt.hash('testpassword2', 10)
+    const passwordHash3 = await bcrypt.hash('testpassword3', 10)
+    const passwordHash4 = await bcrypt.hash('testpassword4', 10)
 
-      const user1 = new User({role: 'admin', active: true, username: 'testusername1', name: 'testname1', password: passwordHash1, email: 'testmail'})
-      const user2 = new User({active: true, username: 'testusername2', name: 'testname2', password: passwordHash2, email: 'testmail'})
-      const user3 = new User({username: 'testusername3', name: 'testname3', password: passwordHash3, email: 'testmail'})
-      const user4 = new User({username: 'testusername4', name: 'testname4', password: passwordHash4, email: 'testmail'})
+    const user1 = new User({role: 'admin', active: true, username: 'testusername1', name: 'testname1', password: passwordHash1, email: 'testmail'})
+    const user2 = new User({active: true, username: 'testusername2', name: 'testname2', password: passwordHash2, email: 'testmail'})
+    const user3 = new User({username: 'testusername3', name: 'testname3', password: passwordHash3, email: 'testmail'})
+    const user4 = new User({username: 'testusername4', name: 'testname4', password: passwordHash4, email: 'testmail'})
       
-     await user1.save()
-     await user2.save()
-     await user3.save()
-     await user4.save()
+    await user1.save()
+    await user2.save()
+    await user3.save()
+    await user4.save()
   })
 
   test('test get users', async () => {
@@ -36,8 +37,8 @@ describe('test get user api', () => {
       username: 'testusername1',
       password: 'testpassword1',
     }
-     let user
-     await api
+    let user
+    await api
       .post('/api/login')
       .send(newUser)
       .expect(200)
@@ -52,7 +53,7 @@ describe('test get user api', () => {
       .set('Authorization', 'Bearer ' +user.token)
       .then(response => rusers = response.body) 
 
-     expect(rusers.length).toBe(users.length)
+    expect(rusers.length).toBe(users.length)
   })
 
   test('test get users when not authenticated', async () => {
@@ -63,7 +64,7 @@ describe('test get user api', () => {
       .expect(401)
       .then(response => message = response.text) 
 
-     expect(message).toBe('Not Authenticated')
+    expect(message).toBe('Not Authenticated')
   })
 
   test('test get users when not admin', async () => {
@@ -73,8 +74,8 @@ describe('test get user api', () => {
       username: 'testusername2',
       password: 'testpassword2',
     }
-     let user
-     await api
+    let user
+    await api
       .post('/api/login')
       .send(newUser)
       .expect(200)
@@ -88,7 +89,7 @@ describe('test get user api', () => {
       .expect(401)
       .then(response => message = response.text) 
 
-     expect(message).toBe('Wrong user role')
+    expect(message).toBe('Wrong user role')
   })
 
   test('test verify password positively', async () => {
@@ -98,8 +99,8 @@ describe('test get user api', () => {
       username: 'testusername1',
       password: 'testpassword1',
     }
-     let user
-     await api
+    let user
+    await api
       .post('/api/login')
       .send(newUser)
       .expect(200)
@@ -114,7 +115,7 @@ describe('test get user api', () => {
       .expect(200)
       .then(response => message = response.text) 
 
-     expect(message).toBe('Old password correct')
+    expect(message).toBe('Old password correct')
   })
 
   test('test verify password negatively', async () => {
@@ -124,8 +125,8 @@ describe('test get user api', () => {
       username: 'testusername1',
       password: 'testpassword1',
     }
-     let user
-     await api
+    let user
+    await api
       .post('/api/login')
       .send(newUser)
       .expect(200)
@@ -140,7 +141,7 @@ describe('test get user api', () => {
       .expect(400)
       .then(response => message = response.text) 
 
-     expect(message).toBe('Old password incorrect')
+    expect(message).toBe('Old password incorrect')
   })
 
   test('test changing password positively', async () => {
@@ -150,8 +151,8 @@ describe('test get user api', () => {
       username: 'testusername1',
       password: 'testpassword1',
     }
-     let user
-     await api
+    let user
+    await api
       .post('/api/login')
       .send(newUser)
       .expect(200)
@@ -166,7 +167,7 @@ describe('test get user api', () => {
       .expect(200)
       .then(response => ruser = response.body) 
 
-     expect(ruser.username).toBe('testusername1')
+    expect(ruser.username).toBe('testusername1')
 
     //login again
     const changedUser = {
@@ -187,8 +188,8 @@ describe('test get user api', () => {
       username: 'testusername1',
       password: 'testpassword1',
     }
-     let user
-     await api
+    let user
+    await api
       .post('/api/login')
       .send(newUser)
       .expect(200)
@@ -217,8 +218,8 @@ describe('test get user api', () => {
       username: 'testusername1',
       password: 'testpassword1',
     }
-     let user
-     await api
+    let user
+    await api
       .post('/api/login')
       .send(newUser)
       .expect(200)
@@ -245,8 +246,8 @@ describe('test get user api', () => {
       username: 'testusername1',
       password: 'testpassword1',
     }
-     let user
-     await api
+    let user
+    await api
       .post('/api/login')
       .send(newUser)
       .expect(200)
@@ -255,7 +256,7 @@ describe('test get user api', () => {
     //then test  
     let message
     await api
-      .get(`/api/users/user/1}`)
+      .get('/api/users/user/1}')
       .set('Authorization', 'Bearer ' +user.token)
       .expect(500)
       .then(response => message = response.text)
@@ -271,8 +272,8 @@ describe('test get user api', () => {
       username: 'testusername1',
       password: 'testpassword1',
     }
-     let user
-     await api
+    let user
+    await api
       .post('/api/login')
       .send(newUser)
       .expect(200)
@@ -305,8 +306,8 @@ describe('test get user api', () => {
       username: 'testusername1',
       password: 'testpassword1',
     }
-     let user
-     await api
+    let user
+    await api
       .post('/api/login')
       .send(newUser)
       .expect(200)
@@ -343,8 +344,8 @@ describe('test get user api', () => {
       username: 'testusername1',
       password: 'testpassword1',
     }
-     let user
-     await api
+    let user
+    await api
       .post('/api/login')
       .send(newUser)
       .expect(200)

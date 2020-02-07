@@ -6,14 +6,14 @@ var timestamps = require('mongoose-timestamp')
  * Schema to store activation links
  */
 const registrationSchema = mongoose.Schema({
-    userid: {
-            type: Object,
-            required: true
-    },
-    hash: {
-      type: String,
-      required: true
-    }
+  userid: {
+    type: Object,
+    required: true
+  },
+  hash: {
+    type: String,
+    required: true
+  }
 })
 
 

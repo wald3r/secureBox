@@ -6,14 +6,14 @@ var timestamps = require('mongoose-timestamp')
  * Schema to save mime types 
  */
 const mimetypeSchema = mongoose.Schema({
-    name: {
-      type: String,
-      required: true
-    },
-    ending: {
-      type: String,
-      required: true
-    }
+  name: {
+    type: String,
+    required: true
+  },
+  ending: {
+    type: String,
+    required: true
+  }
 })
 
 mimetypeSchema.set('toJSON', {

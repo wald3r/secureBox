@@ -1,6 +1,6 @@
 const crypto = require('crypto')
 const AppendInitVect = require('./AppendInitVect')
-const fs = require('fs');
+const fs = require('fs')
 const logger = require('./logger')
 
 
@@ -20,23 +20,23 @@ const createRandomHash = () => {
  * @param {*} pathToObject 
  */
 const encrypt = (password, pathToObject) => {
-    try{
-      const readStream = fs.createReadStream(pathToObject)
-      const key = getCipherKey(password)
-      const iv = crypto.randomBytes(16)
+  try{
+    const readStream = fs.createReadStream(pathToObject)
+    const key = getCipherKey(password)
+    const iv = crypto.randomBytes(16)
 
-      const cipher = crypto.createCipheriv('aes256', key, iv)
-      const appendInitVector = new AppendInitVect(iv)
-      const writeStream = fs.createWriteStream(pathToObject + '.enc')
+    const cipher = crypto.createCipheriv('aes256', key, iv)
+    const appendInitVector = new AppendInitVect(iv)
+    const writeStream = fs.createWriteStream(pathToObject + '.enc')
 
-      readStream.pipe(cipher)
-        .pipe(appendInitVector)
-        .pipe(writeStream)
+    readStream.pipe(cipher)
+      .pipe(appendInitVector)
+      .pipe(writeStream)
 
-      fs.unlinkSync(pathToObject)
-    }catch(error){
-      logger.cryptoError(error.message)
-    }
+    fs.unlinkSync(pathToObject)
+  }catch(error){
+    logger.cryptoError(error.message)
+  }
 }
 
 
@@ -76,7 +76,7 @@ const decrypt = (password, pathToObject) => {
  * Create hash key to secure files
  * @param {*} password 
  */
-const getCipherKey = (password) => crypto.createHash('sha256').update(password).digest();
+const getCipherKey = (password) => crypto.createHash('sha256').update(password).digest()
 
 
 module.exports = { encrypt, decrypt, createRandomHash }

@@ -8,14 +8,14 @@ var timestamps = require('mongoose-timestamp')
  */
 const publicSchema = mongoose.Schema({
     
-    file: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'File'
-    },
-    hash: {
-      type: String,
-      required: true,
-    },
+  file: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'File'
+  },
+  hash: {
+    type: String,
+    required: true,
+  },
    
 })
 

@@ -11,6 +11,7 @@
     "watch": "NODE_ENV=dev nodemon index.js",
     "test": "NODE_ENV=test jest --verbose --runInBand",
     "deploy": "git push heroku master",
+    "lint": "eslint .",
     "build:ui": "rm -rf build && cd /home/walder/workspaces/fullstack_project/frontend && npm run build --prod && cp -r build /home/walder/workspaces/fullstack_project/backend",
     "build:full": "npm run build:ui && git add . && git commit -m heroku && npm run deploy",
     "start:test": "cross-env NODE_ENV=test node index.js"
@@ -19,6 +20,7 @@
   "license": "ISC",
   "devDependencies": {
     "cross-env": "^6.0.3",
+    "eslint": "^6.8.0",
     "jest": "^24.9.0",
     "nodemon": "^1.19.4",
     "supertest": "^4.0.2"

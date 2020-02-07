@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const User = require('../models/user')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
@@ -37,7 +38,7 @@ describe('test add user api', () => {
       .expect(500)
     
     const usersAtEnd = await helper.getUser()
-     expect(usersAtEnd.length).toBe(usersAtStart.length)
+    expect(usersAtEnd.length).toBe(usersAtStart.length)
   })
 
   test('creation fails with an invalid username - required', async () => {
@@ -55,7 +56,7 @@ describe('test add user api', () => {
       .expect(500)
     
     const usersAtEnd = await helper.getUser()
-     expect(usersAtEnd.length).toBe(usersAtStart.length)
+    expect(usersAtEnd.length).toBe(usersAtStart.length)
   })
 
   test('creation fails with an invalid username - string', async () => {
@@ -74,7 +75,7 @@ describe('test add user api', () => {
       .expect(500)
     
     const usersAtEnd = await helper.getUser()
-     expect(usersAtEnd.length).toBe(usersAtStart.length)
+    expect(usersAtEnd.length).toBe(usersAtStart.length)
   })
 
 
@@ -94,7 +95,7 @@ describe('test add user api', () => {
       .expect(500)
     
     const usersAtEnd = await helper.getUser()
-     expect(usersAtEnd.length).toBe(usersAtStart.length)
+    expect(usersAtEnd.length).toBe(usersAtStart.length)
   })
 
   test('creation valid user', async () => {
@@ -113,7 +114,7 @@ describe('test add user api', () => {
       .expect(200)
     
     const usersAtEnd = await helper.getUser()
-     expect(usersAtEnd.length).toBe(usersAtStart.length+1)
+    expect(usersAtEnd.length).toBe(usersAtStart.length+1)
   })
 
 
@@ -132,7 +133,7 @@ describe('test add user api', () => {
       .expect(500)
     
     const usersAtEnd = await helper.getUser()
-     expect(usersAtEnd.length).toBe(usersAtStart.length)
+    expect(usersAtEnd.length).toBe(usersAtStart.length)
   })
 
   test('creation fails with an invalid password - string', async () => {
@@ -151,7 +152,7 @@ describe('test add user api', () => {
       .expect(500)
     
     const usersAtEnd = await helper.getUser()
-     expect(usersAtEnd.length).toBe(usersAtStart.length)
+    expect(usersAtEnd.length).toBe(usersAtStart.length)
   })
 
   test('creation fails with a missing email - required', async () => {
@@ -169,7 +170,7 @@ describe('test add user api', () => {
       .expect(500)
     
     const usersAtEnd = await helper.getUser()
-     expect(usersAtEnd.length).toBe(usersAtStart.length)
+    expect(usersAtEnd.length).toBe(usersAtStart.length)
   })
 
 

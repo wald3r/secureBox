@@ -12,9 +12,9 @@ const bcrypt = require('bcrypt')
  * Cypress router for E2E testing. 
  */
 
- /**
-  * Clear test database
-  */
+/**
+* Clear test database
+*/
 cypressRouter.get('/clear', async (request, response, next) => {
 
   try {

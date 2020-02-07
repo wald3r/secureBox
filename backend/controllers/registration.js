@@ -35,36 +35,36 @@ registrationRouter.get('/verify/:id', async (request, response, next) => {
  * Add new user
  */
 registrationRouter.post('/', async (request, response, next) => {
-    try{
-        const body = request.body
-        const salt = 10
-        const passwordHash = await bcrypt.hash(body.password, salt)
-        const user = new User({
-            username: body.username,
-            name: body.name,
-            password: passwordHash,
-            email: body.email
-        })
-        const savedUser = await user.save()
-        logger.logRegistrations(savedUser, null, 0)
-        if(savedUser !== undefined){
-          const registration = new Registration({
-            userid: savedUser._id,
-            hash: cryptoHelper.createRandomHash()
-          })
+  try{
+    const body = request.body
+    const salt = 10
+    const passwordHash = await bcrypt.hash(body.password, salt)
+    const user = new User({
+      username: body.username,
+      name: body.name,
+      password: passwordHash,
+      email: body.email
+    })
+    const savedUser = await user.save()
+    logger.logRegistrations(savedUser, null, 0)
+    if(savedUser !== undefined){
+      const registration = new Registration({
+        userid: savedUser._id,
+        hash: cryptoHelper.createRandomHash()
+      })
 
-          await registration.save()
-          logger.logRegistrations(null, registration, 1)
-          await nodemailer.sendRegistrationMail(savedUser, registration.hash)
-          logger.logRegistrations(null, null, 2)
-        }
+      await registration.save()
+      logger.logRegistrations(null, registration, 1)
+      await nodemailer.sendRegistrationMail(savedUser, registration.hash)
+      logger.logRegistrations(null, null, 2)
+    }
 
         
-        response.status(200).json(savedUser)
+    response.status(200).json(savedUser)
 
-    } catch(exception){
-      next(exception)
-    }
-  })
+  } catch(exception){
+    next(exception)
+  }
+})
 
-  module.exports = registrationRouter
+module.exports = registrationRouter

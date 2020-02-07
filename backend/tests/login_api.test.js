@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const User = require('../models/user')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
@@ -11,10 +12,10 @@ describe('test login user api', () => {
 
 
   beforeEach(async () => {
-      await User.deleteMany({})
-      const passwordHash = await bcrypt.hash('testpassword', 10)
-      const user = new User({username: 'testusername', name: 'testname', password: passwordHash, email: 'walder2@gmx.at', active: true})
-      await user.save()
+    await User.deleteMany({})
+    const passwordHash = await bcrypt.hash('testpassword', 10)
+    const user = new User({username: 'testusername', name: 'testname', password: passwordHash, email: 'walder2@gmx.at', active: true})
+    await user.save()
     /*  await api
         .post('/api/registration')
         .send(user)
@@ -31,15 +32,15 @@ describe('test login user api', () => {
       password: 'testpassword',
     }
 
-     let user
-     await api
+    let user
+    await api
       .post('/api/login')
       .send(newUser)
       .expect(200)
       .then(response => user = response.body) 
 
-     expect(user.username).toBe('testusername')
-     expect(user.name).toBe('testname')
+    expect(user.username).toBe('testusername')
+    expect(user.name).toBe('testname')
   })
 
   test('login with nonexisting user', async () => {
@@ -49,7 +50,7 @@ describe('test login user api', () => {
       password: 'testpassword1',
     }
     let response_message
-     await api
+    await api
       .post('/api/login')
       .send(newUser)
       .expect(401)
@@ -69,7 +70,7 @@ describe('test login user api', () => {
       password: 'testpassword1',
     }
     let response_message
-     await api
+    await api
       .post('/api/login')
       .send(newUser)
       .expect(401)

@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt')
  * @param {*} ms 
  */
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise(resolve => setTimeout(resolve, ms))
 }
 
 
@@ -31,11 +31,11 @@ const comparePassword = async (object, password) => {
   const passwordCorrect = object === null 
     ? false  
     : await bcrypt.compare(password, object.password)
-    if(!passwordCorrect){
-      return false
-    }else{
-      return true
-    }
+  if(!passwordCorrect){
+    return false
+  }else{
+    return true
+  }
 }
 
 
@@ -45,6 +45,7 @@ const comparePassword = async (object, password) => {
  * @param {*} object 
  */
 function modifyLastUsed(user, object){
+  // eslint-disable-next-line no-undef
   const maxLength = process.env.LASTUSED
   var list = []
   list = list.concat(user.lastUsed.filter(file => String(file) !== String(object.id)))

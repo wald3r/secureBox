@@ -9,7 +9,7 @@ export const getFiles = () => {
     }
     let data = response.data
     dispatch({
-      type: 'GETFILES',
+      type: 'FILES',
       data
     })
   }
@@ -23,7 +23,7 @@ export const getDocuments = () => {
     }
     let data = response.data
     dispatch({
-      type: 'GETDOCUMENTS',
+      type: 'FILES',
       data
     })
   }
@@ -37,7 +37,7 @@ export const getMusic = () => {
     }
     let data = response.data
     dispatch({
-      type: 'GETMUSIC',
+      type: 'FILES',
       data
     })
   }
@@ -51,7 +51,7 @@ export const getFavourites = (id) => {
     }
     let data = response.data
     dispatch({
-      type: 'GETFAVOURITES',
+      type: 'FILES',
       data
     })
   }
@@ -65,7 +65,7 @@ export const getPictures = () => {
     }
     let data = response.data
     dispatch({
-      type: 'GETPICTURES',
+      type: 'FILES',
       data
     })
   }
@@ -74,7 +74,7 @@ export const getPictures = () => {
 export const setFiles = (data) => {
   return async dispatch => {
     dispatch({
-      type: 'SETFILES',
+      type: 'FILES',
       data
     })
   }
@@ -102,17 +102,7 @@ export const removeFile = (data) => {
 const filesReducer = (state = [], action) => {
 
   switch (action.type){
-  case 'GETFILES':
-    return action.data
-  case 'SETFILES':
-    return action.data
-  case 'GETDOCUMENTS':
-    return action.data
-  case 'GETFAVOURITES':
-    return action.data
-  case 'GETPICTURES':
-    return action.data
-  case 'GETMUSIC':
+  case 'FILES':
     return action.data
   case 'CHANGEFILE':
     var list = state.filter(f => f.id !== action.data.id)

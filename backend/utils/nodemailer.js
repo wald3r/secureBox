@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const nodemailer = require('nodemailer')
 require('dotenv').config()
 
@@ -6,32 +7,32 @@ const downloadLink = process.env.NODE_ENV === 'pro'
   : 'localhost:3003/api/files/download/public/'
   
 const verificationLink = process.env.NODE_ENV === 'pro' 
-? 'https://fast-peak-66768.herokuapp.com/api/registration/verify/'
-: 'localhost:3003/api/registration/verify/'
+  ? 'https://fast-peak-66768.herokuapp.com/api/registration/verify/'
+  : 'localhost:3003/api/registration/verify/'
 
 /**
  * Setup nodemailer account
  */
 const transporter = nodemailer.createTransport({
-  host: "smtp.mailtrap.io",
+  host: 'smtp.mailtrap.io',
   port: 2525,
   auth: {
-    user: "0e23ea8dbabae0",
-    pass: "2e18ffad60605d"
+    user: '0e23ea8dbabae0',
+    pass: '2e18ffad60605d'
   }
-});
+})
 
 /**
  * Mail setup
  */
 transporter.set('oauth2_provision_cb', (user, renew, callback)=>{
-  let accessToken = userTokens[user];
+  let accessToken = userTokens[user]
   if(!accessToken){
-      return callback(new Error('Unknown user'));
+    return callback(new Error('Unknown user'))
   }else{
-      return callback(null, accessToken);
+    return callback(null, accessToken)
   }
-});
+})
 
 /**
  * Send a registration email 

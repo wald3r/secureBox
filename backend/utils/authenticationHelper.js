@@ -9,6 +9,7 @@ const isLoggedIn = async (token) => {
   
   var user = undefined
   try{
+    // eslint-disable-next-line no-undef
     const decodedToken = jwt.verify(token, process.env.SECRET)
     if (!token || !decodedToken.id) {
       return null
