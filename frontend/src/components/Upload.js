@@ -58,15 +58,12 @@ const Upload = ( { ...props } ) => {
         return noErr
       }
     }
-
-  
     return noErr
   }
 
-  const encryptFiles = async (password, e) => {
-    console.log('test', uploadedFiles)
+  const encryptFiles = async (password) => {
     await uploadedFiles.map(async f => {
-      await fileService.encryptFile({file: f, password: password})
+      await fileService.encryptFile({ file: f, password: password })
     })
     props.handleNotification('Files encrypted', parameter.notificationTime)
 
@@ -92,7 +89,6 @@ const Upload = ( { ...props } ) => {
         if(response.status === 200){
           setStyle(false)
           setUploadedFiles(response.data)
-          console.log(response.data)
           setShowAddEncryption(true)
           props.handleNotification('All files uploaded', parameter.notificationTime)
         }
@@ -132,43 +128,43 @@ const Upload = ( { ...props } ) => {
 
   return (
     <div>
-    <AddEncryption 
-      showAddEncryption={showAddEncryption}
-      setShowAddEncryption={setShowAddEncryption}
-      handleEncryption={encryptFiles}
-    />
-    <div className='container'>
-      <div className='form-group files' >
-        <Form method='POST' encType='multipart/form-data' onSubmit={uploadHandler} >
-          <input type='file' autoComplete='off' name='files' multiple onChange={onChangeHandler}/>
-          <Button style={{display: uploading === false ? '' : 'none'}} className='button' type="submit">Upload</Button>
-          <Button style={{display: uploading === true ? '' : 'none'}} className='button' type="submit"><Spinner
-                as="span"
-                animation="grow"
-                size="sm"
-                role="status"
-                aria-hidden="true"
-                /> Uploading...
+      <AddEncryption
+        showAddEncryption={showAddEncryption}
+        setShowAddEncryption={setShowAddEncryption}
+        handleEncryption={encryptFiles}
+      />
+      <div className='container'>
+        <div className='form-group files' >
+          <Form method='POST' encType='multipart/form-data' onSubmit={uploadHandler} >
+            <input type='file' autoComplete='off' name='files' multiple onChange={onChangeHandler}/>
+            <Button style={{ display: uploading === false ? '' : 'none' }} className='button' type="submit">Upload</Button>
+            <Button style={{ display: uploading === true ? '' : 'none' }} className='button' type="submit"><Spinner
+              as="span"
+              animation="grow"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            /> Uploading...
             </Button>
-        </Form>
+          </Form>
+        </div>
       </div>
-    </div>
-    <br></br>
-    <div className='container'>
-      <div style={chosenStyle} >
-        <b>Settings</b>
-        <Form onSubmit={handleSettings}>
-          <ButtonGroup className="mr-2" aria-label="First group">
-            <Button className='fileButton' active={type === 'Document'} disabled={disableInput} onClick={() => setType('Document')} variant="primary">Documents</Button>
-            <Button className='fileButton' active={type === 'Picture'}  disabled={disableInput} onClick={() => setType('Picture')} variant="primary">Pictures</Button>
-            <Button className='fileButton' active={type === 'Music'}  disabled={disableInput} onClick={() => setType('Music')} variant="primary">Music</Button>
-          </ButtonGroup>
-          <DatePicker onChange={handleTimeChange} selected={newDate} disabled={disableInput}/>
-          <input onChange={({ target }) => setNewName(target.value)} disabled={disableInput}/>
-          <Button type="submit">{!style ? 'Save' : 'Remove'}</Button>
-        </Form>
+      <br></br>
+      <div className='container'>
+        <div style={chosenStyle} >
+          <b>Settings</b>
+          <Form onSubmit={handleSettings}>
+            <ButtonGroup className="mr-2" aria-label="First group">
+              <Button className='fileButton' active={type === 'Document'} disabled={disableInput} onClick={() => setType('Document')} variant="primary">Documents</Button>
+              <Button className='fileButton' active={type === 'Picture'}  disabled={disableInput} onClick={() => setType('Picture')} variant="primary">Pictures</Button>
+              <Button className='fileButton' active={type === 'Music'}  disabled={disableInput} onClick={() => setType('Music')} variant="primary">Music</Button>
+            </ButtonGroup>
+            <DatePicker onChange={handleTimeChange} selected={newDate} disabled={disableInput}/>
+            <input onChange={({ target }) => setNewName(target.value)} disabled={disableInput}/>
+            <Button type="submit">{!style ? 'Save' : 'Remove'}</Button>
+          </Form>
+        </div>
       </div>
-    </div>
     </div>
   )
 }

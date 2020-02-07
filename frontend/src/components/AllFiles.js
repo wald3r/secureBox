@@ -43,37 +43,37 @@ const AllFiles = (props) => {
 
   return (
     <div>
-    <div className='container'>
-          <div className='filter'>
+      <div className='container'>
+        <div className='filter'>
               Name: <input type='search' onChange={handleNameSearch}/>
               Date: <input type='search' onChange={handleDateSearch}/>
-          </div>
-    </div>
-    <br></br>
-    <div className='container'>
-          <div style={{ textAlign: 'center' }}>
-            <Tabs id="controlled-tab-example" activeKey={chosenType} onSelect={handleTypeChange}>
-             <Tab eventKey="Favourite" title="Favourites">
-                <FilteredFiles filteredFiles={dateFilter}/>
-              </Tab>
-              <Tab eventKey="LastUsed" title="Last Used">
-                <FilteredFiles filteredFiles={props.user.lastUsed}/>
-              </Tab>
-              <Tab eventKey="All" title="All">
-                <FilteredFiles filteredFiles={dateFilter}/>
-              </Tab>
-              <Tab eventKey="Document" title="Documents">
-                <FilteredFiles filteredFiles={dateFilter}/>
-              </Tab>
-              <Tab eventKey="Picture" title="Pictures">
-                <FilteredFiles filteredFiles={dateFilter}/>
-              </Tab>
-              <Tab eventKey="Music" title="Music">
-                <FilteredFiles filteredFiles={dateFilter}/>
-              </Tab>
-            </Tabs>
-          </div>
-    </div>
+        </div>
+      </div>
+      <br></br>
+      <div className='container'>
+        <div style={{ textAlign: 'center' }}>
+          <Tabs id="controlled-tab-example" activeKey={chosenType} onSelect={handleTypeChange}>
+            <Tab eventKey="Favourite" title="Favourites">
+              <FilteredFiles filteredFiles={dateFilter}/>
+            </Tab>
+            <Tab eventKey="LastUsed" title="Last Used">
+              <FilteredFiles filteredFiles={props.user.lastUsed}/>
+            </Tab>
+            <Tab eventKey="All" title="All">
+              <FilteredFiles filteredFiles={dateFilter}/>
+            </Tab>
+            <Tab eventKey="Document" title="Documents">
+              <FilteredFiles filteredFiles={dateFilter}/>
+            </Tab>
+            <Tab eventKey="Picture" title="Pictures">
+              <FilteredFiles filteredFiles={dateFilter}/>
+            </Tab>
+            <Tab eventKey="Music" title="Music">
+              <FilteredFiles filteredFiles={dateFilter}/>
+            </Tab>
+          </Tabs>
+        </div>
+      </div>
     </div>
   )
 }

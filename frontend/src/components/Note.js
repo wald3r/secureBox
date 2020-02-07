@@ -27,9 +27,10 @@ const Note = ({ note, ...props }) => {
 
   return(
     <div>
-      <Confirmation showConfirmation={showConfirmation}
-                    setConfirmation={setShowConfirmation}
-                    handleConfirmation={handleRemoval}/>
+      <Confirmation
+        showConfirmation={showConfirmation}
+        setConfirmation={setShowConfirmation}
+        handleConfirmation={handleRemoval}/>
       <Accordion>
         <Card>
           <Card.Header>

@@ -46,78 +46,74 @@ const Registration = (props) => {
   if(registered){
     return(
       <div className='container'>
-        Registration email has been sent out. Please follow the link in the email to activate your account. 
+        Registration email has been sent out. Please follow the link in the email to activate your account.
       </div>
     )
   }else{
 
-  
     return(
 
       <div className='container'>
-            <Form onSubmit={handleRegistration}>
-              <table className='table .table-striped' width="10">
-                  <thead className='thead-dark'>
+        <Form onSubmit={handleRegistration}>
+          <table className='table .table-striped' width="10">
+            <tbody width="10">
+              <tr>
+                <td width="10">
+                  Name:
+                </td>
 
-                  </thead>
-                  <tbody width="10">
-                      <tr>
-                          <td width="10">
-                              Name:
-                          </td>
-
-                          <td>
-                            <input id='name' autoComplete='off' type='text' onChange={({ target }) => setName(target.value)}/>
-                          </td>
-                      </tr>
-                      <tr>
-                          <td width="10">
+                <td>
+                  <input id='name' autoComplete='off' type='text' onChange={({ target }) => setName(target.value)}/>
+                </td>
+              </tr>
+              <tr>
+                <td width="10">
                               Username:
-                          </td>
+                </td>
 
-                          <td>
-                            <input id='username' autoComplete='off' required type='text' onChange={({ target }) => setNewname(target.value)}/>
-                          </td>
-                      </tr>
-                      <tr>
-                          <td width="10">
+                <td>
+                  <input id='username' autoComplete='off' required type='text' onChange={({ target }) => setNewname(target.value)}/>
+                </td>
+              </tr>
+              <tr>
+                <td width="10">
                               E-Mail:
-                          </td>
+                </td>
 
-                          <td>
-                            <input id='email' autoComplete='off' required type='email' onChange={({ target }) => setEmail(target.value)}/>
-                          </td>
-                      </tr>
-                      <tr>
-                          <td width="10">
-                              Password:
-                          </td>
+                <td>
+                  <input id='email' autoComplete='off' required type='email' onChange={({ target }) => setEmail(target.value)}/>
+                </td>
+              </tr>
+              <tr>
+                <td width="10">
+                   Password:
+                </td>
 
-                          <td>
-                            <input id='password1' autoComplete='off' type='password' required onChange={({ target }) => setNewpwd1(target.value)} />
-                          </td>
-                      </tr>
-                      <tr>
-                          <td width="10">
-                              Repeat Password:
-                          </td>
+                <td>
+                  <input id='password1' autoComplete='off' type='password' required onChange={({ target }) => setNewpwd1(target.value)} />
+                </td>
+              </tr>
+              <tr>
+                <td width="10">
+                  Repeat Password:
+                </td>
 
-                          <td>
-                            <input id='password2' autoComplete='off' type='password' required onChange={({ target }) => setNewpwd2(target.value)} />
-                          </td>
-                      </tr>
-                  </tbody>
-              </table>
-              <div style={{display: registering === false ? '' : 'none'}}><Button className='button' id='register' type="submit">Register</Button></div>
-              <div style={{display: registering === true ? '' : 'none'}}><Button className='button' id='registering' type="submit">  <Spinner
-                as="span"
-                animation="grow"
-                size="sm"
-                role="status"
-                aria-hidden="true"
-                /> Registering...</Button>
-              </div>
-            </Form>
+                <td>
+                  <input id='password2' autoComplete='off' type='password' required onChange={({ target }) => setNewpwd2(target.value)} />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div style={{ display: registering === false ? '' : 'none' }}><Button className='button' id='register' type="submit">Register</Button></div>
+          <div style={{ display: registering === true ? '' : 'none' }}><Button className='button' id='registering' type="submit">  <Spinner
+            as="span"
+            animation="grow"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+          /> Registering...</Button>
+          </div>
+        </Form>
       </div>
     )
   }

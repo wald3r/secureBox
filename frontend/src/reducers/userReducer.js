@@ -12,7 +12,7 @@ export const setUser = ( user ) => {
     usersService.setToken(user.token)
     mimesService.setToken(user.token)
     notesService.setToken(user.token)
-    
+
     dispatch({
       type: 'SETUSER',
       user
@@ -66,20 +66,19 @@ export const removeUser = () => {
 }
 
 const userReducer = (state = null, action) => {
-  console.log(action.type)
   switch (action.type){
   case 'ADDLASTUSED':
-    const addedToList = { ...state, lastUsed: action.list}
+    var addedToList = { ...state, lastUsed: action.list }
     return addedToList
   case 'REMOVELASTUSED':
-    const removedFromList = { ...state, lastUsed: action.list}
+    var removedFromList = { ...state, lastUsed: action.list }
     return removedFromList
   case 'SETUSER':
     return action.user
   case 'LOGOUT':
     return null
   case 'UPDATEDETAILS':
-    const updatedUser = {  ...state,
+    var updatedUser = {  ...state,
       name: action.details.name,
       username: action.details.username,
       email: action.details.email,

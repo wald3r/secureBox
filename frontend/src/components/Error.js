@@ -4,15 +4,15 @@ import '../stylesheets/general.css'
 
 const Error = ( props ) => {
 
-  
 
-  if(props.error === ''){    
+
+  if(props.error === ''){
     return null
   }
   else{
     return(
       <div className='error'>
-        {props.error}  
+        {props.error}
       </div>
     )
   }

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { Modal, Form, Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { addNote } from '../reducers/notesReducer'
@@ -13,14 +13,14 @@ const AddNote = ( { showAddNote, handleShowAddNote, ...props } ) => {
 
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
- 
+
 
   const noChanges = () => handleShowAddNote(false)
 
   const saveChanges = async (e) => {
     e.preventDefault()
     try{
-      await props.addNote({title: title, body: body})
+      await props.addNote({ title: title, body: body })
       await props.getNotes()
       props.handleNotification('Note successfully added', parameter.notificationTime)
       handleShowAddNote(false)
@@ -37,37 +37,37 @@ const AddNote = ( { showAddNote, handleShowAddNote, ...props } ) => {
           <Modal.Title>Add new Note </Modal.Title>
         </Modal.Header>
         <Form onSubmit={saveChanges}>
-        <Modal.Body>
-          <table className='table .table-striped' >
-                <tbody >
-                  <tr>
-                    <td >
+          <Modal.Body>
+            <table className='table .table-striped' >
+              <tbody >
+                <tr>
+                  <td >
                       Title:
-                    </td>
+                  </td>
 
-                    <td>
-                      <input id='title' type='text' required onChange={({target}) => setTitle(target.value)} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td >
+                  <td>
+                    <input id='title' type='text' required onChange={({ target }) => setTitle(target.value)} />
+                  </td>
+                </tr>
+                <tr>
+                  <td >
                       Body:
-                    </td>
-                    <td>
-                      <textarea id='body' rows='4' cols='40' type='text' required onChange={({target}) => setBody(target.value)}/>
-                    </td>
-                  </tr>
-                </tbody>
+                  </td>
+                  <td>
+                    <textarea id='body' rows='4' cols='40' type='text' required onChange={({ target }) => setBody(target.value)}/>
+                  </td>
+                </tr>
+              </tbody>
             </table>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button id='cancel' variant="secondary" onClick={noChanges}>
-            Close
-          </Button>
-          <Button id='save' variant="primary" type='submit'>
-            Add Note
-          </Button>
-        </Modal.Footer>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button id='cancel' variant="secondary" onClick={noChanges}>
+              Close
+            </Button>
+            <Button id='save' variant="primary" type='submit'>
+              Add Note
+            </Button>
+          </Modal.Footer>
         </Form>
       </Modal>
     </div>

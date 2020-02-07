@@ -38,7 +38,7 @@ export const removeType = (object) => {
 const mimetypesReducer = (state = [], action) => {
   switch (action.type){
   case 'GETTYPES':
-   return action.data
+    return action.data
   case 'ADDTYPE':
     return state.concat(action.data)
   case 'REMOVETYPE':

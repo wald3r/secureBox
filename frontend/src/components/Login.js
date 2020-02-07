@@ -36,34 +36,31 @@ const Login = ( props ) => {
   return (
 
     <div className='container'>
-          <Form onSubmit={handleLogin}>
-            <table className='table .table-striped' width="10">
-                <thead className='thead-dark'>
+      <Form onSubmit={handleLogin}>
+        <table className='table .table-striped' width="10">
+          <tbody width="10">
+            <tr>
+              <td width="10">
+                Username:
+              </td>
 
-                </thead>
-                <tbody width="10">
-                    <tr>
-                        <td width="10">
-                            Username:
-                        </td>
+              <td>
+                <input id='username' autoComplete='off' required onChange={({ target }) => setUsername(target.value)}/>
+              </td>
+            </tr>
+            <tr>
+              <td width="10">
+                Password:
+              </td>
 
-                        <td>
-                          <input id='username' autoComplete='off' required onChange={({ target }) => setUsername(target.value)}/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="10">
-                            Password:
-                        </td>
-
-                        <td>
-                          <input id='password' autoComplete='off' type='password' required onChange={({ target }) => setPassword(target.value)}/>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <Button className='button' id='login' type="submit">Login</Button>
-          </Form>
+              <td>
+                <input id='password' autoComplete='off' type='password' required onChange={({ target }) => setPassword(target.value)}/>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <Button className='button' id='login' type="submit">Login</Button>
+      </Form>
     </div>
   )
 }

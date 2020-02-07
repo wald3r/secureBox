@@ -33,16 +33,16 @@ export const removeUser = ( user ) => {
 
 const userReducer = (state = [], action) => {
   switch (action.type){
-    case 'GETUSERS':
-      return action.users
-    case 'CHANGEUSER':
-      const users = state.filter(u => u.id !== action.user.id)
-      users.concat(action.user)
-      return users.concat(action.user)
-    case 'REMOVEUSER':
-      return state.filter(u => u.id !== action.user.id)
-    default:
-      return state
+  case 'GETUSERS':
+    return action.users
+  case 'CHANGEUSER':
+    var users = state.filter(u => u.id !== action.user.id)
+    users.concat(action.user)
+    return users.concat(action.user)
+  case 'REMOVEUSER':
+    return state.filter(u => u.id !== action.user.id)
+  default:
+    return state
   }
 }
 

@@ -42,10 +42,10 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
     setAllSelected(false)
     setSelectedFiles([])
     var items = document.getElementsByClassName('checkbox')
-  
+
     for(let a = 0; a < items.length; a++){
       if(items[a].type === 'checkbox'){
-          items[a].checked = false
+        items[a].checked = false
       }
     }
   }
@@ -53,7 +53,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
   const singleDownload = async (password, event) => {
 
     try{
-  
+
       event.preventDefault()
       const response = await fileService.downloadEncryptedFile(fileToDownload.id, password)
       fileDownload(response.data, fileToDownload.name)
@@ -64,11 +64,11 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
 
     }catch(error){
       if(error.response.status === 401){
-          props.handleError(error.response.statusText, parameter.errorTime)
+        props.handleError(error.response.statusText, parameter.errorTime)
       }
       else if(error.response.status === 404){
         props.handleError(error.response.statusText, parameter.errorTime)
-    }
+      }
       else{
         exception.catchException(error, props)
       }
@@ -76,31 +76,29 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
   }
 
   const handleSingleDownload = async (file) => {
-      if(file.password !== undefined){
-        setFileToDownload(file)
-        setShowEnterPasswordSingle(true)
-      }else{
-        try{
-          const response = await fileService.downloadFile(file.id)
-          fileDownload(response.data, file.name)
-          props.addLastUsed(file, props.user)
-          props.handleNotification('Download started...', 2500)
-          removeSelection()
-        }catch(error){
-          if(error.response.status === 401){
-              props.handleError(error.response.statusText, parameter.errorTime)
-          }
-          else if(error.response.status === 404){
-            props.handleError(error.response.statusText, parameter.errorTime)
+    if(file.password !== undefined){
+      setFileToDownload(file)
+      setShowEnterPasswordSingle(true)
+    }else{
+      try{
+        const response = await fileService.downloadFile(file.id)
+        fileDownload(response.data, file.name)
+        props.addLastUsed(file, props.user)
+        props.handleNotification('Download started...', 2500)
+        removeSelection()
+      }catch(error){
+        if(error.response.status === 401){
+          props.handleError(error.response.statusText, parameter.errorTime)
         }
-          else{
-            exception.catchException(error, props)
-          }
+        else if(error.response.status === 404){
+          props.handleError(error.response.statusText, parameter.errorTime)
         }
-
+        else{
+          exception.catchException(error, props)
+        }
       }
-      
-  
+
+    }
   }
 
   const handleSingleRemoval = (file) => {
@@ -121,7 +119,6 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
       props.removeLastUsed(singleFileToDelete.id, props.user)
       props.setFiles(props.files.filter(oFile => oFile.id !== singleFileToDelete.id))
       removeSelection()
-      
     }catch(error){
       exception.catchException(error, props)
     }
@@ -151,7 +148,6 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
         props.handleNotification(`File ${file.name} removed`, parameter.notificationTime)
         removeSelection()
       })
-    
     }catch(error){
       exception.catchException(error, props)
     }
@@ -165,7 +161,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
         flag = true
       }
     })
- 
+
     if(flag){
       setShowEnterPasswordSelected(true)
     }else{
@@ -211,7 +207,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
         props.handleError(error.response.statusText, parameter.errorTime)
       }
       else{
-       exception.catchException(error, props)
+        exception.catchException(error, props)
       }
     }
   }
@@ -235,13 +231,12 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
       }
       setSelectedFiles([])
     }
-   
   }
 
   const encryptFile = async (password, event) => {
     event.preventDefault()
     try{
-      const response = await fileService.encryptFile({password: password, file: file.name})
+      const response = await fileService.encryptFile({ password: password, file: file.name })
       props.changeFile(response.data)
       props.handleNotification('File encrypted', parameter.notificationTime)
       setFile(null)
@@ -255,7 +250,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
   const decryptFile = async (password, event) => {
     event.preventDefault()
     try{
-      const response = await fileService.decryptFile({password: password, file: file.name})
+      const response = await fileService.decryptFile({ password: password, file: file.name })
       props.changeFile(response.data)
       props.handleNotification('File decrypted', parameter.notificationTime)
       setFile(null)
@@ -299,81 +294,83 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
     )
   }else{
     return (
-        <div className='tablecontainer'> 
-            <EnterPassword 
-            showEnterPassword={showEnterPasswordEncrypt}
-            setShowEnterPassword={setShowEnterPasswordEncrypt}
-            handleDownload={encryptFile} 
-          />
-           <EnterPassword 
-            showEnterPassword={showEnterPasswordDecrypt}
-            setShowEnterPassword={setShowEnterPasswordDecrypt}
-            handleDownload={decryptFile} 
-          />
-          <EnterPassword 
-            showEnterPassword={showEnterPasswordSingle}
-            setShowEnterPassword={setShowEnterPasswordSingle}
-            handleDownload={singleDownload} 
-          />
-          <EnterPassword 
-            showEnterPassword={showEnterPasswordSelected}
-            setShowEnterPassword={setShowEnterPasswordSelected}
-            handleDownload={selectedDownload} 
-          />
-          <Confirmation 
-            showConfirmation={showConfirmationSingle}
-            setConfirmation={setShowConfirmationSingle}
-            handleConfirmation={removeSingleFile}
-          />
-           <Confirmation 
-            showConfirmation={showConfirmationSelected}
-            setConfirmation={setShowConfirmationSelected}
-            handleConfirmation={handleSelectedRemoval}
-          />
-          <PublicLink showDialog={showLinkDialog}
-                    handleShowDialog={setShowLinkDialog}
-                    link={publicLink}/>
-          <SendPublicLink showDialog={showEmailDialog}
-                    handleShowDialog={setShowEmailDialog}
-                    file={file}/>
-          <Table responsive className='table table-hover'>
-            <thead className='thead-dark'>
-              <tr>
-                <th>Select</th>
-                <th>Category</th>
-                <th>Name</th>
-                <th>Encrypted</th>
-                <th>Size</th>
-                <th>Date</th>
+      <div className='tablecontainer'>
+        <EnterPassword
+          showEnterPassword={showEnterPasswordEncrypt}
+          setShowEnterPassword={setShowEnterPasswordEncrypt}
+          handleDownload={encryptFile}
+        />
+        <EnterPassword
+          showEnterPassword={showEnterPasswordDecrypt}
+          setShowEnterPassword={setShowEnterPasswordDecrypt}
+          handleDownload={decryptFile}
+        />
+        <EnterPassword
+          showEnterPassword={showEnterPasswordSingle}
+          setShowEnterPassword={setShowEnterPasswordSingle}
+          handleDownload={singleDownload}
+        />
+        <EnterPassword
+          showEnterPassword={showEnterPasswordSelected}
+          setShowEnterPassword={setShowEnterPasswordSelected}
+          handleDownload={selectedDownload}
+        />
+        <Confirmation
+          showConfirmation={showConfirmationSingle}
+          setConfirmation={setShowConfirmationSingle}
+          handleConfirmation={removeSingleFile}
+        />
+        <Confirmation
+          showConfirmation={showConfirmationSelected}
+          setConfirmation={setShowConfirmationSelected}
+          handleConfirmation={handleSelectedRemoval}
+        />
+        <PublicLink
+          showDialog={showLinkDialog}
+          handleShowDialog={setShowLinkDialog}
+          link={publicLink}/>
+        <SendPublicLink
+          showDialog={showEmailDialog}
+          handleShowDialog={setShowEmailDialog}
+          file={file}/>
+        <Table responsive className='table table-hover'>
+          <thead className='thead-dark'>
+            <tr>
+              <th>Select</th>
+              <th>Category</th>
+              <th>Name</th>
+              <th>Encrypted</th>
+              <th>Size</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredFiles.map(file =>
+              <tr key={file.id}>
+                <td><input onClick={(event) => handleOneSelection(file, event)} type="checkbox" className='checkbox'/></td>
+                <td>{file.category}</td>
+                <td>{helperClass.formatName(file.name)}</td>
+                <td>{file.password === undefined ? '' : 'x'}</td>
+                <td>{file.size}</td>
+                <td>{file.date}</td>
+                <td>
+                  <Button data-toggle='tooltip' data-placement='top' title='Download file' onClick={() => handleSingleDownload(file)}><i className="fa fa-download"></i></Button>
+                  <Button data-toggle='tooltip' data-placement='top' title='Delete file' onClick={() => handleSingleRemoval(file)}><i className="fa fa-trash"></i></Button>
+                  <Button style={{ display: file.password !== undefined ? 'none' : '' }} data-toggle='tooltip' data-placement='top' title='Create download link' onClick={() => handleConfidentiality(file)}><i className="fa fa-reply"></i></Button>
+                  <Button style={{ display: file.password !== undefined ? 'none' : '' }} data-toggle='tooltip' data-placement='top' title='Create and send download link per email' onClick={() => handleSendEmail(file)}><i className="fa fa-envelope"></i></Button>
+                  <Button style={{ display: file.password !== undefined ? '' : 'none' }} data-toggle='tooltip' data-placement='top' title='Decrypt' onClick={() => handleDecryption(file)}><i className="fa fa-key	"></i></Button>
+                  <Button style={{ display: file.password !== undefined ? 'none' : '' }}data-toggle='tooltip' data-placement='top' title='Encrypt' onClick={() => handleEncryption(file)}><i className="fa fa-key	"></i></Button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {filteredFiles.map(file =>
-                <tr key={file.id}>
-                  <td><input onClick={(event) => handleOneSelection(file, event)} type="checkbox" className='checkbox'/></td>
-                  <td>{file.category}</td>
-                  <td>{helperClass.formatName(file.name)}</td>
-                  <td>{file.password === undefined ? '' : 'x'}</td>
-                  <td>{file.size}</td>
-                  <td>{file.date}</td>
-                  <td>
-                      <Button data-toggle='tooltip' data-placement='top' title='Download file' onClick={() => handleSingleDownload(file)}><i className="fa fa-download"></i></Button>
-                      <Button data-toggle='tooltip' data-placement='top' title='Delete file' onClick={() => handleSingleRemoval(file)}><i className="fa fa-trash"></i></Button>
-                      <Button style={{ display: file.password !== undefined ? 'none' : '' }} data-toggle='tooltip' data-placement='top' title='Create download link' onClick={() => handleConfidentiality(file)}><i className="fa fa-reply"></i></Button>
-                      <Button style={{ display: file.password !== undefined ? 'none' : '' }} data-toggle='tooltip' data-placement='top' title='Create and send download link per email' onClick={() => handleSendEmail(file)}><i className="fa fa-envelope"></i></Button>
-                      <Button style={{ display: file.password !== undefined ? '' : 'none' }} data-toggle='tooltip' data-placement='top' title='Decrypt' onClick={() => handleDecryption(file)}><i className="fa fa-key	"></i></Button>
-                      <Button style={{ display: file.password !== undefined ? 'none' : '' }}data-toggle='tooltip' data-placement='top' title='Encrypt' onClick={() => handleEncryption(file)}><i className="fa fa-key	"></i></Button>
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </Table>
-          <div style={showSelectedButtons}>
-            <Button  onClick={handleSelectAll}>{showCheckedAllName}</Button>
-            <Button  onClick={() => setShowConfirmationSelected(true)}><i className="fa fa-trash"></i></Button>
-            <Button  onClick={handleSelectedDownload}><i className="fa fa-folder"></i></Button>
-          </div>
+            )}
+          </tbody>
+        </Table>
+        <div style={showSelectedButtons}>
+          <Button  onClick={handleSelectAll}>{showCheckedAllName}</Button>
+          <Button  onClick={() => setShowConfirmationSelected(true)}><i className="fa fa-trash"></i></Button>
+          <Button  onClick={handleSelectedDownload}><i className="fa fa-folder"></i></Button>
         </div>
+      </div>
     )
   }
 }

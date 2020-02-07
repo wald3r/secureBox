@@ -10,6 +10,7 @@ import exception from '../utils/exception'
 const SendPublicLink = ( { showDialog, handleShowDialog, file, ...props } ) => {
 
   const [email, setEmail] = useState('')
+  // eslint-disable-next-line no-unused-vars
   const [link, setLink] = useState('')
 
   const noChanges = () => {
@@ -34,22 +35,22 @@ const SendPublicLink = ( { showDialog, handleShowDialog, file, ...props } ) => {
           <Modal.Title>Send public link per email </Modal.Title>
         </Modal.Header>
         <Form onSubmit={handleSubmit}>
-        <Modal.Body>
-            Email: <input type='email' required onChange={({target}) => setEmail(target.value)}/>
+          <Modal.Body>
+            Email: <input type='email' required onChange={({ target }) => setEmail(target.value)}/>
             <br></br>
 
             <br></br>
             <br></br>
-            <div style={{ color: 'red'}}><Badge variant="secondary">Attention</Badge> This will send a one-time-only link to the entered address. If not used, it will get invalid after midnight.</div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" type="submit">
-            Send
-          </Button>
-          <Button variant="secondary" onClick={noChanges} >
-            Close
-          </Button>
-        </Modal.Footer>
+            <div style={{ color: 'red' }}><Badge variant="secondary">Attention</Badge> This will send a one-time-only link to the entered address. If not used, it will get invalid after midnight.</div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="primary" type="submit">
+              Send
+            </Button>
+            <Button variant="secondary" onClick={noChanges} >
+              Close
+            </Button>
+          </Modal.Footer>
         </Form>
       </Modal>
     </div>

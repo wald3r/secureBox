@@ -56,45 +56,47 @@ const AllUsers = (props) => {
   return (
 
     <div className='container'>
-              <Confirmation 
-                showConfirmation={showConfirmation}
-                setConfirmation={setShowConfirmation}
-                handleConfirmation={removeUser}
-              />
-              <ChangeUser showDialog={showUserDialog}
-                          handleShowDialog={setShowUserDialog}
-                          user={user}/>
-              <ChangePassword showDialog={showPasswordDialog}
-                          handleShowDialog={setShowPasswordDialog}
-                          user={user}/>
-              <Table responsive className='table table-hover'>
-                <thead className='thead-dark'>
-                  <tr>
-                    <th>Username</th>
-                    <th>Fullname</th>
-                    <th>Mail</th>
-                    <th>Role</th>
-                    <th>Active</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {props.users.map(u =>
-                    <tr id='idUserRow' key={u.id}>
-                      <td id='idUsername'>{u.username}</td>
-                      <td id='idName'>{u.name}</td>
-                      <td id='idEmail'>{u.email}</td>
-                      <td id='idRole'>{u.role}</td>
-                      <td>{u.active.toString()}</td>
-                      <td style={priorityStyle}>
-                        <Button id='idChangeUser' data-toggle='tooltip' data-placement='top' title='Edit profile' onClick={() => handleUserChange(u)}><i className="fa fa-drivers-license-o	" /></Button>
-                        <Button id='idChangePassword' data-toggle='tooltip' data-placement='top' title='Change password' onClick={() => handlePasswordChange(user)}><i className="fa fa-lock	"/></Button>
-                        <Button id='idDelete' data-toggle='tooltip' data-placement='top' title='Remove user' onClick={() => handleRemoval(u)}><i className="fa fa-trash" /></Button>
-                      </td>
+      <Confirmation
+        showConfirmation={showConfirmation}
+        setConfirmation={setShowConfirmation}
+        handleConfirmation={removeUser}
+      />
+      <ChangeUser
+        showDialog={showUserDialog}
+        handleShowDialog={setShowUserDialog}
+        user={user}/>
+      <ChangePassword
+        showDialog={showPasswordDialog}
+        handleShowDialog={setShowPasswordDialog}
+        user={user}/>
+      <Table responsive className='table table-hover'>
+        <thead className='thead-dark'>
+          <tr>
+            <th>Username</th>
+            <th>Fullname</th>
+            <th>Mail</th>
+            <th>Role</th>
+            <th>Active</th>
+          </tr>
+        </thead>
+        <tbody>
+          {props.users.map(u =>
+            <tr id='idUserRow' key={u.id}>
+              <td id='idUsername'>{u.username}</td>
+              <td id='idName'>{u.name}</td>
+              <td id='idEmail'>{u.email}</td>
+              <td id='idRole'>{u.role}</td>
+              <td>{u.active.toString()}</td>
+              <td style={priorityStyle}>
+                <Button id='idChangeUser' data-toggle='tooltip' data-placement='top' title='Edit profile' onClick={() => handleUserChange(u)}><i className="fa fa-drivers-license-o	" /></Button>
+                <Button id='idChangePassword' data-toggle='tooltip' data-placement='top' title='Change password' onClick={() => handlePasswordChange(user)}><i className="fa fa-lock	"/></Button>
+                <Button id='idDelete' data-toggle='tooltip' data-placement='top' title='Remove user' onClick={() => handleRemoval(u)}><i className="fa fa-trash" /></Button>
+              </td>
 
-                    </tr>
-                  ) }
-                </tbody>
-              </Table>
+            </tr>
+          ) }
+        </tbody>
+      </Table>
     </div>
   )
 }

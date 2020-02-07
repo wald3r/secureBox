@@ -37,7 +37,7 @@ export const removeNote = (note) => {
 const notesReducer = (state = [], action) => {
   switch (action.type){
   case 'GETNOTES':
-   return action.data
+    return action.data
   case 'ADDNOTE':
     return state.concat(action.data)
   case 'REMOVENOTE':

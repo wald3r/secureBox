@@ -23,12 +23,12 @@ export const handleError = (message, time) => {
 
 const errorReducer = (state = '', action) => {
   switch(action.type){
-    case 'ERROR':
-      return action.data
-    case 'REMOVERROR':
-      return ''
-    default:
-      return state
+  case 'ERROR':
+    return action.data
+  case 'REMOVERROR':
+    return ''
+  default:
+    return state
   }
 }
 

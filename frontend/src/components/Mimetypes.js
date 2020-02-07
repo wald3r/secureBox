@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import '../stylesheets/general.css'
 import { Table, Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
@@ -13,7 +13,7 @@ import Confirmation from './Confirmation'
 
 
 const Mimetypes = (props) => {
- 
+
   const [showAddMime, setShowAddMime] = useState(false)
   const [filter, setFilter] = useState('')
   const [type, setType] = useState(null)
@@ -28,7 +28,7 @@ const Mimetypes = (props) => {
       props.handleNotification(response.data, parameter.notificationTime)
     }catch(error){
       exception.catchException(error, props)
-    }  
+    }
   }
 
   const handleRemoval = (mime) => {
@@ -42,14 +42,14 @@ const Mimetypes = (props) => {
   }
 
   return(
-    <div className='container'> 
-      <Confirmation 
+    <div className='container'>
+      <Confirmation
         showConfirmation={showConfirmation}
         setConfirmation={setShowConfirmation}
         handleConfirmation={removeMime}
       />
       <AddMime
-        showAddMime={showAddMime} 
+        showAddMime={showAddMime}
         handleShowAddMime={setShowAddMime}/>
       <Table responsive className='table table-hover'>
         <thead className='thead-dark'>
@@ -72,7 +72,7 @@ const Mimetypes = (props) => {
       <Button id='idAddMime' onClick={() => setShowAddMime(true)}>Add new MimeType</Button>
       <br></br>
       <br></br>
-      <p style={{textAlign: 'left'}}><b>Allowed MIME-Types to upload files.</b></p>
+      <p style={{ textAlign: 'left' }}><b>Allowed MIME-Types to upload files.</b></p>
     </div>
   )
 }

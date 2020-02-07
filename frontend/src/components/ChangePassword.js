@@ -49,31 +49,29 @@ const ChangePassword = ( { showDialog, handleShowDialog, user, ...props } ) => {
           <Modal.Title>Edit user details </Modal.Title>
         </Modal.Header>
         <Form onSubmit={saveChanges}>
-        <Modal.Body>
-          <table className='table .table-striped' width="10">
-            <thead className='thead-dark'>
-              </thead>
-                <tbody width="10">
-                  <tr>
-                    <td width="10">
+          <Modal.Body>
+            <table className='table .table-striped' width="10">
+              <tbody width="10">
+                <tr>
+                  <td width="10">
                       Password:
-                    </td>
+                  </td>
 
-                    <td>
-                      <input autoComplete='off' type='password' onChange={({target}) => setPassword(target.value)}/>
-                    </td>
-                  </tr>
-                </tbody>
+                  <td>
+                    <input autoComplete='off' type='password' onChange={({ target }) => setPassword(target.value)}/>
+                  </td>
+                </tr>
+              </tbody>
             </table>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={noChanges}>
-            Close
-          </Button>
-          <Button variant="primary" type='submit'>
-            Save Changes
-          </Button>
-        </Modal.Footer>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={noChanges}>
+              Close
+            </Button>
+            <Button variant="primary" type='submit'>
+              Save Changes
+            </Button>
+          </Modal.Footer>
         </Form>
       </Modal>
     </div>

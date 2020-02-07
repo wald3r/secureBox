@@ -29,21 +29,21 @@ const Notes = (props) => {
     <div>
       <div className='container'>
         <div className='filter'>
-          Name: <input type='search'id='idNameFilter' onChange={handleFilter}/> 
+          Name: <input type='search'id='idNameFilter' onChange={handleFilter}/>
           Date: <input type='search' id='idDateFilter' onChange={handleDateSearch}/>
         </div>
       </div>
       <br></br>
       <div style={{ textAlign: 'center' }} className='notes'>
-      <Button id='addNote' style={{ textAlign: 'center' }} data-toggle='tooltip' data-placement='top' title='Add new note' onClick={() => setShowAddNote(true)}>Add new Note</Button>
+        <Button id='addNote' style={{ textAlign: 'center' }} data-toggle='tooltip' data-placement='top' title='Add new note' onClick={() => setShowAddNote(true)}>Add new Note</Button>
         <br></br>
         <br></br>
-        <AddNote 
+        <AddNote
           showAddNote={showAddNote}
           handleShowAddNote={setShowAddNote} />
-          {filteredNotes.map(n => 
-            <Note note={n} key={n.id}/>
-          )}
+        {filteredNotes.map(n =>
+          <Note note={n} key={n.id}/>
+        )}
       </div>
     </div>
   )

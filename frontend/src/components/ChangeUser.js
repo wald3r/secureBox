@@ -63,68 +63,66 @@ const ChangeUser = ( { showDialog, handleShowDialog, user, ...props } ) => {
           <Modal.Title>Edit user details </Modal.Title>
         </Modal.Header>
         <Form onSubmit={saveChanges}>
-        <Modal.Body>
-          <table className='table .table-striped' width="10">
-            <thead className='thead-dark'>
-              </thead>
-                <tbody width="10">
-                  <tr>
-                    <td width="10">
-                      Username:
-                    </td>
+          <Modal.Body>
+            <table className='table .table-striped' width="10">
+              <tbody width="10">
+                <tr>
+                  <td width="10">
+                    Username:
+                  </td>
 
-                    <td>
-                      <input id='idChangeUsername' autoComplete='off' required defaultValue={user.username} type='text' onChange={({target}) => setUsername(target.value)}/>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td width="10">
-                      Fullname:
-                    </td>
+                  <td>
+                    <input id='idChangeUsername' autoComplete='off' required defaultValue={user.username} type='text' onChange={({ target }) => setUsername(target.value)}/>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="10">
+                    Fullname:
+                  </td>
 
-                    <td>
-                      <input autoComplete='off' id='idChangeName' defaultValue={user.name} type='text' onChange={({target}) => setName(target.value)}/>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td width="10">
-                      E-Mail:
-                    </td>
+                  <td>
+                    <input autoComplete='off' id='idChangeName' defaultValue={user.name} type='text' onChange={({ target }) => setName(target.value)}/>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="10">
+                    E-Mail:
+                  </td>
 
-                    <td>
-                      <input autoComplete='off' id='idChangeEmail' required defaultValue={user.email} type='email' onChange={({target}) => SetEmail(target.value)}/>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td width="10">
+                  <td>
+                    <input autoComplete='off' id='idChangeEmail' required defaultValue={user.email} type='email' onChange={({ target }) => SetEmail(target.value)}/>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="10">
                       Role:
-                    </td>
+                  </td>
 
-                    <td>
-                      <input id='idAdmin' autoComplete='off' type='radio' name='role' value='admin' defaultChecked={user.role === 'admin'} onChange={handleRoleChange}/>admin
-                      <input id='idUser' autoComplete='off' type='radio' name='role' value='user' defaultChecked={user.role === 'user'} onChange={handleRoleChange}/>user
-                    </td>
-                  </tr>
-                  <tr>
-                    <td width="10">
+                  <td>
+                    <input id='idAdmin' autoComplete='off' type='radio' name='role' value='admin' defaultChecked={user.role === 'admin'} onChange={handleRoleChange}/>admin
+                    <input id='idUser' autoComplete='off' type='radio' name='role' value='user' defaultChecked={user.role === 'user'} onChange={handleRoleChange}/>user
+                  </td>
+                </tr>
+                <tr>
+                  <td width="10">
                       Active:
-                    </td>
+                  </td>
 
-                    <td>
-                      <input id='idActive' autoComplete='off' type='checkbox' name='active' defaultChecked={user.active} onChange={handleActivation}/>
-                    </td>
-                  </tr>
-                </tbody>
+                  <td>
+                    <input id='idActive' autoComplete='off' type='checkbox' name='active' defaultChecked={user.active} onChange={handleActivation}/>
+                  </td>
+                </tr>
+              </tbody>
             </table>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" id='idClose' onClick={noChanges}>
-            Close
-          </Button>
-          <Button variant="primary" id='idSave' type='submit'>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" id='idClose' onClick={noChanges}>
+              Close
+            </Button>
+            <Button variant="primary" id='idSave' type='submit'>
             Save Changes
-          </Button>
-        </Modal.Footer>
+            </Button>
+          </Modal.Footer>
         </Form>
       </Modal>
     </div>

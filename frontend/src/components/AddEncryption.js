@@ -13,9 +13,9 @@ const AddEncryption = ({ showAddEncryption , setShowAddEncryption, handleEncrypt
     window.location.reload()
   }
 
-  const saveChanges = async (event) => {
+  const saveChanges = async () => {
     setShowAddEncryption(false)
-    await handleEncryption(password, event)
+    await handleEncryption(password)
   }
 
   return (
@@ -25,31 +25,31 @@ const AddEncryption = ({ showAddEncryption , setShowAddEncryption, handleEncrypt
           <Modal.Title>Add Encryption </Modal.Title>
         </Modal.Header>
         <Form onSubmit={saveChanges}>
-        <Modal.Body>
-          <table className='table .table-striped' >
-            <thead className='thead-dark'>
+          <Modal.Body>
+            <table className='table .table-striped' >
+              <thead className='thead-dark'>
               </thead>
-                <tbody >
-                  <tr>
-                    <td >
-                      Password:
-                    </td>
+              <tbody >
+                <tr>
+                  <td >
+                    Password:
+                  </td>
 
-                    <td>
-                      <input type='text' required onChange={({target}) => setPassword(target.value)} />
-                    </td>
-                  </tr>
-                </tbody>
+                  <td>
+                    <input type='text' required onChange={({ target }) => setPassword(target.value)} />
+                  </td>
+                </tr>
+              </tbody>
             </table>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={noChanges}>
-            No Encryption
-          </Button>
-          <Button variant="primary" type='submit'>
-            Add Encryption
-          </Button>
-        </Modal.Footer>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={noChanges}>
+              No Encryption
+            </Button>
+            <Button variant="primary" type='submit'>
+              Add Encryption
+            </Button>
+          </Modal.Footer>
         </Form>
       </Modal>
     </div>

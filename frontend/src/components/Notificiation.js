@@ -12,7 +12,7 @@ const Notification = ( props ) => {
   else{
     return(
       <div className='notification'>
-            {props.notification}
+        {props.notification}
       </div>
     )
   }

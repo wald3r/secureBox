@@ -6,6 +6,6 @@ require('dotenv').config()
 
 const server = http.createServer(app)
 
-server.listen(3001, () => {
-    console.log(`Server running on port 3001`)
+server.listen(config.PORT || 3001, () => {
+    console.log(`Server running on port ${config.PORT}`)
 })

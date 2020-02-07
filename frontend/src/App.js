@@ -34,32 +34,32 @@ const App = ( props ) => {
         props.getUsers(newUser)
       }
     }
-// eslint-disable-next-line react-hooks/exhaustive-deps,
+  // eslint-disable-next-line react-hooks/exhaustive-deps,
   }, [])
 
 
 
-  
+
   if (props.user === null){
     return (
       <div className='bg'>
-      <Error />
-      <Notification />
-      <div className='container2'>
-      <div className='row'>
-      <div className='col-md-15'>
-        <Router>
-        <div className='header'>SecureBox</div>
-        <br></br>
-          <Link className='link' to='/'>Login</Link>
-          <Link className='link' to='/app/registration'>Registration</Link>  
-          <br></br>
-          <Route exact path='/' render={() => <Login/> } />
-          <Route exact path='/app/registration' render={() => <Registration /> } />
-        </Router>
-      </div>
-      </div>
-      </div>
+        <Error />
+        <Notification />
+        <div className='container2'>
+          <div className='row'>
+            <div className='col-md-15'>
+              <Router>
+                <div className='header'>SecureBox</div>
+                <br></br>
+                <Link className='link' to='/'>Login</Link>
+                <Link className='link' to='/app/registration'>Registration</Link>
+                <br></br>
+                <Route exact path='/' render={() => <Login/> } />
+                <Route exact path='/app/registration' render={() => <Registration /> } />
+              </Router>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }else{
@@ -69,9 +69,9 @@ const App = ( props ) => {
         <Error />
         <Notification />
         <Router>
-        <div className='container3'>
-          <div className='row'>
-            <div className='col-md-18'>
+          <div className='container3'>
+            <div className='row'>
+              <div className='col-md-18'>
                 <div className='header'>SecureBox</div>
                 <br></br>
                 <Link className='link' to='/'>Home</Link>
@@ -80,16 +80,15 @@ const App = ( props ) => {
                 <Link className='link' to='/app/notes'>Notes</Link>
                 <Link className='link' to ='/app/profile'>Profile</Link>
                 <Link style={priorityStyle} className='link' to='/app/admin'>Admin</Link>
-        
-                
+
                 <Route exact path='/' render={() => <Home /> }/>
                 <Route exact path='/app/upload' render={(props) => <Upload {...props}/> } />
                 <Route exact path='/app/allfiles' render={(props) => <AllFiles {...props}/> } />
                 <Route exact path='/app/notes' render={(props) => <Notes {...props}/> } />
                 <Route exact path='/app/profile' render={(props) => <Profile {...props}/> } />
                 <Route exact path='/app/admin' render={(props) => <Admin {...props}/> } />
-              <br></br>
-              <br></br>
+                <br></br>
+                <br></br>
               </div>
             </div>
 
@@ -97,7 +96,7 @@ const App = ( props ) => {
           <br></br>
           <Footer />
 
-          </Router>
+        </Router>
       </div>
     )
   }

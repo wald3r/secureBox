@@ -50,7 +50,7 @@ const sendPublicMail = async (id, mail) => {
   const config = {
     headers: { Authorization: token },
   }
-  const response = await axios.post(`${baseUrl}/public/mail/${id}`, {mail: mail}, config)
+  const response = await axios.post(`${baseUrl}/public/mail/${id}`, { mail: mail }, config)
   return response
 }
 
@@ -82,7 +82,7 @@ const getMusic = async () => {
 }
 
 const getFile = async (id) => {
-  
+
   const config = {
     headers: { Authorization: token },
   }
@@ -117,7 +117,7 @@ const downloadEncryptedFile = async (id, password) => {
     responseType: 'blob',
     headers: { Authorization: token },
   }
-  const response = await axios.post(`${baseUrl}/download/encrypted/${id}`, {password: password}, config)
+  const response = await axios.post(`${baseUrl}/download/encrypted/${id}`, { password: password }, config)
   return response
 }
 
@@ -155,7 +155,7 @@ const sendFiles = async (data) => {
   }
   const response = await axios.post(`${baseUrl}/upload`, data, config)
   return response
-  
+
 }
 
 

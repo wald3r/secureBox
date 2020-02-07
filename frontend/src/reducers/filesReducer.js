@@ -115,10 +115,10 @@ const filesReducer = (state = [], action) => {
   case 'GETMUSIC':
     return action.data
   case 'CHANGEFILE':
-      let list = state.filter(f => f.id !== action.data.id)
+    var list = state.filter(f => f.id !== action.data.id)
     return list.concat(action.data)
   case 'REMOVEFILE':
-      let files = state.filter(f => f.id !== action.data.id)
+    var files = state.filter(f => f.id !== action.data.id)
     return files
   default:
     return state
