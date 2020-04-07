@@ -2,6 +2,17 @@
 @import './event.css';
 @import './table.css';
 
+.grid-container{
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto;
+  grid-gap: 30px;
+  padding: 20px;
+} 
+
+.selected-file{
+  background-color: blue;
+}
+
 .title{
   text-align: center;
 }

@@ -15,6 +15,9 @@ import parameter from '../utils/parameter'
 import exception from '../utils/exception'
 import Confirmation from './Confirmation'
 import EnterPassword from './EnterPassword'
+import folder from '../folder.png'
+import picture from '../picture.png'
+import FileDetails from './FileDetails'
 
 const AllMyFiles = ({ filteredFiles, ...props }) => {
 
@@ -31,8 +34,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
   const [showEnterPasswordSelected, setShowEnterPasswordSelected] = useState(false)
   const [showEnterPasswordEncrypt, setShowEnterPasswordEncrypt] = useState(false)
   const [showEnterPasswordDecrypt, setShowEnterPasswordDecrypt] = useState(false)
-
-
+  const [showFileDetails, setShowFileDetails] = useState(false)
   const [fileToDownload, setFileToDownload] = useState(null)
 
   const showSelectedButtons = { display: props.files.length === 0 ? 'none' : '' }
@@ -280,6 +282,10 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
     }
   }
 
+  const handleShowFileDetails = (file) => {
+    setFile(file)
+    setShowFileDetails(true)
+  }
 
   const handleSendEmail = async (file) => {
     setFile(file)
@@ -333,38 +339,22 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
           showDialog={showEmailDialog}
           handleShowDialog={setShowEmailDialog}
           file={file}/>
-        <Table responsive className='table table-hover'>
-          <thead className='thead-dark'>
-            <tr>
-              <th>Select</th>
-              <th>Category</th>
-              <th>Name</th>
-              <th>Encrypted</th>
-              <th>Size</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredFiles.map(file =>
-              <tr key={file.id}>
-                <td><input onClick={(event) => handleOneSelection(file, event)} type="checkbox" className='checkbox'/></td>
-                <td>{file.category}</td>
-                <td>{helperClass.formatName(file.name)}</td>
-                <td>{file.password === undefined ? '' : 'x'}</td>
-                <td>{file.size}</td>
-                <td>{file.date}</td>
-                <td>
-                  <Button data-toggle='tooltip' data-placement='top' title='Download file' onClick={() => handleSingleDownload(file)}><i className="fa fa-download"></i></Button>
-                  <Button data-toggle='tooltip' data-placement='top' title='Delete file' onClick={() => handleSingleRemoval(file)}><i className="fa fa-trash"></i></Button>
-                  <Button style={{ display: file.password !== undefined ? 'none' : '' }} data-toggle='tooltip' data-placement='top' title='Create download link' onClick={() => handleConfidentiality(file)}><i className="fa fa-reply"></i></Button>
-                  <Button style={{ display: file.password !== undefined ? 'none' : '' }} data-toggle='tooltip' data-placement='top' title='Create and send download link per email' onClick={() => handleSendEmail(file)}><i className="fa fa-envelope"></i></Button>
-                  <Button style={{ display: file.password !== undefined ? '' : 'none' }} data-toggle='tooltip' data-placement='top' title='Decrypt' onClick={() => handleDecryption(file)}><i className="fa fa-key	"></i></Button>
-                  <Button style={{ display: file.password !== undefined ? 'none' : '' }}data-toggle='tooltip' data-placement='top' title='Encrypt' onClick={() => handleEncryption(file)}><i className="fa fa-key	"></i></Button>
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
+        <FileDetails 
+          showFileDetails={showFileDetails}
+          handleShowFileDetails={setShowFileDetails}
+          file={file}
+        />
+          <div className='grid-container'>
+          {filteredFiles.map(file=>
+            <div key={file.id}>
+              {file.category === 'Document' ? <img onClick={()=> handleShowFileDetails(file)} className='selected-file' src={folder} alt='icon' height="80" width="80"/> : ''}
+              {file.category === 'Picture' ? <img src={picture} alt='icon' height="80" width="80"/> : ''}
+              <br/>{helperClass.formatName(file.name)}<br/>
+              <input onClick={(event) => handleOneSelection(file, event)} type="checkbox" className='checkbox'/>
+            </div>
+          )}
+          </div>
+        <br/>
         <div style={showSelectedButtons}>
           <Button  onClick={handleSelectAll}>{showCheckedAllName}</Button>
           <Button  onClick={() => setShowConfirmationSelected(true)}><i className="fa fa-trash"></i></Button>
