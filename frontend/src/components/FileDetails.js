@@ -1,17 +1,11 @@
 import React, { useState } from 'react'
-import { Modal, Form, Button } from 'react-bootstrap'
+import { Modal, Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import parameter from '../utils/parameter'
-import exception from '../utils/exception'
 import { handleNotification } from '../reducers/notificationReducer'
 import { handleError } from '../reducers/errorReducer'
 
 
 const FileDetails = ( {handleSendEmail, handleDecryption, handleEncryption, handleConfidentiality, handleSingleDownload, handleSingleRemoval, showFileDetails, handleShowFileDetails, file, ...props } ) => {
-
-  const [title, setTitle] = useState('')
-  const [body, setBody] = useState('')
-
 
   const noChanges = () => handleShowFileDetails(false)
 

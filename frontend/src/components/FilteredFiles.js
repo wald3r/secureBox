@@ -36,7 +36,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
   const [showEnterPasswordDecrypt, setShowEnterPasswordDecrypt] = useState(false)
   const [showFileDetails, setShowFileDetails] = useState(false)
   const [fileToDownload, setFileToDownload] = useState(null)
-
+  const [fileDetails, setFileDetails] = useState(null)
   const showSelectedButtons = { display: props.files.length === 0 ? 'none' : '' }
   const showCheckedAllName = allSelected === true ? 'Remove selection' : 'Select all'
 
@@ -236,17 +236,16 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
   }
 
   const encryptFile = async (password, event) => {
-    console.log(password)
+
     event.preventDefault()
     try{
-      const response = await fileService.encryptFile({ password: password, file: file.name })
+      const response = await fileService.encryptFile({ password: password, id: file.id })
       props.changeFile(response.data)
       props.handleNotification('File encrypted', parameter.notificationTime)
       setFile(null)
 
     }catch(error){
       exception.catchException(error, props)
-
     }
   }
 
@@ -284,7 +283,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
   }
 
   const handleShowFileDetails = (file) => {
-    setFile(file)
+    setFileDetails(file)
     setShowFileDetails(true)
   }
 
@@ -343,7 +342,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
         <FileDetails 
           showFileDetails={showFileDetails}
           handleShowFileDetails={setShowFileDetails}
-          file={file}
+          file={fileDetails}
           handleSingleDownload={handleSingleDownload}
           handleSingleRemoval={handleSingleRemoval}
           handleEncryption={handleEncryption}

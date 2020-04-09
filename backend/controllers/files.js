@@ -380,11 +380,11 @@ filesRouter.post('/encrypt/', async (request, response, next) => {
       return response.status(401).send('Not Authenticated')
     }
     const path = `files/${user.username}`
-    const file = request.body.file
+    const id = request.body.id
     const salt = 10
-    
+
     const passwordHash = await bcrypt.hash(request.body.password, salt)
-    const savedFile = await File.findById(file.id)
+    let savedFile = await File.findById(id)
     savedFile.password = passwordHash
 
     for(let a = 0; a < 10; a++){
