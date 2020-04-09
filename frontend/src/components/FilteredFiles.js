@@ -236,6 +236,7 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
   }
 
   const encryptFile = async (password, event) => {
+    console.log(password)
     event.preventDefault()
     try{
       const response = await fileService.encryptFile({ password: password, file: file.name })
@@ -343,12 +344,18 @@ const AllMyFiles = ({ filteredFiles, ...props }) => {
           showFileDetails={showFileDetails}
           handleShowFileDetails={setShowFileDetails}
           file={file}
+          handleSingleDownload={handleSingleDownload}
+          handleSingleRemoval={handleSingleRemoval}
+          handleEncryption={handleEncryption}
+          handleConfidentiality={handleConfidentiality}
+          handleSendEmail={handleSendEmail}
+          handleDecryption={handleDecryption}
         />
           <div className='grid-container'>
           {filteredFiles.map(file=>
             <div key={file.id}>
-              {file.category === 'Document' ? <img onClick={()=> handleShowFileDetails(file)} className='selected-file' src={folder} alt='icon' height="80" width="80"/> : ''}
-              {file.category === 'Picture' ? <img src={picture} alt='icon' height="80" width="80"/> : ''}
+              {file.category === 'Document' ? <img onClick={()=> handleShowFileDetails(file)} src={folder} alt='icon' height="80" width="80"/> : ''}
+              {file.category === 'Picture' ? <img onClick={()=> handleShowFileDetails(file)} src={picture} alt='icon' height="80" width="80"/> : ''}
               <br/>{helperClass.formatName(file.name)}<br/>
               <input onClick={(event) => handleOneSelection(file, event)} type="checkbox" className='checkbox'/>
             </div>
